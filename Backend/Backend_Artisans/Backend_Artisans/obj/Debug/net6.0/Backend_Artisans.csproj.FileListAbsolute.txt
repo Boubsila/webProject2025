@@ -51,3 +51,4 @@ C:\Users\boubs\Desktop\Ephec\Ephec2025\Projet développement Web\Projets\Web Dev
 C:\Users\boubs\Desktop\Ephec\Ephec2025\Projet développement Web\Projets\Web Development Project 2025\Backend\Backend_Artisans\Backend_Artisans\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\boubs\Desktop\Ephec\Ephec2025\Projet développement Web\Projets\Web Development Project 2025\Backend\Backend_Artisans\Backend_Artisans\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\boubs\Desktop\Ephec\Ephec2025\Projet développement Web\Projets\Web Development Project 2025\Backend\Backend_Artisans\Backend_Artisans\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\boubs\Desktop\Ephec\Ephec2025\Projet développement Web\Projets\Web Development Project 2025\Backend\Backend_Artisans\Backend_Artisans\obj\Debug\net6.0\Backend_Artisans.sourcelink.json

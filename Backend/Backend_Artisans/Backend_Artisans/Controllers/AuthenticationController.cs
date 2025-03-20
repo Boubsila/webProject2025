@@ -23,10 +23,10 @@ namespace Backend_Artisans.Controllers
 
         [HttpPost("Register")]
         [AllowAnonymous]
-        public void Register(string login, string password)
+        public void Register(string login, string password,string role)
         {
 
-            _authenticationService.RegisterUser(login, password);
+            _authenticationService.RegisterUser(login, password,role);
         }
 
         [HttpGet]

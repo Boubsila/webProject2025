@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Domain;
 using Business;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Backend_Artisans.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 
 public class livraisonController : ControllerBase
 {
@@ -17,6 +19,8 @@ public class livraisonController : ControllerBase
         _service = service;
     }
 
+
+    [Authorize(Roles ="Admin")] 
     [HttpGet]
     public ActionResult GetLivraison()
     {

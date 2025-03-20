@@ -13,7 +13,7 @@ namespace Domain
         public string Description { get; set; }
         public decimal Prix { get; set; }
         public string Categorie { get; set; }
-        public string ImageUrl { get; set; }
+        public byte[] Image { get; set; }
         public int Quantite { get; set; }
 
         // Relation avec Artisan

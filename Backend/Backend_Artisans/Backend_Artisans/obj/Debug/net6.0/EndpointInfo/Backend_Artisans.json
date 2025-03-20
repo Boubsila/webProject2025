@@ -46,6 +46,13 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -148,6 +155,10 @@
             "nullable": true
           },
           "salt": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
             "type": "string",
             "nullable": true
           }

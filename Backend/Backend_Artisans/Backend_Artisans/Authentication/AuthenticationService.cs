@@ -11,9 +11,9 @@ namespace Backend_Artisans.Authentication
 
         //Liste des utilisateurs : 
         private static readonly List<User> users = new List<User> {
-            new User("user1","829792F8543443A91F7E","Sunday"),  //test
-            new User("user2","EE1D043DE283E12CD10A","Sunday"), //password
-            new User("user3","A06EE0913A1EBFCE55EF","Sunday") //secret
+            new User("user1","829792F8543443A91F7E","Sunday","Admin"),  //test
+            new User("user2","EE1D043DE283E12CD10A","Sunday","User"), //password
+            new User("user3","A06EE0913A1EBFCE55EF","Sunday","") //secret
         };
 
         // Service pour récupérer les infos dans notre configuration appsetting
@@ -34,7 +34,10 @@ namespace Backend_Artisans.Authentication
             var claims = new[] {
                 new Claim(JwtRegisteredClaimNames.Sub, username),
                 new Claim("custom_info", "info"),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim (ClaimTypes.Role, users.FirstOrDefault(x=>x.Username==username).Role),
+                //new Claim("email", users.FirstOrDefault(x => x.Username == username).Email) // Ajout d'une claim personnalisée "email"
+
             };
 
             var jwtIssuer = _config["Jwt:Issuer"];
@@ -65,7 +68,7 @@ namespace Backend_Artisans.Authentication
             return Convert.ToHexString(hash);
         }
 
-        public void RegisterUser(string username, string password)
+        public void RegisterUser(string username, string password,string role)
         {
 
             if (users.Any(user => user.Username.ToLower() == username.ToLower()))
@@ -74,7 +77,7 @@ namespace Backend_Artisans.Authentication
             }
             var salt = DateTime.Now.ToString("dddd"); // get the day of week. Ex: Sunday
             var passwordHash = HashPassword(password, salt);
-            var newUser = new User(username, passwordHash, salt);
+            var newUser = new User(username, passwordHash, salt,role);
             users.Add(newUser);
         }
 
@@ -104,21 +107,25 @@ namespace Backend_Artisans.Authentication
     {
         public string Username { get; set; }
 
-        public User(string username, string password, string salt)
+        public User(string username, string password, string salt,string role)
         {
             Username = username;
             Password = password;
             Salt = salt;
+            Role = role;
+            
         }
 
-        public User(string username, string password)
+        public User(string email, string password)
         {
-            Username = username;
+            Username = email;
             Password = password;
         }
 
         public string Password { get; set; }
         public string Salt { get; set; }
+        public string Role { get; set; }
+       
     }
 
 }
