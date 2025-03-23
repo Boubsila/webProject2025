@@ -12,6 +12,7 @@ namespace Domain
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string Role { get; set; }
+        public Boolean statut { get; set; }
 
         // Relations
         public Artisan? Artisan { get; set; }

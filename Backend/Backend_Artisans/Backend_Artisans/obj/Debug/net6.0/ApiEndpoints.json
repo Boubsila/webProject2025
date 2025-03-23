@@ -69,6 +69,11 @@
     "Order": 0,
     "Parameters": [
       {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
         "Name": "login",
         "Type": "System.String",
         "IsRequired": false
@@ -82,6 +87,11 @@
         "Name": "role",
         "Type": "System.String",
         "IsRequired": false
+      },
+      {
+        "Name": "statut",
+        "Type": "System.Boolean",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -91,6 +101,22 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "Backend_Artisans.Controllers.AuthenticationController",
+    "Method": "UpdateUserStatus",
+    "RelativePath": "api/Authentication/Users/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Backend_Artisans.Controllers.livraisonController",

@@ -34,6 +34,14 @@
         ],
         "parameters": [
           {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
             "name": "login",
             "in": "query",
             "schema": {
@@ -52,6 +60,13 @@
             "in": "query",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "statut",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -128,6 +143,29 @@
         }
       }
     },
+    "/api/Authentication/Users/{id}": {
+      "put": {
+        "tags": [
+          "Authentication"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/livraison": {
       "get": {
         "tags": [
@@ -146,6 +184,10 @@
       "User": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "username": {
             "type": "string",
             "nullable": true
@@ -161,6 +203,9 @@
           "role": {
             "type": "string",
             "nullable": true
+          },
+          "statut": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

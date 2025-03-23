@@ -23,7 +23,7 @@ namespace Backend_Artisans.Controllers
 
         [HttpPost("Register")]
         [AllowAnonymous]
-        public void Register(string login, string password,string role)
+        public void Register(int id,string login, string password,string role,bool statut)
         {
 
             _authenticationService.RegisterUser(login, password,role);
@@ -45,9 +45,35 @@ namespace Backend_Artisans.Controllers
             return Ok(new { Token = token });
         }
 
-      
 
-      
+        [HttpPut("Users/{id}")]
+        [Authorize(Roles = "Admin")] 
+        public ActionResult UpdateUserStatus(int id)
+        {
+            try
+            {
+                var users = _authenticationService.GetUsers();
+                var user = users.FirstOrDefault(u => u.Id == id);
+
+                if (user == null)
+                {
+                    return NotFound($"User with ID {id} not found.");
+                }
+
+                user.Statut = true;
+
+
+
+                return Ok(new { message = "statut changed" }); // Renvoie un objet JSON
+            
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating user status.");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An error occurred while updating the user status." }); // Renvoie un objet JSON
+            }
+        }
+
 
 
     }
