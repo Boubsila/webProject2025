@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Backend_Artisans.Authentication;
+using Data;
+//migration test
+using Domain;
 
 namespace Backend_Artisans.Controllers
 {
@@ -13,11 +16,14 @@ namespace Backend_Artisans.Controllers
     {
         private readonly ILogger<AuthenticationController> _logger;
         private readonly Authentication.AuthenticationService _authenticationService;
+        //migration test
+        private readonly IRepo _repo;
 
-        public AuthenticationController(ILogger<AuthenticationController> logger,Authentication.AuthenticationService authenticationService)
+        public AuthenticationController(ILogger<AuthenticationController> logger,Authentication.AuthenticationService authenticationService,IRepo repo)
         {
             _logger = logger;
             _authenticationService = authenticationService;
+            _repo = repo;
         }
 
 
@@ -31,9 +37,11 @@ namespace Backend_Artisans.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public List<User> GetUsers()
+        public IEnumerable<User> GetUsers()
         {
-            return _authenticationService.GetUsers();
+            //return _authenticationService.GetUsers();
+            //migration test
+            return _repo.GetUsers();
         }
 
         [HttpPost("Login")]
@@ -52,7 +60,10 @@ namespace Backend_Artisans.Controllers
         {
             try
             {
-                var users = _authenticationService.GetUsers();
+
+                //var users = _authenticationService.GetUsers();
+                //migration test
+                var users = _repo.GetUsers();
                 var user = users.FirstOrDefault(u => u.Id == id);
 
                 if (user == null)

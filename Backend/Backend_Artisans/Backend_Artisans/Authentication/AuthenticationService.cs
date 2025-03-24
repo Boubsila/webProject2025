@@ -1,4 +1,6 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Data;
+using Domain;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -9,19 +11,24 @@ namespace Backend_Artisans.Authentication
     public class AuthenticationService
     {
         // Liste statique pour stocker les utilisateurs (pour le développement)
-        private static List<User> users = new List<User>
-        {
-            new User ( 1,  "admin@artisans.be",  "admin", Guid.NewGuid().ToString(), "Admin",  true ),
-            new User ( 2, "artisan@artisans.be", "artisan", Guid.NewGuid().ToString(), "artisan", false ),
-            new User ( 3, "c@artisans.be", "3892C265A1C4F640E7C7", Guid.NewGuid().ToString(), "client", true ),
-            new User ( 4,"admin2@artisans.be","4326FACBD8C1467C6FC7","f6893125-485c-4439-a443-d4600865f788","Admin",true)
-        };
+        //private static List<User> users = new List<User>
+        //{
+        //    new User ( 1,  "admin@artisans.be",  "admin", Guid.NewGuid().ToString(), "Admin",  true ),
+        //    new User ( 2, "artisan@artisans.be", "artisan", Guid.NewGuid().ToString(), "artisan", false ),
+        //    new User ( 3, "c@artisans.be", "3892C265A1C4F640E7C7", Guid.NewGuid().ToString(), "client", true ),
+        //    new User ( 4,"admin2@artisans.be","4326FACBD8C1467C6FC7","f6893125-485c-4439-a443-d4600865f788","Admin",true)
+        //};
 
         IConfiguration _config;
+        IRepo _repo;
 
-        public AuthenticationService(IConfiguration config)
+        public AuthenticationService(IConfiguration config,IRepo repo)
         {
             _config = config;
+
+            //migration test
+            _repo = repo;
+
         }
 
         private string GenerateJSONWebToken(string username)
@@ -34,7 +41,9 @@ namespace Backend_Artisans.Authentication
                 new Claim(JwtRegisteredClaimNames.Sub, username),
                 new Claim("custom_info", "info"),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim (ClaimTypes.Role, users.FirstOrDefault(x=>x.Username==username)?.Role),
+
+                //migration test
+                new Claim (ClaimTypes.Role, _repo.GetUsers().FirstOrDefault(x=>x.Username==username)?.Role),
             };
 
             var jwtIssuer = _config["Jwt:Issuer"];
@@ -64,7 +73,8 @@ namespace Backend_Artisans.Authentication
 
         public void RegisterUser(string username, string password, string role)
         {
-            if (users.Any(user => user.Username.ToLower() == username.ToLower()))
+            //migration test
+            if (_repo.GetUsers().Any(user => user.Username.ToLower() == username.ToLower()))
             {
                 throw new Exception("User already exist");
             }
@@ -73,14 +83,16 @@ namespace Backend_Artisans.Authentication
             var passwordHash = HashPassword(password, salt);
 
             var newUser = new User(GenerateNewId(), username, passwordHash, salt, role, false);
-            users.Add(newUser);
+            //migration test
+            _repo.AddUser(newUser);
         }
 
         public string Login(string username, string password)
         {
             try
             {
-                var user = users.FirstOrDefault(user => user.Username.ToLower() == username.ToLower());
+                //migration test
+                var user = _repo.GetUsers().FirstOrDefault(user => user.Username.ToLower() == username.ToLower());
 
                 if (user == null)
                 {
@@ -109,38 +121,39 @@ namespace Backend_Artisans.Authentication
             }
         }
 
-        public List<User> GetUsers()
-        {
-            return users;
-        }
+        //public List<User> GetUsers()
+        //{
+        //    return users;
+        //}
 
         private int GenerateNewId()
         {
-            if (users.Count == 0)
+            //migration test
+            if (_repo.GetUsers().Count() == 0)
             {
                 return 1;
             }
-            return users.Max(u => u.Id) + 1;
+            return _repo.GetUsers().Max(u => u.Id) + 1;
         }
     }
 
-    public class User
-    {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Salt { get; set; }
-        public string Role { get; set; }
-        public bool Statut { get; set; }
+    //public class User
+    //{
+    //    public int Id { get; set; }
+    //    public string Username { get; set; }
+    //    public string Password { get; set; }
+    //    public string Salt { get; set; }
+    //    public string Role { get; set; }
+    //    public bool Statut { get; set; }
 
-        public User(int id, string username, string password, string salt, string role, bool statut)
-        {
-            Id = id;
-            Username = username;
-            Password = password;
-            Salt = salt;
-            Role = role;
-            Statut = statut;
-        }
-    }
+    //    public User(int id, string username, string password, string salt, string role, bool statut)
+    //    {
+    //        Id = id;
+    //        Username = username;
+    //        Password = password;
+    //        Salt = salt;
+    //        Role = role;
+    //        Statut = statut;
+    //    }
+    //}
 }

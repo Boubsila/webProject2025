@@ -9,14 +9,30 @@ namespace Domain
     public class User
     {
         public int Id { get; set; }
-        public string Email { get; set; }
-        public string PasswordHash { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Salt { get; set; }
         public string Role { get; set; }
-        public Boolean statut { get; set; }
+        public Boolean Statut { get; set; }
 
         // Relations
+       
+
         public Artisan? Artisan { get; set; }
         public Client? Client { get; set; }
         public PartenaireLivraison? PartenaireLivraison { get; set; }
+
+
+        //migration test 
+
+        public User(int id, string username, string password, string salt, string role, bool statut)
+        {
+            Id = id;
+            Username = username;
+            Password = password;
+            Salt = salt;
+            Role = role;
+            Statut = statut;
+        }
     }
 }

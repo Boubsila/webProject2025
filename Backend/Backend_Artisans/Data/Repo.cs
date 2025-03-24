@@ -26,6 +26,26 @@ namespace Data
             
         };
 
+        //migration test
+        private static List<User> users = new List<User>
+        {
+            new User ( 1,  "admin@artisans.be",  "admin", Guid.NewGuid().ToString(), "Admin",  true ),
+            new User ( 2, "artisan@artisans.be", "artisan", Guid.NewGuid().ToString(), "artisan", false ),
+            new User ( 3, "c@artisans.be", "3892C265A1C4F640E7C7", Guid.NewGuid().ToString(), "client", true ),
+            new User ( 4,"admin2@artisans.be","4326FACBD8C1467C6FC7","f6893125-485c-4439-a443-d4600865f788","Admin",true)
+        };
+
         public IEnumerable<livraisonTest> GetLivraisons() => livraisons;
+
+        //migration test
+        public List<User> GetUsers()
+        {
+            return users;
+        }
+        //migration test
+        public void AddUser (User user)
+        {
+            users.Add(user);
+        }
     }
 }

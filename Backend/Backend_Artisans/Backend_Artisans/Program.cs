@@ -44,6 +44,8 @@ builder.Services.AddAuthentication(opt => {
 
 builder.Services.AddScoped<Backend_Artisans.Authentication.AuthenticationService,Backend_Artisans.Authentication.AuthenticationService>();
 
+
+
 builder.Services.AddSwaggerGen(option => {
     option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -96,7 +98,7 @@ var app = builder.Build();
 
 
 
-// Utiliser CORS
+// Use CORS
 app.UseCors("AllowAngularFrontend");
 
 
@@ -114,5 +116,4 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.UseCors();
 app.Run();

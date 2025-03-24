@@ -10,5 +10,10 @@ namespace Data
     public interface IRepo
     {
         IEnumerable<livraisonTest> GetLivraisons();
+
+        //migration test
+        List<User> GetUsers();
+
+        void AddUser(User user);
     }
 }
