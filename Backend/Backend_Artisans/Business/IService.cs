@@ -10,6 +10,11 @@ namespace Business
     public interface IService
     {
         IEnumerable<livraisonTest> GetLivraisons();
+        public void DeleteUser(int Id);
+        void AddUser(User user);
+        //migration test
+        List<User> GetUsers();
+
 
     }
 }

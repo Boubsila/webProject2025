@@ -12,5 +12,19 @@ namespace Business
         }
         public IEnumerable<livraisonTest> GetLivraisons() => _repository.GetLivraisons();
 
+        public void DeleteUser(int Id)
+        {
+            _repository.DeleteUser(Id);
+        }
+
+        public void AddUser(User user)
+        {
+            _repository.AddUser(user);
+        }
+
+        public List<User> GetUsers()
+        {
+            return _repository.GetUsers();
+        }
     }
 }

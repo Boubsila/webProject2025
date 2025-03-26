@@ -15,5 +15,7 @@ namespace Data
         List<User> GetUsers();
 
         void AddUser(User user);
+
+        void DeleteUser(int Id);
     }
 }

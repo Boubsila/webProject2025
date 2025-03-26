@@ -47,5 +47,16 @@ namespace Data
         {
             users.Add(user);
         }
+
+        //migration test
+        public void DeleteUser(int Id)
+        {
+            var user = users.FirstOrDefault(x => x.Id == Id);
+            if (user != null)
+            {
+                users.Remove(user);
+            }
+        }
+
     }
 }

@@ -6,6 +6,7 @@ using Backend_Artisans.Authentication;
 using Data;
 //migration test
 using Domain;
+using Business;
 
 namespace Backend_Artisans.Controllers
 {
@@ -17,13 +18,14 @@ namespace Backend_Artisans.Controllers
         private readonly ILogger<AuthenticationController> _logger;
         private readonly Authentication.AuthenticationService _authenticationService;
         //migration test
-        private readonly IRepo _repo;
+        
+        private readonly IService _service;
 
-        public AuthenticationController(ILogger<AuthenticationController> logger,Authentication.AuthenticationService authenticationService,IRepo repo)
+        public AuthenticationController(ILogger<AuthenticationController> logger,Authentication.AuthenticationService authenticationService,IService service)
         {
             _logger = logger;
             _authenticationService = authenticationService;
-            _repo = repo;
+            _service = service;
         }
 
 
@@ -35,13 +37,13 @@ namespace Backend_Artisans.Controllers
             _authenticationService.RegisterUser(login, password,role);
         }
 
-        [HttpGet]
+        [HttpGet("GetUsers")]
         [AllowAnonymous]
         public IEnumerable<User> GetUsers()
         {
-            //return _authenticationService.GetUsers();
+            
             //migration test
-            return _repo.GetUsers();
+            return _service.GetUsers();
         }
 
         [HttpPost("Login")]
@@ -54,7 +56,7 @@ namespace Backend_Artisans.Controllers
         }
 
 
-        [HttpPut("Users/{id}")]
+        [HttpPut("UpdateUserStatus/{id}")]
         [Authorize(Roles = "Admin")] 
         public ActionResult UpdateUserStatus(int id)
         {
@@ -63,7 +65,7 @@ namespace Backend_Artisans.Controllers
 
                 //var users = _authenticationService.GetUsers();
                 //migration test
-                var users = _repo.GetUsers();
+                var users = _service.GetUsers();
                 var user = users.FirstOrDefault(u => u.Id == id);
 
                 if (user == null)
@@ -84,6 +86,15 @@ namespace Backend_Artisans.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An error occurred while updating the user status." }); // Renvoie un objet JSON
             }
         }
+
+        [HttpDelete("DeleteUser/{id}")]
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteUser(int id)
+        {
+            _service.DeleteUser(id);
+            return Ok(new { message = $"User Id : {id} has been deleted." });
+        }
+
 
 
 
