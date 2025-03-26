@@ -26,7 +26,7 @@ namespace Backend_Artisans.Controllers
         [HttpGet("statisticsUsers/byRole")]
         public int GetAllUsersCount(string role)
         {
-            int count = _service.GetUsers().Count(x=>x.Role.ToLower() ==role.ToLower());
+            int count = _service.GetUsers().Count(x=>x.Role.ToLower() ==role.ToLower()&& x.Statut==true);
             return count;
         }
     }
