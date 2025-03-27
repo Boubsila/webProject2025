@@ -52,7 +52,7 @@
               "RelativeDocumentMoniker": "Data\\Repo.cs",
               "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\Repo.cs",
               "RelativeToolTip": "Data\\Repo.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACgAAAAAAAAAAAAzwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-26T22:25:42.285Z",
               "EditorCaption": ""
@@ -67,8 +67,7 @@
               "RelativeToolTip": "Domain\\Commande.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-26T22:22:15.599Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-26T22:22:15.599Z"
             },
             {
               "$type": "Document",
@@ -80,8 +79,7 @@
               "RelativeToolTip": "Domain\\User.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-26T22:21:05.663Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-26T22:21:05.663Z"
             },
             {
               "$type": "Document",
@@ -93,8 +91,7 @@
               "RelativeToolTip": "Domain\\Client.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-26T22:20:39.457Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-26T22:20:39.457Z"
             },
             {
               "$type": "Document",
@@ -106,8 +103,7 @@
               "RelativeToolTip": "Domain\\PartenaireLivraison.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-26T22:18:53.873Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-26T22:18:53.873Z"
             }
           ]
         }

@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\backend_artisans\\controllers\\statisticscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|solutionrelative:backend_artisans\\controllers\\statisticscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\data\\repo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|solutionrelative:data\\repo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB597B17-EEE2-46B6-BEBE-CC6B77DD286F}|Domain\\Domain.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\domain\\commande.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB597B17-EEE2-46B6-BEBE-CC6B77DD286F}|Domain\\Domain.csproj|solutionrelative:domain\\commande.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FB597B17-EEE2-46B6-BEBE-CC6B77DD286F}|Domain\\Domain.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\domain\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FB597B17-EEE2-46B6-BEBE-CC6B77DD286F}|Domain\\Domain.csproj|solutionrelative:domain\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\backend_artisans\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|solutionrelative:backend_artisans\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FB597B17-EEE2-46B6-BEBE-CC6B77DD286F}|Domain\\Domain.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\domain\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB597B17-EEE2-46B6-BEBE-CC6B77DD286F}|Domain\\Domain.csproj|solutionrelative:domain\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\data\\irepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|solutionrelative:data\\irepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\data\\repo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|solutionrelative:data\\repo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FB597B17-EEE2-46B6-BEBE-CC6B77DD286F}|Domain\\Domain.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\domain\\partenairelivraison.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB597B17-EEE2-46B6-BEBE-CC6B77DD286F}|Domain\\Domain.csproj|solutionrelative:domain\\partenairelivraison.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,65 +46,64 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Domain\\User.cs",
-              "RelativeDocumentMoniker": "Domain\\User.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Domain\\User.cs",
-              "RelativeToolTip": "Domain\\User.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAswCYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-26T22:06:28.102Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "StatisticsController.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\StatisticsController.cs",
-              "RelativeDocumentMoniker": "Backend_Artisans\\Controllers\\StatisticsController.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\StatisticsController.cs*",
-              "RelativeToolTip": "Backend_Artisans\\Controllers\\StatisticsController.cs*",
-              "ViewState": "AgIAABYAAAAAAAAAAAAAwBwAAABnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-25T22:36:43.362Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AuthenticationController.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\AuthenticationController.cs",
-              "RelativeDocumentMoniker": "Backend_Artisans\\Controllers\\AuthenticationController.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\AuthenticationController.cs",
-              "RelativeToolTip": "Backend_Artisans\\Controllers\\AuthenticationController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABQAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-25T21:34:22.259Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "IRepo.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\IRepo.cs",
-              "RelativeDocumentMoniker": "Data\\IRepo.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\IRepo.cs",
-              "RelativeToolTip": "Data\\IRepo.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAmwA0AAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T21:18:03.663Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "Repo.cs",
               "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\Repo.cs",
               "RelativeDocumentMoniker": "Data\\Repo.cs",
               "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\Repo.cs",
               "RelativeToolTip": "Data\\Repo.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAmwDUAAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAACgAAAAAAAAAAAAzwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T21:13:23.338Z"
+              "WhenOpened": "2025-03-26T22:25:42.285Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Commande.cs",
+              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Domain\\Commande.cs",
+              "RelativeDocumentMoniker": "Domain\\Commande.cs",
+              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Domain\\Commande.cs",
+              "RelativeToolTip": "Domain\\Commande.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T22:22:15.599Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Domain\\User.cs",
+              "RelativeDocumentMoniker": "Domain\\User.cs",
+              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Domain\\User.cs",
+              "RelativeToolTip": "Domain\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T22:21:05.663Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Client.cs",
+              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Domain\\Client.cs",
+              "RelativeDocumentMoniker": "Domain\\Client.cs",
+              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Domain\\Client.cs",
+              "RelativeToolTip": "Domain\\Client.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T22:20:39.457Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PartenaireLivraison.cs",
+              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Domain\\PartenaireLivraison.cs",
+              "RelativeDocumentMoniker": "Domain\\PartenaireLivraison.cs",
+              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Domain\\PartenaireLivraison.cs",
+              "RelativeToolTip": "Domain\\PartenaireLivraison.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-26T22:18:53.873Z"
             }
           ]
         }
