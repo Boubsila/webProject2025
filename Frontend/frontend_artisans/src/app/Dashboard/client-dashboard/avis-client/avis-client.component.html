@@ -1,0 +1,52 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <button class="btn btn-outline-secondary fw-bold rounded-pill" (click)="goToDashboard()">
+      <i class="bi bi-arrow-left me-2"></i> Retour au tableau de bord
+    </button>
+   
+  </div>
+
+  <h2 class="text-center mb-4 text-primary fw-bold">Laisser un Avis</h2>
+
+  <div class="card shadow-lg rounded-4">
+    <div class="card-body p-4">
+      <div *ngIf="orders && orders.length > 0; else noOrders">
+        <div *ngFor="let order of orders; let orderIndex = index">
+          <h3 class="mb-3">
+            Commande {{ order.orderNumber }} - {{ order.orderDate | date }}
+          </h3>
+          <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col" *ngFor="let item of order.items; let itemIndex = index">
+              <div class="card h-100">
+                <div class="card-body">
+                  <h5 class="card-title">{{ item.name }}</h5>
+                  <form (ngSubmit)="submitReview(orderIndex, itemIndex)">
+                    <div class="mb-3">
+                      <label class="form-label">Note</label>
+                      <div class="rating">
+                        <i class="bi bi-star" *ngFor="let i of [1, 2, 3, 4, 5]" (click)="setRating(i, orderIndex, itemIndex)"
+                          [class.bi-star-fill]="i <= getRating(orderIndex, itemIndex)"></i>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="comment" class="form-label">Commentaire</label>
+                      <textarea class="form-control" id="comment" [(ngModel)]="item.comment" name="comment" rows="3"></textarea>
+                    </div>
+                    <div class="text-end">
+                      <button type="submit" class="btn btn-primary rounded-pill">
+                        Envoyer
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #noOrders>
+        <p class="text-center">Vous n'avez pas de commandes à évaluer.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

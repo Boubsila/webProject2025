@@ -1,0 +1,103 @@
+.carousel-item {
+    padding: 6rem 2rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.carousel-content {
+    position: relative;
+    z-index: 1;
+    transform: scale(0.6) rotateY(5deg); /* Échelle initiale réduite */
+    opacity: 0;
+    transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+.carousel-item.active .carousel-content {
+    transform: scale(1) rotateY(0deg);
+    opacity: 1;
+}
+
+.carousel-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #a8dadc, #e0fbfc, #fceabb, #fff2cc, #f8f9fa);
+    opacity: 0.3;
+    transition: opacity 0.8s ease-in-out, background 12s ease infinite;
+    z-index: 0;
+    border-radius: 10px;
+    animation: backgroundShift 12s linear infinite;
+}
+
+@keyframes backgroundShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.carousel-item.active::before {
+    opacity: 0.4;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    border-radius: 50%;
+}
+
+.carousel-item h3 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #333;
+    transition: color 0.3s ease-in-out;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-item p.lead {
+    font-size: 1.2rem;
+    color: #444;
+    margin-bottom: 1.5rem;
+    transition: color 0.3s ease-in-out;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-item p {
+    color: #555;
+    transition: color 0.3s ease-in-out;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-item:hover h3,
+.carousel-item:hover p.lead,
+.carousel-item:hover p {
+    color: #007bff;
+}
+
+.carousel-item img {
+    border-radius: 8px;
+    transform: scale(0.8); /* Taille initiale de l'image réduite */
+    transition: transform 1s ease-in-out; /* Transition pour l'image */
+}
+
+.carousel-item.active img {
+    transform: scale(1); /* Taille normale de l'image */
+}
+
+.carousel-item span {
+    font-size: 0.9rem; /* Taille initiale du texte réduite */
+    transition: font-size 1s ease-in-out; /* Transition pour le texte */
+}
+
+.carousel-item.active span {
+    font-size: 1.2rem; /* Taille normale du texte */
+}

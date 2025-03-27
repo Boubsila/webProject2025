@@ -1,0 +1,48 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card shadow-lg border-0 rounded-4" style="width: 400px;">
+    <div class="card-header text-white text-center py-4 rounded-top-4" style="background: linear-gradient(135deg, #6772E5, #4A569D);">
+      <h2 class="fw-bold mb-0">
+        <i class="bi bi-box-arrow-in-right me-2"></i> Connexion
+      </h2>
+    </div>
+    <div class="card-body p-4">
+      <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label fw-bold">
+            <i class="bi bi-envelope me-2"></i> Adresse Email
+          </label>
+          <input type="email" formControlName="Email" class="form-control form-control-lg rounded-3" id="exampleInputEmail1" placeholder="Entrez votre email" required />
+          <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre email avec quelqu'un d'autre.</small>
+          <div *ngIf="myForm.get('Email')?.invalid && myForm.get('Email')?.touched" class="text-danger">
+            <div *ngIf="myForm.get('Email')?.errors?.['required']">L'email est requis.</div>
+            <div *ngIf="myForm.get('Email')?.errors?.['email']">L'email n'est pas valide.</div>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="exampleInputPassword1" class="form-label fw-bold">
+            <i class="bi bi-lock me-2"></i> Mot de passe
+          </label>
+          <input type="password" formControlName="Password" class="form-control form-control-lg rounded-3" id="exampleInputPassword1" placeholder="Entrez votre mot de passe" required />
+          <div *ngIf="myForm.get('Password')?.invalid && myForm.get('Password')?.touched" class="text-danger">
+            <div *ngIf="myForm.get('Password')?.errors?.['required']">Le mot de passe est requis.</div>
+            <div *ngIf="myForm.get('Password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères.</div>
+          </div>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-lg fw-bold rounded-pill" [class.btn-secondary]="myForm.invalid" [disabled]="myForm.invalid">
+            <i class="bi bi-box-arrow-in-right me-2"></i> Se connecter
+          </button>
+        </div>
+
+        <div class="text-center mt-3">
+          <p class="text-muted mb-0">Vous n'avez pas de compte ?</p>
+          <button type="button" class="btn btn-link fw-bold" (click)="goToRegister()">S'inscrire</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

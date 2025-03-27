@@ -1,0 +1,55 @@
+<div class="container mt-4">
+  <div class="mb-3">
+    <button class="btn btn-outline-secondary fw-bold rounded-pill" (click)="goToDashboard()">
+      <i class="bi bi-arrow-left me-2"></i> Retour au tableau de bord
+    </button>
+  </div>
+
+  <h2 class="text-center mb-4 text-primary fw-bold">Modération des Produits</h2>
+
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-light rounded-top-4">
+          <h4 class="card-title mb-0"><i class="bi bi-hourglass-split me-2"></i> Produits en Attente</h4>
+        </div>
+        <div class="card-body p-4">
+          <div *ngFor="let product of pendingProducts" class="card mb-3 rounded-3 shadow-sm border-0">
+            <div class="card-body">
+              <img src="{{product.imageUrl}}" class="img-fluid mb-3 rounded-2" alt="Image du produit">
+              <h5 class="card-title text-primary"><i class="bi bi-box-seam me-1"></i> {{ product.name }}</h5>
+              <p class="card-text"><i class="bi bi-file-text me-1"></i> {{ product.description }}</p>
+              <p class="card-text"><small class="text-muted"><i class="bi bi-person me-1"></i> Artisan : {{ product.artisanName }}</small></p>
+              <div class="d-grid gap-2 d-md-block">
+                <button class="btn btn-success btn-sm rounded-pill me-2" (click)="approveProduct(product.id)">
+                  <i class="bi bi-check-circle me-1"></i> Approuver
+                </button>
+                <button class="btn btn-danger btn-sm rounded-pill" (click)="deleteProduct(product.id)">
+                  <i class="bi bi-trash me-1"></i> Supprimer
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card shadow-lg rounded-4">
+        <div class="card-header bg-light rounded-top-4">
+          <h4 class="card-title mb-0"><i class="bi bi-box-seam me-2"></i> Tous les Produits</h4>
+        </div>
+        <div class="card-body p-4">
+          <div *ngFor="let product of products" class="card mb-3 rounded-3 shadow-sm border-0">
+            <div class="card-body">
+              <img src="{{product.imageUrl}}"  class="img-fluid mb-3 rounded-2" alt="Image du produit">
+              <h5 class="card-title text-primary"><i class="bi bi-box-seam me-1"></i> {{ product.name }}</h5>
+              <p class="card-text"><i class="bi bi-file-text me-1"></i> {{ product.description }}</p>
+              <p class="card-text"><small class="text-muted"><i class="bi bi-info-circle me-1"></i> Statut : {{ product.status }}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

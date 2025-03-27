@@ -1,0 +1,20 @@
+
+body {
+  margin: 0;
+  position: relative; /* Permet de positionner le pseudo-élément correctement */
+}
+
+body::before {
+  content: ''; /* Obligatoire pour un pseudo-élément */
+  position: fixed; /* Fixe l'image en arrière-plan */
+  top: 0;
+  left: 0;
+  width: 100%; /* Couvre toute la largeur de la page */
+  height: 100%; /* Couvre toute la hauteur de la page */
+  background-image: url('https://th.bing.com/th/id/R.4e29d27dd6c26204b06d61b30d54ecd6?rik=7SgA6sjqqM5NFA&riu=http%3a%2f%2fwww.deco-salon-marocain.net%2fwp-content%2fuploads%2f2017%2f08%2fartisanat-fassi.jpg&ehk=mogibWviH77zjFg3POO2mn5xbQ%2behV1Os4mMY0%2bYB24%3d&risl=&pid=ImgRaw&r=0');
+  background-size: cover; /* Ajuste l'image pour qu'elle couvre toute la page */
+  background-position: center; /* Centre l'image */
+  background-repeat: no-repeat; /* Empêche la répétition */
+  opacity: 0.5; /* Opacité de l'image */
+  z-index: -1; /* Place l'image derrière le contenu */
+}

@@ -1,0 +1,88 @@
+<div class="container border p-4 mt-4 shadow-lg bg-light  rounded rounded-3 " >
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <!-- Titre du formulaire -->
+      <div class="title text-center mb-4">
+        <h2 class="display-5 fw-bold text-primary">
+          <i class="bi bi-box-seam me-2"></i> Ajouter un produit artisanal
+        </h2>
+        <p class="text-muted">Remplissez les détails du produit pour l'ajouter à votre catalogue.</p>
+      </div>
+
+      <!-- Formulaire -->
+      <form (ngSubmit)="onSubmit()" #productForm="">
+        <!-- Champ pour les images -->
+        <div class="form-group mb-3">
+          <label for="image" class="form-label fw-bold">
+            <i class="bi bi-image me-2"></i> Image du produit
+          </label>
+          <input
+            type="file"
+            class="form-control form-control-lg"
+            id="image"
+            name="image"
+            accept="image/*"
+            required
+          />
+          <small class="form-text text-muted">Téléversez une image représentative du produit.</small>
+        </div>
+
+        <!-- Champ pour la description -->
+        <div class="form-group mb-3">
+          <label for="description" class="form-label fw-bold">
+            <i class="bi bi-card-text me-2"></i> Description du produit
+          </label>
+          <textarea
+            class="form-control form-control-lg"
+            id="description"
+            name="description"
+            rows="4"
+            required
+            placeholder="Décrivez le produit en détail..."
+          ></textarea>
+        </div>
+
+        <!-- Champ pour le prix -->
+        <div class="form-group mb-3">
+          <label for="price" class="form-label fw-bold">
+            <i class="bi bi-currency-euro me-2"></i> Prix (en €)
+          </label>
+          <div class="input-group">
+            <span class="input-group-text bg-primary text-white">€</span>
+            <input
+              type="number"
+              class="form-control form-control-lg"
+              id="price"
+              name="price"
+              step="0.01"
+              required
+              placeholder="0.00"
+            />
+          </div>
+        </div>
+
+        <!-- Champ pour la catégorie -->
+        <div class="form-group mb-4">
+          <label for="category" class="form-label fw-bold">
+            <i class="bi bi-tags me-2"></i> Catégorie
+          </label>
+          <select class="form-select form-select-lg" id="category" name="category" required>
+            <option value="" disabled selected>Sélectionnez une catégorie</option>
+            <option value="peintures">Peintures</option>
+            <option value="bijoux">Bijoux</option>
+            <option value="poterie">Poterie</option>
+            <option value="textile">Textile</option>
+            <option value="autres">Autres</option>
+          </select>
+        </div>
+
+        <!-- Bouton de soumission -->
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary btn-lg fw-bold" [disabled]="">
+            <i class="bi bi-plus-circle me-2"></i> Ajouter le produit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

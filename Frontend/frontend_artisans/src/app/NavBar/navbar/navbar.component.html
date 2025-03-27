@@ -1,0 +1,43 @@
+<div class="container-fluid mt-3 mb-3">
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #6772E5; border-radius: 10px;">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/home">
+        <i class="bi bi-house-door me-2"></i> Accueil
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item" *ngIf="!islogged()">
+            <a class="nav-link btn btn-outline-success rounded-5 me-2" routerLink="/register" [class.active]="activeRoute === '/register'">
+              <i class="bi bi-pencil-square me-2"></i> Inscription
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="!islogged()">
+            <a class="nav-link btn btn-outline-success rounded-5 me-2" routerLink="/login" [class.active]="activeRoute === '/login'">
+              <i class="bi bi-key me-2"></i> Connexion
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-outline-success rounded-5 me-2" routerLink="/dashboard" [class.active]="activeRoute === '/dashboard'">
+              <i class="bi bi-gear me-2"></i> Tableau de bord
+            </a>
+          </li>
+          
+          <li class="nav-item" >
+            <a class="nav-link btn btn-outline-success rounded-5 me-2" routerLink="/produits" [class.active]="activeRoute === '/produits'">
+              <i class="bi bi-book me-2"></i> Catalogue
+            </a>
+          </li>
+          
+          <li class="nav-item" *ngIf="islogged()">
+            <button class="nav-link btn btn-outline-success rounded-5" (click)="logout()">
+              <i class="bi bi-box-arrow-left me-2"></i> Déconnexion
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>

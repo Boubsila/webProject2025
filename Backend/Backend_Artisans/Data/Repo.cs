@@ -48,7 +48,7 @@ namespace Data
             users.Add(user);
         }
 
-        //migration test
+        //migration test delete user
         public void DeleteUser(int Id)
         {
             var user = users.FirstOrDefault(x => x.Id == Id);

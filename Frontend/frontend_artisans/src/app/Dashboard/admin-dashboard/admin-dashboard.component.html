@@ -1,0 +1,43 @@
+<div class="container-fluid">
+    <!-- En-tête du tableau de bord -->
+    <header class="bg-primary text-white text-center py-4 mb-4">
+      <h1 class="display-4">Tableau de Bord </h1>
+      <p class="lead">Bienvenue, {{ userRole }}!</p>
+    </header>
+  
+    <!-- Section de navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#dashboardNav" aria-controls="dashboardNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="dashboardNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/user-management">Gestion des Utilisateurs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/moderation">Modération des Produits</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/statistics">Statistiques</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  
+    <!-- Section de contenu dynamique -->
+    <section class="container">
+      <div class="row">
+        <div class="col">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Pied de page du tableau de bord -->
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+      <p class="mb-0">&copy; 2025 Plateforme de Marché de l'Art. Tous droits réservés PSR12216.</p>
+    </footer>
+  </div>

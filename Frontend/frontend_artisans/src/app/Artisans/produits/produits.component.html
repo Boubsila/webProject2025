@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+      <div class="col-md-12">
+          <div class="btn-group mb-4">
+              <button *ngFor="let categorie of categories" class="btn btn-outline-dark bg-secondary" (click)="filtrerParCategorie(categorie)">
+                  {{ categorie }}
+              </button>
+          </div>
+      </div>
+  </div>
+  <div class="row">
+      <div *ngFor="let produit of produitsFiltres" class="col-md-4 mb-4">
+          <div class="card shadow-lg border-0 h-100">
+              <img class="card-img-top img-fluid" src="{{produit.url}}" alt="{{produit.nom}}" style="height: 200px; object-fit: cover;">
+              <div class="card-body">
+                  <h5 class="card-title fw-bold text-primary">
+                      <i class="bi bi-box-seam me-2"></i> {{produit.nom}}
+                  </h5>
+                  <h6 class="card-subtitle mb-2 text-muted">
+                      <i class="bi bi-currency-euro me-1"></i> {{produit.prix}} €
+                  </h6>
+                  <p class="card-text">{{produit.description}}</p>
+              </div>
+              <div class="card-footer bg-transparent border-0">
+                  <div class="d-grid gap-2">
+                      <button class="btn btn-success" (click)="commanderProduit(produit)">
+                          <i class="bi bi-cart-plus me-2"></i> Commander
+                      </button>
+                      <button class="btn btn-outline-primary" (click)="ajouterAuPanier(produit)">
+                          <i class="bi bi-cart me-2"></i> Ajouter au panier
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

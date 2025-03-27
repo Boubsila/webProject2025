@@ -1,0 +1,77 @@
+
+<div class="container mt-4">
+    <div class="mb-3">
+      <button class="btn btn-outline-secondary fw-bold rounded-pill" (click)="goToDashboard()">
+        <i class="bi bi-arrow-left me-2"></i> Retour au tableau de bord
+      </button>
+    </div>
+  
+    <h2 class="text-center mb-4 text-primary fw-bold">Gestion des Avis Clients</h2>
+  
+    <div class="card shadow-lg rounded-4">
+      <div class="card-body p-4">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th scope="col">Client</th>
+                <th scope="col">Produit</th>
+                <th scope="col">Note</th>
+                <th scope="col">Commentaire</th>
+                <th scope="col" class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let review of reviews">
+                <td>{{ review.customerName }}</td>
+                <td>{{ review.productName }}</td>
+                <td>
+                  <div class="rating">
+                    <i class="bi bi-star-fill" *ngFor="let i of getStarArray(review.rating)"></i>
+                    <i class="bi bi-star" *ngFor="let i of getEmptyStarArray(review.rating)"></i>
+                  </div>
+                </td>
+                <td>{{ review.comment }}</td>
+                <td class="text-center">
+                  <button class="btn btn-sm btn-secondary rounded-pill" (click)="respondToReview(review)">
+                    <i class="bi bi-reply me-1"></i> Répondre
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  
+    <div class="modal fade" id="respondModal" tabindex="-1" aria-labelledby="respondModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="respondModalLabel">Répondre à l'Avis</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
+          </div>
+          <div class="modal-body">
+            <div *ngIf="selectedReview">
+              <p><strong>Client :</strong> {{ selectedReview.customerName }}</p>
+              <p><strong>Produit :</strong> {{ selectedReview.productName }}</p>
+              <p><strong>Note :</strong></p>
+              <div class="rating">
+                <i class="bi bi-star-fill" *ngFor="let i of getStarArray(selectedReview.rating)"></i>
+                <i class="bi bi-star" *ngFor="let i of getEmptyStarArray(selectedReview.rating)"></i>
+              </div>
+              <p><strong>Commentaire :</strong> {{ selectedReview.comment }}</p>
+              <div class="mb-3">
+                <label for="response" class="form-label">Votre Réponse</label>
+                <textarea class="form-control" id="response" [(ngModel)]="response"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal" (click)="closeModal()">Annuler</button>
+            <button type="button" class="btn btn-primary rounded-pill" (click)="saveResponse()">Envoyer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

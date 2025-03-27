@@ -1,0 +1,7 @@
+
+
+body {
+    background-color: #a80b0b; /* Remplacez par la couleur de votre choix */
+    margin: 0; /* Pour supprimer la marge par défaut du body */
+    height: 100vh; /* Pour que le fond couvre toute la hauteur de la page */
+  }
