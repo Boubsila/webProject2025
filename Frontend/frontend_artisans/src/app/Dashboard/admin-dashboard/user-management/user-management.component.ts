@@ -44,6 +44,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   deleteUser(userId: number): void {
+    var userEmail = this.users.find(user => user.id === userId)?.email;
     this.user.deleteUSer(userId).subscribe(
       (response: any) => {
         // Mettre à jour la liste des utilisateurs ici
@@ -57,7 +58,7 @@ export class UserManagementComponent implements OnInit {
             };
           });
         });
-        this.SuccessAlertService.successAlert('Utilisateur supprimé');
+        this.SuccessAlertService.successAlert('Utilisateur supprimé : ' +userEmail  );
       },
       (error) => {
         this.ErreurAlertService.erreurAlert('Erreur lors de la suppression de l\'utilisateur');
@@ -99,11 +100,30 @@ export class UserManagementComponent implements OnInit {
   }
 
   rejectUser(userId: number): void {
-    const user = this.users.find(u => u.id === userId);
-    if (user) {
-      user.status = 'rejected';
-      this.ErreurAlertService.erreurAlert('Utilisateur rejeté : ' + user.email);
-    }
+    this.user.deleteUSer(userId).subscribe(
+      (response: any) => {
+        // Mettre à jour la liste des utilisateurs après suppression
+        this.user.getUsers().subscribe((users: any[]) => {
+          this.users = users.map(user => {
+            return {
+              id: user.id,
+              email: user.username,
+              role: user.role,
+              status: user.statut ? 'approved' : 'pending'
+            };
+          });
+  
+          // Trouver l'utilisateur rejeté avant sa suppression pour afficher son email
+          const rejectedUser = this.users.find(user => user.id === userId);
+          if (rejectedUser) {
+            this.SuccessAlertService.successAlert('Utilisateur rejeté : ' + rejectedUser.email);
+          }
+        });
+      },
+      (error) => {
+        this.ErreurAlertService.erreurAlert('Erreur lors du rejet de l\'utilisateur');
+      }
+    );
   }
 
   // Méthode pour naviguer vers le tableau de bord

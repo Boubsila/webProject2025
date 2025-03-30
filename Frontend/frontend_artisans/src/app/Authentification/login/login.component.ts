@@ -40,16 +40,11 @@ export class LoginComponent {
         sessionStorage.setItem("jwt", response.token);
        this.success.successAlert('Connexion réussie');
 
-        
-
-        // let role = this.authentication.getUserRoles();
-
-        // console.log('Rôle:', role);
-
       }else
       {
         this.erreur.erreurAlert('Erreur de connexion');
       }
+
       this.router.navigate(['/dashboard']);
       email = '';
       password = '';
@@ -57,8 +52,5 @@ export class LoginComponent {
 
 
   }
-
-
-
 
 }

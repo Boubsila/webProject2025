@@ -41,7 +41,7 @@ export class NavbarComponent {
       const jwt = sessionStorage.getItem('jwt');
       let role = jwt ? JSON.parse(atob(jwt.split('.')[1])).role : null;
      return role ;
-     console.log('role:', role);
+     
     }
     return '';
     

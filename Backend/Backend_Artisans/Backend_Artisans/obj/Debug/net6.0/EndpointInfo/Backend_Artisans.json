@@ -201,6 +201,62 @@
         }
       }
     },
+    "/api/Produit/getAllProducts": {
+      "get": {
+        "tags": [
+          "Produit"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Produit/changeStatus": {
+      "put": {
+        "tags": [
+          "Produit"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Produit/deleteProduct": {
+      "delete": {
+        "tags": [
+          "Produit"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Statistics/statisticsAllUsers": {
       "get": {
         "tags": [
@@ -556,12 +612,19 @@
           },
           "image": {
             "type": "string",
-            "format": "byte",
             "nullable": true
           },
           "quantite": {
             "type": "integer",
             "format": "int32"
+          },
+          "artisanName": {
+            "type": "string",
+            "nullable": true
+          },
+          "statut": {
+            "type": "string",
+            "nullable": true
           },
           "artisanId": {
             "type": "integer",

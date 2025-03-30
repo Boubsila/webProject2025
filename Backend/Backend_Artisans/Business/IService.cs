@@ -15,6 +15,12 @@ namespace Business
         //migration test
         List<User> GetUsers();
 
+        List<Produit> getAllProducts();
+        void changeProductStatus(int id);
+        void deleteProduct(int id);
+
+
+
 
     }
 }

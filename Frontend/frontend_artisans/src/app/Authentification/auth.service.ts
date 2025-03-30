@@ -67,11 +67,12 @@ export class AuthService {
    * Récupère les rôles de l'utilisateur à partir du token JWT stocké dans le session storage.
    * @returns {any} Les rôles de l'utilisateur depuis la revendication 'role' du token.
    */
+
+
   getUserRoles(): any {
     let token = sessionStorage.getItem("jwt") ?? '';
     let decodedToken: any = jwtDecode(token);
     return decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-
 
   }
 
@@ -79,6 +80,7 @@ export class AuthService {
    * Récupère le nom d'utilisateur à partir du token JWT stocké dans le session storage.
    * @returns {string} Le nom d'utilisateur depuis la revendication 'sub' du token.
    */
+  
   getUserName(): string {
     let token = sessionStorage.getItem("jwt") ?? '';
     let decodedToken: any = jwtDecode(token);

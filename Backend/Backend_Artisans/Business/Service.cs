@@ -26,5 +26,20 @@ namespace Business
         {
             return _repository.GetUsers();
         }
+
+        public List<Produit> getAllProducts()
+        {
+            return _repository.getAllProducts();
+        }
+
+        public void changeProductStatus(int id)
+        {
+            _repository.changeProductStatus(id);
+        }
+
+        public void deleteProduct(int id)
+        {
+            _repository.deleteProduct(id);
+        }
     }
 }

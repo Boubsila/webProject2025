@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SuccessAlertService } from '../../../Authentification/alerts/success-alert.service';
 
 @Component({
   selector: 'app-panier',
@@ -15,13 +16,13 @@ export class PanierComponent implements OnInit {
     { id: 1, productName: 'Produit A', quantity: 2, unitPrice: 25 },
     { id: 2, productName: 'Produit B', quantity: 1, unitPrice: 30 }
   ];
-  cartItemCount: number = 125; // Exemple: nombre d'articles dans le panier
+  cartItemCount: number = this.cartItems.length; // Exemple: nombre d'articles dans le panier
 
   subtotal: number = 0;
   deliveryFee: number = 5;
   total: number = 0;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,private succeAlert: SuccessAlertService) { }
 
   ngOnInit(): void {
     this.calculateTotals();
@@ -56,6 +57,12 @@ export class PanierComponent implements OnInit {
 
   proceedToCheckout() {
     // Logique pour procéder au paiement (API)
-    console.log('Procéder au paiement');
+    this.succeAlert.successAlert('Commande avec le montant de : ' + this.total + ' € passée avec succès !');
+    // Réinitialiser le panier après la commande
+    this.cartItems = [];
+    this.calculateTotals();
+    this.cartItemCount = 0; // Réinitialiser le nombre d'articles dans le panier
+
+    
   }
 }

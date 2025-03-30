@@ -28,7 +28,7 @@ export const routes: Routes = [
     { path: '', component: CarouselComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'produits', component: ProduitsComponent , canActivate: [clientGuard]},
+    { path: 'produits', component: ProduitsComponent },
     { path: 'addProduct', component: AddProductComponent },
     { path: 'delivery', component: DeliveryComponent },
     { path: 'home', component: CarouselComponent },

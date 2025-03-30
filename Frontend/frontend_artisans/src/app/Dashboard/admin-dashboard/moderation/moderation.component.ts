@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SuccessAlertService } from '../../../Authentification/alerts/success-alert.service';
+import { ErreurAlertService } from '../../../Authentification/alerts/erreur-alert.service';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-moderation',
@@ -11,43 +14,82 @@ import { Router } from '@angular/router';
 })
 export class ModerationComponent implements OnInit {
 
-  urlProduits = 'https://th.bing.com/th/id/OIP.VWalo9NbcK994cYqeV-tDAHaH7?w=171&h=183&c=7&r=0&o=5&dpr=1.4&pid=1.7';
+  allProducts: any[] = [];
 
-  pendingProducts: any[] = [
-    { id: 1, name: 'Produit 1', description: 'Description du produit 1', artisanName: 'Artisan A', status: 'pending', imageUrl: '/images/1.jpg' },
-    { id: 2, name: 'Produit 2', description: 'Description du produit 2', artisanName: 'Artisan B', status: 'pending', imageUrl: '/images/2.jpg' },
-    ];
+  constructor(private router: Router,private successAlert : SuccessAlertService , private product : ProductService) { }
 
-  products: any[] = [
-    { id: 1, name: 'Produit 1', description: 'Description du produit 1', status: 'approved', imageUrl: '/images/3.jpg' },
-    { id: 2, name: 'Produit 2', description: 'Description du produit 2', status: 'pending', imageUrl: '/images/4.jpg' },
-    { id: 3, name: 'Produit 3', description: 'Description du produit 3', status: 'approved', imageUrl: '/images/5.jpg' },
-    { id: 4, name: 'Produit 4', description: 'Description du produit 4', status: 'pending', imageUrl: '/images/6.jpg' },
-  ];
-
-  constructor(private router: Router) { }
+  
+  pendingProducts: number = 0;
+  approvedProducts: number = 0;
 
   ngOnInit(): void {
-    // Vous pouvez ajouter ici des appels API pour récupérer les produits
+    this.product.getProducts().subscribe(
+      (products: any[]) => {
+        this.allProducts = products.map(prod => ({
+          id: prod.id,
+          nom: prod.nom,
+          imageUrl: prod.image,
+          artisanName: prod.artisanName,
+          categorie: prod.categorie,
+          quantite: prod.quantite,
+          description: prod.description,
+          prix: prod.prix,
+          statut: prod.statut ==='approved'? 'approved' : 'pending'
+        }));
+        
+        this.pendingProducts = this.getPendingProducts().length;
+        this.approvedProducts = this.getApprovedProducts().length;
+        
+
+      },
+     
+    );
   }
 
   approveProduct(productId: number): void {
-    const product = this.pendingProducts.find(p => p.id === productId);
-    if (product) {
-      product.status = 'approved';
-      this.products.push({ ...product, status: 'approved' }); // Ajoute le produit approuvé à la liste des produits
-      this.pendingProducts = this.pendingProducts.filter(p => p.id !== productId); // Retire le produit de la liste des produits en attente
-      console.log('Produit approuvé :', productId);
-    }
+    this.product.changeProductStatus(productId).subscribe(
+      () => {
+       
+        const product = this.allProducts.find(p => p.id === productId);
+        if (product) {
+          product.statut = 'approved';
+        }
+        this.pendingProducts = this.getPendingProducts().length;
+        this.approvedProducts = this.getApprovedProducts().length;
+        this.successAlert.successAlert(`Produit : ${productId} approuvé avec succès !`);
+      },
+      
+    );
   }
 
   deleteProduct(productId: number): void {
-    this.pendingProducts = this.pendingProducts.filter(p => p.id !== productId);
-    this.products = this.products.filter(p => p.id !== productId);
-    console.log('Produit supprimé :', productId);
+    this.product.deleteProduct(productId).subscribe({
+      next: () => {
+        
+        this.allProducts = this.allProducts.filter(p => p.id !== productId);
+  
+        this.pendingProducts = this.getPendingProducts().length;
+        this.approvedProducts = this.getApprovedProducts().length;
+        this.successAlert.successAlert(`Produit : ${productId} supprimé avec succès !`);
+      },
+      error: (error: unknown) => {
+        
+        console.error('Erreur lors de la suppression du produit :', error);
+        
+      }
+    });
   }
 
   goToDashboard() {
     this.router.navigate(['/dashboard']);
+  }
+
+  getPendingProducts(): any[] {
+    return this.allProducts.filter(p => p.statut === 'pending');
+    
+  }
+
+  getApprovedProducts(): any[] {
+    return this.allProducts.filter(p => p.statut === 'approved');
   }
 }

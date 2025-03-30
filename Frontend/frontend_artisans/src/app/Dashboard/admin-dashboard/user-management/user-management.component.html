@@ -12,7 +12,8 @@
       <div class="mb-3">
         <div class="input-group">
           <span class="input-group-text"><i class="bi bi-search"></i></span>
-          <input type="text" class="form-control rounded-pill" placeholder="Rechercher un utilisateur..." [(ngModel)]="searchText">
+          <input type="text" class="form-control rounded-pill" placeholder="Rechercher un utilisateur..."
+            [(ngModel)]="searchText">
         </div>
       </div>
 
@@ -29,15 +30,17 @@
           </thead>
           <tbody>
             <tr *ngFor="let user of filteredUsers">
-              
+
               <td>{{ user.id }}</td>
               <td>{{ user.email }}</td>
               <td>
                 <span class="badge bg-secondary rounded-pill">{{ user.role }}</span>
               </td>
-            
+
               <td>
-                <span class="badge" [ngClass]="{'bg-success': user.status === 'approved', 'bg-warning': user.status === 'pending', 'bg-danger': user.status === 'rejected'}">{{ user.status }}</span>
+                <span class="badge"
+                  [ngClass]="{'bg-success': user.status === 'approved', 'bg-warning': user.status === 'pending', 'bg-danger': user.status === 'rejected'}">{{
+                  user.status }}</span>
               </td>
               <td class="text-center">
                 <ng-container *ngIf="user.status === 'pending'">
@@ -48,7 +51,8 @@
                     <i class="bi bi-x-circle me-1"></i> Refuser
                   </button>
                 </ng-container>
-                <button class="btn btn-danger btn-sm rounded-pill" (click)="deleteUser(user.id)">
+                <button *ngIf="user.email !== 'su@artisans.be'" class="btn btn-danger btn-sm rounded-pill"
+                  (click)="deleteUser(user.id)">
                   <i class="bi bi-trash"></i> Supprimer
                 </button>
               </td>

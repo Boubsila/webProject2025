@@ -17,5 +17,9 @@ namespace Data
         void AddUser(User user);
 
         void DeleteUser(int Id);
+
+        List<Produit> getAllProducts();
+        void changeProductStatus(int id);
+        void deleteProduct(int id);
     }
 }
