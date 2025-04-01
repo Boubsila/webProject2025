@@ -22,13 +22,14 @@ import { CommandeClientComponent } from './Dashboard/client-dashboard/commande-c
 import { PanierComponent } from './Dashboard/client-dashboard/panier/panier.component';
 import { AvisClientComponent } from './Dashboard/client-dashboard/avis-client/avis-client.component';
 import { clientGuard } from './Authentification/client.guard';
+import { adminClientGuard } from './Authentification/admin-client.guard';
 
 export const routes: Routes = [
 
     { path: '', component: CarouselComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'produits', component: ProduitsComponent },
+    { path: 'produits', component: ProduitsComponent, canActivate: [adminClientGuard] }, 
     { path: 'addProduct', component: AddProductComponent },
     { path: 'delivery', component: DeliveryComponent },
     { path: 'home', component: CarouselComponent },

@@ -59,13 +59,13 @@ namespace Data
         {
             return users;
         }
-        //migration test
+    //migration test
         public void AddUser (User user)
         {
             users.Add(user);
         }
 
-        //migration test 
+    //migration test 
         public void DeleteUser(int Id)
         {
             var user = users.FirstOrDefault(x => x.Id == Id);

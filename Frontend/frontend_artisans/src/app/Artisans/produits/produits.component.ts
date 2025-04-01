@@ -27,7 +27,7 @@ export class ProduitsComponent implements OnInit {
     produits: any[] = [];
     produitsFiltres: any[] = [];
     categorieSelectionnee: string = '';
-    //client: any = { id: 1, nom: 'Nom du client', email: 'email@client.com' };
+    
 
     constructor(private productService: ProductService, private http: HttpClient) { }
 
@@ -44,7 +44,7 @@ export class ProduitsComponent implements OnInit {
                     description: produit.description,
                     prix: produit.prix,
                     categorie: produit.categorie,
-                    url: produit.image || 'assets/images/default-product.jpg', // Image par défaut si non fournie
+                    url: produit.image , 
                     quantite: produit.quantite || 0,
                     artisan: produit.artisan || '',
                     statut: produit.statut || 'pending'

@@ -5,5 +5,5 @@ import { inject } from '@angular/core';
 export const adminGuard: CanActivateFn = (route, state) => {
   const authSvc = inject(AuthService);
 
-  return authSvc.getUserRoles() == 'Admin';
+  return authSvc.getUserRoles() =='Admin';
 };

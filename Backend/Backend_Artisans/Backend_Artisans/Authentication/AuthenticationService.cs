@@ -32,13 +32,20 @@ namespace Backend_Artisans.Authentication
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
+            //getUSers
+            var user = _service.GetUsers().FirstOrDefault(x => x.Username == username);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            //ajouter des claims
             var claims = new[] {
                 new Claim(JwtRegisteredClaimNames.Sub, username),
                 new Claim("custom_info", "info"),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-
-                //migration test
-                new Claim (ClaimTypes.Role, _service.GetUsers().FirstOrDefault(x=>x.Username==username)?.Role),
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim("UserId", user.Id.ToString())
             };
 
             var jwtIssuer = _config["Jwt:Issuer"];
