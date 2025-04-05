@@ -15,26 +15,26 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-deleteUSer(userId: number): Observable<any> {
-  return this.http.delete(`${this.deleteUserUrl}/${userId}`);
-}
+  deleteUSer(userId: number): Observable<any> {
+    return this.http.delete(`${this.deleteUserUrl}/${userId}`);
+  }
 
   getUsers(): any {
     return this.http.get<any[]>(this.userUrl);
   }
 
-  getStatisticsUserByRole(role: string){
+  getStatisticsUserByRole(role: string) {
     return this.http.get<number>(`${this.statisticsUserByRoleUrl}role=${role}`);
   }
 
   getStatisticsAllUsers() {
-    return this.http.get<number>(this.statisticsAllUsersUrl); 
+    return this.http.get<number>(this.statisticsAllUsersUrl);
   }
 
   changeStatus(userId: number): Observable<any> {
     return this.http.put(`${this.userStatusUrl}/${userId}`, null);
     this.getUsers();
-}
+  }
 
 
 }

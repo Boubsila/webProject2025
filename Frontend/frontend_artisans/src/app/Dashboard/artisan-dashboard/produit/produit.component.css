@@ -1,0 +1,7 @@
+.description-wrap {
+    max-width: 250px; /* Tu peux ajuster la taille selon ton design */
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+  

@@ -146,6 +146,57 @@
   },
   {
     "ContainingType": "Backend_Artisans.Controllers.ProduitController",
+    "Method": "addProduct",
+    "RelativePath": "api/Produit/AddProduct",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nom",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "prix",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "categorie",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "image",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "quantite",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "artisan",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "statut",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_Artisans.Controllers.ProduitController",
     "Method": "changeProductStatus",
     "RelativePath": "api/Produit/changeStatus",
     "HttpMethod": "PUT",
@@ -184,6 +235,68 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_Artisans.Controllers.ProduitController",
+    "Method": "GetProductsByArtisanName",
+    "RelativePath": "api/Produit/getProductsByArtisanName",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "artisanName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_Artisans.Controllers.ProduitController",
+    "Method": "UpdateProduct",
+    "RelativePath": "api/Produit/UpdateProduct",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "nom",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "prix",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "categorie",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "image",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "quantite",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {

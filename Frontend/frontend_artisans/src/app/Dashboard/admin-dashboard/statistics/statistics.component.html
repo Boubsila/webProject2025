@@ -5,88 +5,151 @@
     </button>
   </div>
 
-  <h2 class="text-center mb-4 text-primary fw-bold">Statistiques</h2>
+  <h2 class="text-center mb-5 text-primary fw-bold">
+    <i class="bi bi-bar-chart-fill me-2"></i> Statistiques Générales
+  </h2>
 
-  <div class="row g-4">
-    <div class="col-md-4">
-      <div class="card text-center shadow-lg rounded-4 h-100">
-        <div class="card-body p-4">
-          <i class="bi bi-people fs-1 text-primary mb-3"></i>
-          <h5 class="card-title text-secondary fw-bold">Utilisateurs</h5>
-          <p class="card-text display-4 fw-bold text-primary">{{ totalUsers }}</p>
-          <p class="text-muted">Total des utilisateurs inscrits</p>
+  <!-- 👥 SECTION UTILISATEURS -->
+  <section class="mb-5">
+    <h3 class="text-secondary fw-bold mb-4">
+      <i class="bi bi-people-fill me-2 text-primary"></i> Utilisateurs
+    </h3>
+    <div class="row g-4">
+      <!-- Total Users -->
+      <div class="col-md-3">
+        <div class="card text-center shadow-lg rounded-4 h-100">
+          <div class="card-body p-4">
+            <i class="bi bi-people fs-1 text-primary mb-3"></i>
+            <h5 class="card-title fw-bold">Total</h5>
+            <p class="display-4 fw-bold text-primary">{{ totalUsers }}</p>
+            <p class="text-muted">Utilisateurs inscrits</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Artisans -->
+      <div class="col-md-3">
+        <div class="card text-center shadow-lg rounded-4 h-100">
+          <div class="card-body p-4">
+            <i class="bi bi-hammer fs-1 text-success mb-3"></i>
+            <h5 class="card-title fw-bold">Artisans</h5>
+            <p class="display-4 fw-bold text-success">{{ artisan }}</p>
+            <p class="text-muted">Artisans actifs</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Clients -->
+      <div class="col-md-3">
+        <div class="card text-center shadow-lg rounded-4 h-100">
+          <div class="card-body p-4">
+            <i class="bi bi-person-heart fs-1 text-warning mb-3"></i>
+            <h5 class="card-title fw-bold">Clients</h5>
+            <p class="display-4 fw-bold text-warning">{{ client }}</p>
+            <p class="text-muted">Clients actifs</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Livreurs -->
+      <div class="col-md-3">
+        <div class="card text-center shadow-lg rounded-4 h-100">
+          <div class="card-body p-4">
+            <i class="bi bi-truck fs-1 text-info mb-3"></i>
+            <h5 class="card-title fw-bold">Livreurs</h5>
+            <p class="display-4 fw-bold text-info">{{ livreur }}</p>
+            <p class="text-muted">Livreurs actifs</p>
+          </div>
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="col-md-4">
-      <div class="card text-center shadow-lg rounded-4 h-100">
-        <div class="card-body p-4">
-          <i class="bi bi-hammer fs-1 text-success mb-3"></i>
-          <h5 class="card-title text-secondary fw-bold">Artisans</h5>
-          <p class="card-text display-4 fw-bold text-success">{{ artisan }}</p>
-          <p class="text-muted">Artisans actifs sur la plateforme</p>
+  <!-- 📦 SECTION COMMANDES -->
+  <section class="mb-5">
+    <h3 class="text-secondary fw-bold mb-4">
+      <i class="bi bi-bag-check-fill me-2 text-success"></i> Commandes
+    </h3>
+    <div class="row g-4">
+      <!-- Total Orders -->
+      <div class="col-md-4">
+        <div class="card text-center shadow-lg rounded-4 h-100">
+          <div class="card-body p-4">
+            <i class="bi bi-cart fs-1 text-primary mb-3"></i>
+            <h5 class="card-title fw-bold">Totales</h5>
+            <p class="display-4 fw-bold text-primary">{{ orderStats.totalOrders }}</p>
+            <p class="text-muted">Commandes passées</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Completed Orders -->
+      <div class="col-md-4">
+        <div class="card text-center shadow-lg rounded-4 h-100">
+          <div class="card-body p-4">
+            <i class="bi bi-check-circle fs-1 text-success mb-3"></i>
+            <h5 class="card-title fw-bold">Complétées</h5>
+            <p class="display-4 fw-bold text-success">{{ orderStats.completedOrders }}</p>
+            <p class="text-muted">Commandes livrées</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending Orders -->
+      <div class="col-md-4">
+        <div class="card text-center shadow-lg rounded-4 h-100">
+          <div class="card-body p-4">
+            <i class="bi bi-clock fs-1 text-warning mb-3"></i>
+            <h5 class="card-title fw-bold">En attente</h5>
+            <p class="display-4 fw-bold text-warning">{{ orderStats.pendingOrders }}</p>
+            <p class="text-muted">Commandes en cours</p>
+          </div>
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="col-md-4">
-      <div class="card text-center shadow-lg rounded-4 h-100">
-        <div class="card-body p-4">
-          <i class="bi bi-person-heart fs-1 text-warning mb-3"></i>
-          <h5 class="card-title text-secondary fw-bold">Clients</h5>
-          <p class="card-text display-4 fw-bold text-warning">{{ client }}</p>
-          <p class="text-muted">Clients actifs sur la plateforme</p>
+  <!-- 🛒 SECTION PRODUITS -->
+  <section class="mb-5">
+    <h3 class="text-secondary fw-bold mb-4">
+      <i class="bi bi-box-seam-fill me-2 text-info"></i> Produits
+    </h3>
+    <div class="row g-4">
+      <!-- Total Products -->
+      <div class="col-md-4">
+        <div class="card text-center shadow-lg rounded-4 h-100">
+          <div class="card-body p-4">
+            <i class="bi bi-box-seam fs-1 text-primary mb-3"></i>
+            <h5 class="card-title fw-bold">Totaux</h5>
+            <p class="display-4 fw-bold text-primary">{{ totalProducts }}</p>
+            <p class="text-muted">Nombre total de produits</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending Products -->
+      <div class="col-md-4">
+        <div class="card text-center shadow-lg rounded-4 h-100">
+          <div class="card-body p-4">
+            <i class="bi bi-hourglass-split fs-1 text-warning mb-3"></i>
+            <h5 class="card-title fw-bold">En attente</h5>
+            <p class="display-4 fw-bold text-warning">{{ pendingProducts }}</p>
+            <p class="text-muted">Produits non approuvés</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Approved Products -->
+      <div class="col-md-4">
+        <div class="card text-center shadow-lg rounded-4 h-100">
+          <div class="card-body p-4">
+            <i class="bi bi-patch-check fs-1 text-success mb-3"></i>
+            <h5 class="card-title fw-bold">Approuvés</h5>
+            <p class="display-4 fw-bold text-success">{{ approvedProducts }}</p>
+            <p class="text-muted">Produits validés</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="row g-4 mt-4">
-    <div class="col-md-4">
-      <div class="card text-center shadow-lg rounded-4 h-100">
-        <div class="card-body p-4">
-          <i class="bi bi-truck fs-1 text-info mb-3"></i>
-          <h5 class="card-title text-secondary fw-bold">Livreurs</h5>
-          <p class="card-text display-4 fw-bold text-info">{{ livreur }}</p>
-          <p class="text-muted">Livreurs actifs sur la plateforme</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card text-center shadow-lg rounded-4 h-100">
-        <div class="card-body p-4">
-          <i class="bi bi-cart fs-1 text-primary mb-3"></i>
-          <h5 class="card-title text-secondary fw-bold">Commandes Totales</h5>
-          <p class="card-text display-4 fw-bold text-primary">{{ orderStats.totalOrders }}</p>
-          <p class="text-muted">Total des commandes passées</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="card text-center shadow-lg rounded-4 h-100">
-        <div class="card-body p-4">
-          <i class="bi bi-check-circle fs-1 text-success mb-3"></i>
-          <h5 class="card-title text-secondary fw-bold">Commandes Complétées</h5>
-          <p class="card-text display-4 fw-bold text-success">{{ orderStats.completedOrders }}</p>
-          <p class="text-muted">Commandes livrées avec succès</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row g-4 mt-4">
-    <div class="col-md-4">
-      <div class="card text-center shadow-lg rounded-4 h-100">
-        <div class="card-body p-4">
-          <i class="bi bi-clock fs-1 text-warning mb-3"></i>
-          <h5 class="card-title text-secondary fw-bold">Commandes en Attente</h5>
-          <p class="card-text display-4 fw-bold text-warning">{{ orderStats.pendingOrders }}</p>
-          <p class="text-muted">Commandes en cours de traitement</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  </section>
 </div>

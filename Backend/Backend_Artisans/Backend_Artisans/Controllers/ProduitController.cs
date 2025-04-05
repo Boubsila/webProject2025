@@ -33,6 +33,23 @@ namespace Backend_Artisans.Controllers
             }
         }
 
+        //get products by artisan name
+        [HttpGet("getProductsByArtisanName")]
+        public IActionResult GetProductsByArtisanName(string artisanName)
+        {
+            try
+            {
+                var produits = _service.GetProductsByArtisanName(artisanName);
+                return Ok(produits);
+            }
+            catch (Exception ex)
+            {
+                // Log l'erreur (optionnel)
+                return StatusCode(500, "Erreur interne du serveur.");
+            }
+        }
+
+
         [HttpPut("changeStatus")]
         public ActionResult changeProductStatus(int id)
         {
@@ -45,6 +62,32 @@ namespace Backend_Artisans.Controllers
         {
             _service.deleteProduct(id);
             return Ok(new { message = $"{id} : deleted" });
+        }
+
+        [HttpPost("AddProduct")]
+
+        public ActionResult addProduct(string nom, string description, double prix, string categorie, string image, int quantite, string artisan, string statut)
+
+        {
+            _service.addProduct(nom, description, prix, categorie, image, quantite, artisan, statut);
+            return Ok(new { message = "product added" });
+        }
+
+        //updateProduct
+
+        [HttpPut("UpdateProduct")]
+        public IActionResult UpdateProduct(
+            int id,
+            string nom,
+            string description,
+            double prix,
+            string categorie,
+            string image,
+            int quantite
+           )
+        {
+            _service.updateProduct(id, nom, description, prix, categorie, image, quantite);
+            return Ok();
         }
 
     }

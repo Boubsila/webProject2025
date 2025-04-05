@@ -38,17 +38,19 @@ export class ProduitsComponent implements OnInit {
     chargerProduits(): void {
         this.productService.getProducts().subscribe(
             (data: any[]) => {
-                this.produits = data.map(produit => ({
-                    id: produit.id,
-                    nom: produit.nom,
-                    description: produit.description,
-                    prix: produit.prix,
-                    categorie: produit.categorie,
-                    url: produit.image , 
-                    quantite: produit.quantite || 0,
-                    artisan: produit.artisan || '',
-                    statut: produit.statut || 'pending'
-                }));
+                this.produits = data
+                    .filter(produit => produit.statut === 'approved') // Filtrer les produits approuvés
+                    .map(produit => ({
+                        id: produit.id,
+                        nom: produit.nom,
+                        description: produit.description,
+                        prix: produit.prix,
+                        categorie: produit.categorie,
+                        url: produit.image,
+                        quantite: produit.quantite || 0,
+                        ArtisanName: produit.artisanName,
+                        statut: produit.statut || 'pending'
+                    }));
                 this.filtrerParCategorie(this.categories[0]);
             },
             (error: any) => {

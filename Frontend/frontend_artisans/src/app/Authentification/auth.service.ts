@@ -88,4 +88,10 @@ export class AuthService {
     return decodedToken.sub;
   }
 
+  getUserId(): string {
+    let token = sessionStorage.getItem("jwt") ?? '';
+    let decodedToken: any = jwtDecode(token);
+    return decodedToken.UserId;
+  }
+
 }

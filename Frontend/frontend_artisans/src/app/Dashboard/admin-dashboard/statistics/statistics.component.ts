@@ -1,6 +1,7 @@
 import { UserService } from './../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-statistics',
@@ -9,15 +10,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./statistics.component.css']
 })
 export class StatisticsComponent implements OnInit {
-  
-  constructor(private router: Router,private statistics: UserService) { }
-  
-    totalUsers: any = 0;
-    artisan: any = 0;
-    client: any = 0;
-    livreur: any = 0;
-   
-  
+
+  constructor(private router: Router, private statistics: UserService, private productService: ProductService) { }
+
+  totalUsers: any = 0;
+  artisan: any = 0;
+  client: any = 0;
+  livreur: any = 0;
+
+  totalProducts: number = 0;
+  pendingProducts: number = 0;
+  approvedProducts: number = 0;
 
   orderStats = {
     totalOrders: 0,
@@ -25,35 +28,21 @@ export class StatisticsComponent implements OnInit {
     pendingOrders: 0
   };
 
- 
-
   ngOnInit(): void {
-    
-    this.totalUsers = this.statistics.getStatisticsAllUsers().subscribe(
-      (data)=>{
-        this.totalUsers = data;
-        
-      },);
+    this.statistics.getStatisticsAllUsers().subscribe(data => this.totalUsers = data);
+    this.statistics.getStatisticsUserByRole('artisan').subscribe(data => this.artisan = data);
+    this.statistics.getStatisticsUserByRole('client').subscribe(data => this.client = data);
+    this.statistics.getStatisticsUserByRole('livreur').subscribe(data => this.livreur = data);
 
-    this.artisan = this.statistics.getStatisticsUserByRole('artisan').subscribe(
-      (data)=>{
-        this.artisan = data;
-        
-      },);
+    this.updateProductStats();
+  }
 
-    this.client = this.statistics.getStatisticsUserByRole('client').subscribe(
-      (data)=>{
-        this.client = data;
-        
-      },);
-
-    this.livreur = this.statistics.getStatisticsUserByRole('livreur').subscribe(
-      (data)=>{
-        this.livreur = data;
-        
-      },);
-      
-
+  updateProductStats() {
+    this.productService.getProducts().subscribe((data: any[]) => {
+      this.totalProducts = data.length;
+      this.pendingProducts = data.filter(p => p.statut === 'pending').length;
+      this.approvedProducts = data.filter(p => p.statut === 'approved').length;
+    });
   }
 
   goToDashboard() {

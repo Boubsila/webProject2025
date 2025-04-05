@@ -45,7 +45,8 @@ namespace Backend_Artisans.Authentication
                 new Claim("custom_info", "info"),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Role, user.Role),
-                new Claim("UserId", user.Id.ToString())
+                new Claim("UserId", user.Id.ToString()),
+                
             };
 
             var jwtIssuer = _config["Jwt:Issuer"];
