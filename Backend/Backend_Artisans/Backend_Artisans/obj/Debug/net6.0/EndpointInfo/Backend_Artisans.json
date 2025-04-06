@@ -189,10 +189,128 @@
         }
       }
     },
-    "/api/livraison": {
+    "/api/Commande/GetOrder": {
       "get": {
         "tags": [
-          "livraison"
+          "Commande"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Commande/addOrder": {
+      "post": {
+        "tags": [
+          "Commande"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Commande"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Commande"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Commande"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Commande/updateOrder/{id}": {
+      "put": {
+        "tags": [
+          "Commande"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Commande"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Commande"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Commande"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Commande/Delete/{id}": {
+      "delete": {
+        "tags": [
+          "Commande"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Commande/GetCommandesByArtisan/{artisanName}": {
+      "get": {
+        "tags": [
+          "Commande"
+        ],
+        "parameters": [
+          {
+            "name": "artisanName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -618,34 +736,56 @@
             "type": "integer",
             "format": "int32"
           },
-          "clientId": {
+          "numeroCommande": {
+            "type": "string",
+            "nullable": true
+          },
+          "produitId": {
             "type": "integer",
             "format": "int32"
           },
-          "client": {
-            "$ref": "#/components/schemas/Client"
+          "produitName": {
+            "type": "string",
+            "nullable": true
+          },
+          "artisanName": {
+            "type": "string",
+            "nullable": true
+          },
+          "clientName": {
+            "type": "string",
+            "nullable": true
+          },
+          "livreurName": {
+            "type": "string",
+            "nullable": true
           },
           "dateCommande": {
             "type": "string",
             "nullable": true
           },
-          "total": {
-            "type": "number",
-            "format": "double"
-          },
           "statut": {
             "type": "string",
             "nullable": true
           },
-          "commandesProduits": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CommandeProduit"
-            },
+          "isOrderd": {
+            "type": "boolean"
+          },
+          "quantite": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "prix": {
+            "type": "number",
+            "format": "double"
+          },
+          "adresseLivraison": {
+            "type": "string",
             "nullable": true
           },
-          "livraison": {
-            "$ref": "#/components/schemas/Livraison"
+          "dateLivraison": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

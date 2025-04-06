@@ -37,7 +37,9 @@
         </div>
       </div>
     </div>
-  
+
+  <!-- modal vanaf hier  -->
+
     <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -48,7 +50,7 @@
           <div class="modal-body">
             <div *ngIf="selectedOrder">
               <p><strong>Numéro de Commande :</strong> {{ selectedOrder.orderNumber }}</p>
-              <p><strong>Date de Commande :</strong> {{ selectedOrder.orderDate | date }}</p>
+              <p><strong>Date de Commande :</strong> {{ selectedOrder.orderDate |  date:'dd/MM/yyyy' }}</p>
               <p><strong>Statut :</strong>
                 <span class="badge" [ngClass]="{'bg-warning': selectedOrder.status === 'pending', 'bg-info': selectedOrder.status === 'processing', 'bg-success': selectedOrder.status === 'shipped', 'bg-danger': selectedOrder.status === 'cancelled'}">{{ selectedOrder.status }}</span>
               </p>
@@ -58,6 +60,9 @@
                   {{ item.productName }} - Quantité : {{ item.quantity }} - Prix unitaire : {{ item.unitPrice }} €
                 </li>
               </ul>
+              <p><strong>Artisan :</strong> {{ selectedOrder.artisanName }}</p>
+              <p><strong>Prix Total :</strong> {{ selectedOrder.totalPrice }} €</p>
+              
               <p><strong>Adresse de Livraison :</strong> {{ selectedOrder.shippingAddress }}</p>
             </div>
           </div>

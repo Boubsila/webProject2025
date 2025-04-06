@@ -28,7 +28,7 @@ namespace Backend_Artisans.Controllers
             }
             catch (Exception ex)
             {
-                // Log l'erreur (optionnel)
+
                 return StatusCode(500, "Erreur interne du serveur.");
             }
         }
@@ -49,7 +49,7 @@ namespace Backend_Artisans.Controllers
             }
         }
 
-
+        //change status
         [HttpPut("changeStatus")]
         public ActionResult changeProductStatus(int id)
         {
@@ -57,13 +57,14 @@ namespace Backend_Artisans.Controllers
             return Ok(new { message = "statut changed" });
         }
 
+        // Delete product
         [HttpDelete("deleteProduct")]
         public ActionResult deleteProduct(int id)
         {
             _service.deleteProduct(id);
             return Ok(new { message = $"{id} : deleted" });
         }
-
+        // addProduct
         [HttpPost("AddProduct")]
 
         public ActionResult addProduct(string nom, string description, double prix, string categorie, string image, int quantite, string artisan, string statut)

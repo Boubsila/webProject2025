@@ -1,100 +1,134 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { ProductService } from '../../services/product.service';
+import { AuthService } from '../../Authentification/auth.service';
+import { SuccessAlertService } from '../../Authentification/alerts/success-alert.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'app-produits',
-    standalone: true,
-    imports: [CommonModule],
-    templateUrl: './produits.component.html',
-    styleUrl: './produits.component.css'
+  selector: 'app-produits',
+  standalone: true,
+  imports: [CommonModule,FormsModule],
+  templateUrl: './produits.component.html',
+  styleUrls: ['./produits.component.css']
 })
 export class ProduitsComponent implements OnInit {
+  categories = [
+    'Poterie et Céramique',
+    'Tissage et Tapis',
+    'Travail du Cuir (Tanneries)',
+    'Travail du Bois (Menuiserie et Marqueterie)',
+    'Métallurgie et Ferronnerie',
+    'Bijouterie et Orfèvrerie',
+    'Autres'
+  ];
 
-    categories = [
-        'Poterie et Céramique',
-        'Tissage et Tapis',
-        'Travail du Cuir (Tanneries)',
-        'Travail du Bois (Menuiserie et Marqueterie)',
-        'Métallurgie et Ferronnerie',
-        'Bijouterie et Orfèvrerie',
-        'Autres'
-    ];
+  artisans: string[] = [];
+  produits: any[] = [];
+  produitsFiltres: any[] = [];
 
-    produits: any[] = [];
-    produitsFiltres: any[] = [];
-    categorieSelectionnee: string = '';
-    
+  categorieSelectionnee: string = '';
+  artisanSelectionne: string = '';
 
-    constructor(private productService: ProductService, private http: HttpClient) { }
+  constructor(
+    private productService: ProductService,
+    private successAlert: SuccessAlertService,
+    private userName: AuthService,
+    private http: HttpClient
+  ) {}
 
-    ngOnInit(): void {
-        this.chargerProduits();
-    }
+  ngOnInit(): void {
+    this.chargerProduits();
+    this.chargerArtisans();
+  }
 
-    chargerProduits(): void {
-        this.productService.getProducts().subscribe(
-            (data: any[]) => {
-                this.produits = data
-                    .filter(produit => produit.statut === 'approved') // Filtrer les produits approuvés
-                    .map(produit => ({
-                        id: produit.id,
-                        nom: produit.nom,
-                        description: produit.description,
-                        prix: produit.prix,
-                        categorie: produit.categorie,
-                        url: produit.image,
-                        quantite: produit.quantite || 0,
-                        ArtisanName: produit.artisanName,
-                        statut: produit.statut || 'pending'
-                    }));
-                this.filtrerParCategorie(this.categories[0]);
-            },
-            (error: any) => {
-                console.error('Erreur lors du chargement des produits', error);
-            }
-        );
-    }
+  // Charger les produits
+  chargerProduits(): void {
+    this.productService.getProducts().subscribe(
+      (data: any[]) => {
+        this.produits = data
+          .filter(p => p.statut === 'approved')
+          .map(p => ({
+            id: p.id,
+            nom: p.nom,
+            description: p.description,
+            prix: p.prix,
+            categorie: p.categorie,
+            url: p.image,
+            quantite: p.quantite || 0,
+            ArtisanName: p.artisanName,
+            statut: p.statut || 'pending'
+          }));
 
-    filtrerParCategorie(categorie: string): void {
-        this.categorieSelectionnee = categorie;
-        if (!this.produits.length) return;
-
-        if (categorie === 'Autres') {
-            this.produitsFiltres = this.produits.filter(produit =>
-                !this.categories.slice(0, 6).includes(produit.categorie)
-            );
-        } else {
-            this.produitsFiltres = this.produits.filter(produit => produit.categorie === categorie);
+        // Définir la catégorie par défaut si elle n'est pas déjà sélectionnée
+        if (!this.categorieSelectionnee && this.categories.length > 0) {
+          this.categorieSelectionnee = this.categories[0];
         }
-    }
 
-    commanderProduit(produit: any): void {
-        const commande = {
-            produitId: produit.id,
-            clientId: 1, // Remplacez par l'ID du client connecté ',
-            quantite: 1,
-            dateCommande: new Date()
-        };
+        // Appliquer le filtre par catégorie et artisan
+        this.filtrerProduits();
+      },
+      (error: any) => console.error('Erreur chargement produits', error)
+    );
+  }
 
-        this.http.post('URL_DE_VOTRE_BACKEND/commandes', commande)
-            .pipe(
-                catchError(error => {
-                    console.error('Erreur lors de l\'envoi de la commande', error);
-                    return throwError(error);
-                })
-            )
-            .subscribe(
-                response => {
-                    console.log('Commande envoyée avec succès', response);
-                }
-            );
-    }
-    
-    ajouterAuPanier(produit: any): void {
-        console.log('Produit ajouté au panier :', produit);
-    }
+  // Charger les artisans
+  chargerArtisans(): void {
+    this.userName.getAllUsers().subscribe(
+      (users: any[]) => {
+        const artisansFiltrés = users.filter(u => u.role === 'artisan');
+        this.artisans = artisansFiltrés.map(u => u.username);
+
+        if (this.artisans.length > 0) {
+          this.artisanSelectionne = this.artisans[0];
+        }
+
+        this.filtrerProduits();
+      },
+      error => console.error('Erreur chargement artisans', error)
+    );
+  }
+
+  // Filtrer les produits par catégorie et artisan
+  filtrerProduits(): void {
+    this.produitsFiltres = this.produits.filter(produit =>
+      (this.categorieSelectionnee === 'Autres'
+        ? !this.categories.slice(0, 6).includes(produit.categorie)
+        : produit.categorie === this.categorieSelectionnee) &&
+      produit.ArtisanName === this.artisanSelectionne
+    );
+  }
+
+  // Ajouter un produit au panier
+  ajouterAuPanier(produit: any): void {
+    const commande = {
+      id: 0,
+      produitId: produit.id,
+      produitName: produit.nom,
+      artisanName: produit.ArtisanName,
+      clientName: this.userName.getUserName(),
+      livreurName: '',
+      dateCommande: new Date().toISOString(),
+      statut: 'pending',
+      isOrderd: false,
+      quantite: 1,
+      prix: produit.prix,
+      adresseLivraison: '',
+      dateLivraison: ''
+    };
+
+    this.http.post('https://localhost:7128/api/Commande/addOrder', commande)
+      .pipe(
+        catchError(error => {
+          console.error('Erreur ajout commande', error);
+          return throwError(error);
+        })
+      )
+      .subscribe(() => {
+        this.successAlert.successAlert(`${produit.nom} ajouté au panier avec succès!`);
+      });
+  }
 }

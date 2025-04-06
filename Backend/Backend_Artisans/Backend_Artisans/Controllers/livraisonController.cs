@@ -12,19 +12,18 @@ namespace Backend_Artisans.Controllers;
 
 public class livraisonController : ControllerBase
 {
-    private readonly IService _service;
+    //private readonly IService _service;
 
-    public livraisonController(IService service)
-    {
-        _service = service;
-    }
+    //public livraisonController(IService service)
+    //{
+    //    _service = service;
+    //}
 
 
-    [Authorize(Roles ="Admin")] 
-    [HttpGet]
-    public ActionResult GetLivraison()
-    {
-       
-        return Ok(_service.GetLivraisons());
-    }
+    //private readonly IService _service;
+
+    //public ProduitController(IService service)
+    //{
+    //    _service = service;
+    //}
 }

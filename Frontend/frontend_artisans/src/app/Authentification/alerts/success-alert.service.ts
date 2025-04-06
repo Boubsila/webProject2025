@@ -15,7 +15,7 @@ export class SuccessAlertService {
       text: message,
       icon: 'success', // Icône de succès
       confirmButtonText: 'OK',
-      timer: 2000, // Temps avant de fermer la popup automatiquement
+      timer: 2500, // Temps avant de fermer la popup automatiquement
       timerProgressBar: true, // Barre de progression
       showConfirmButton: true,
       customClass: {

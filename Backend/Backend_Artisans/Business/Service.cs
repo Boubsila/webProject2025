@@ -10,7 +10,7 @@ namespace Business
         {
             _repository = repository;
         }
-        public IEnumerable<livraisonTest> GetLivraisons() => _repository.GetLivraisons();
+        //public IEnumerable<livraisonTest> GetLivraisons() => _repository.GetLivraisons();
 
         public void DeleteUser(int Id)
         {
@@ -32,7 +32,7 @@ namespace Business
             return _repository.getAllProducts();
         }
 
-        
+
 
         public void changeProductStatus(int id)
         {
@@ -51,12 +51,41 @@ namespace Business
 
         public List<Produit> GetProductsByArtisanName(string artisanName)
         {
-           return _repository.GetProductsByArtisanName(artisanName);
+            return _repository.GetProductsByArtisanName(artisanName);
         }
 
         public void updateProduct(int id, string nom, string description, double prix, string categorie, string image, int quantite)
         {
-            _repository.updateProduct(id,nom,description,prix,categorie,image,quantite);
+            _repository.updateProduct(id, nom, description, prix, categorie, image, quantite);
         }
+
+        public void AddCommande(Commande commande)
+        {
+            _repository.AddCommande(commande);
+        }
+
+        public List<Commande> GetCommandeList()
+        {
+
+            return _repository.GetCommandeList();
+        }
+
+        public void UpdateCommande(int id, string statut, bool isOrdered,string numeroCommande, string? adresseLivraison = null, string? dateLivraison = null)
+        {
+            _repository.UpdateCommande(id, statut, isOrdered, numeroCommande, adresseLivraison, dateLivraison);
+        }
+
+        public void DeleteCommande(int id)
+        {
+            _repository.DeleteCommande(id);
+        }
+
+        // Récupère les commandes d'un artisan spécifique
+        public List<Commande> GetCommandesByArtisanName(string artisanName)
+        {
+            
+            return _repository.GetCommandeList().Where(c => c.artisanName.Equals(artisanName, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
     }
 }

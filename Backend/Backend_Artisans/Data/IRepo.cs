@@ -9,7 +9,7 @@ namespace Data
 {
     public interface IRepo
     {
-        IEnumerable<livraisonTest> GetLivraisons();
+        //IEnumerable<livraisonTest> GetLivraisons();
 
         //migration test
         List<User> GetUsers();
@@ -25,6 +25,16 @@ namespace Data
         void addProduct(string nom, string description, double prix, string categorie, string image, int quantite, string artisan, string statut);
 
         void updateProduct(int id, string nom, string description, double prix, string categorie, string image, int quantite);
-       
+        
+        //commandes
+        public void AddCommande(Commande commande);
+        public List<Commande> GetCommandeList();
+        void UpdateCommande(int id, string statut, bool isOrdered, string numeroCommande, string? adresseLivraison=null , string? dateLivraison=null );
+       void DeleteCommande(int id);
+
+        // recuperer les commandes par nom d'artisan
+        List<Commande> GetCommandesByArtisanName(string artisanName);
+
+
     }
 }

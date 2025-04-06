@@ -39,7 +39,6 @@ export class ProductService {
   }
 
   updateProduct(product: any): any {
-    //'https://localhost:7128/api/Produit/UpdateProduct?id=2&nom=test%20update&description=updated&prix=21&categorie=autre&image=%2Fimages%2F3.jpg&quantite=40'
     const url = `${this.updateProductUrl}?id=${product.id}&nom=${product.nom}&description=${product.description}&prix=${product.prix}&categorie=${product.categorie}&image=${product.image}&quantite=${product.quantite}`;
     
     return this.http.put(url, {});

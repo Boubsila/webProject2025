@@ -30,7 +30,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of cartItems">
-              <td>{{ item.productName }}</td>
+              <td>{{ item.name }}</td>
               <td>
                 <div class="input-group">
                   <button class="btn btn-sm btn-outline-secondary" type="button"
@@ -60,10 +60,18 @@
         <p><strong>Total :</strong> {{ total }} €</p>
       </div>
 
+      <!-- Champ adresse livraison -->
+      <div class="form-group mt-4">
+        <label for="adresseLivraison" class="form-label fw-bold">Adresse de livraison</label>
+        <input type="text" id="adresseLivraison" class="form-control" [(ngModel)]="adresseLivraison"
+          placeholder="Entrez votre adresse complète" required>
+      </div>
+
       <div class="text-center mt-4">
         <button class="btn btn-primary rounded-pill btn-lg"
-          (click)="proceedToCheckout()">
-          <i class="bi bi-credit-card me-2"></i> Passer à la caisse
+          (click)="Commander()"
+          [disabled]="cartItems.length === 0 || !adresseLivraison">
+          <i class="bi bi-credit-card me-2"></i> Commander
         </button>
       </div>
     </div>

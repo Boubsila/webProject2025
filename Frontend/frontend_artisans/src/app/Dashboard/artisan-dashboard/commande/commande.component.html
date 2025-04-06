@@ -1,13 +1,12 @@
-
 <div class="container mt-4">
     <div class="mb-3">
       <button class="btn btn-outline-secondary fw-bold rounded-pill" (click)="goToDashboard()">
         <i class="bi bi-arrow-left me-2"></i> Retour au tableau de bord
       </button>
     </div>
-  
+
     <h2 class="text-center mb-4 text-primary fw-bold">Gestion de Mes Commandes</h2>
-  
+
     <div class="card shadow-lg rounded-4">
       <div class="card-body p-4">
         <div class="table-responsive">
@@ -43,7 +42,8 @@
         </div>
       </div>
     </div>
-  
+
+    <!-- Modal Détails de la commande -->
     <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -74,7 +74,8 @@
         </div>
       </div>
     </div>
-  
+
+    <!-- Modal Modifier le statut -->
     <div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -103,4 +104,4 @@
         </div>
       </div>
     </div>
-  </div>
+</div>

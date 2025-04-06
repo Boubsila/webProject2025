@@ -135,13 +135,82 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Backend_Artisans.Controllers.livraisonController",
-    "Method": "GetLivraison",
-    "RelativePath": "api/livraison",
+    "ContainingType": "Backend_Artisans.Controllers.CommandeController",
+    "Method": "AddCommande",
+    "RelativePath": "api/Commande/addOrder",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "commande",
+        "Type": "Domain.Commande",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_Artisans.Controllers.CommandeController",
+    "Method": "DeleteOrder",
+    "RelativePath": "api/Commande/Delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_Artisans.Controllers.CommandeController",
+    "Method": "GetCommandesByArtisan",
+    "RelativePath": "api/Commande/GetCommandesByArtisan/{artisanName}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "artisanName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_Artisans.Controllers.CommandeController",
+    "Method": "GetOrder",
+    "RelativePath": "api/Commande/GetOrder",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_Artisans.Controllers.CommandeController",
+    "Method": "UpdateCommande",
+    "RelativePath": "api/Commande/updateOrder/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updatedCommande",
+        "Type": "Domain.Commande",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

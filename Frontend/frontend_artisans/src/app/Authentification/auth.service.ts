@@ -94,4 +94,14 @@ export class AuthService {
     return decodedToken.UserId;
   }
 
+  getAllUsers(): Observable<any> {
+    return this.http.get<any>('https://localhost:7128/api/Authentication/GetUsers')
+      .pipe(
+        catchError(error => {
+          this.erreur.erreurAlert('Erreur lors de la récupération des utilisateurs');
+          return throwError(error);
+        })
+      );
+  }
+
 }
