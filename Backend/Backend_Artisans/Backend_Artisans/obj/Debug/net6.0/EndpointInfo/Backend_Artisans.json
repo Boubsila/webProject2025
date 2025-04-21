@@ -319,6 +319,74 @@
         }
       }
     },
+    "/api/Commande/ChangeOrderStatus/{numeroCommande}/{nouveauStatut}": {
+      "put": {
+        "tags": [
+          "Commande"
+        ],
+        "parameters": [
+          {
+            "name": "numeroCommande",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "nouveauStatut",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Commande/ChangeCommandeStatut/{numeroCommande}/{artisanName}/{nouveauStatut}": {
+      "put": {
+        "tags": [
+          "Commande"
+        ],
+        "parameters": [
+          {
+            "name": "numeroCommande",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "artisanName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "nouveauStatut",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Produit/getAllProducts": {
       "get": {
         "tags": [

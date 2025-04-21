@@ -152,6 +152,53 @@
   },
   {
     "ContainingType": "Backend_Artisans.Controllers.CommandeController",
+    "Method": "ChangeCommandeStatut",
+    "RelativePath": "api/Commande/ChangeCommandeStatut/{numeroCommande}/{artisanName}/{nouveauStatut}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numeroCommande",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "artisanName",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "nouveauStatut",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_Artisans.Controllers.CommandeController",
+    "Method": "ChangeOrderStatus",
+    "RelativePath": "api/Commande/ChangeOrderStatus/{numeroCommande}/{nouveauStatut}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numeroCommande",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "nouveauStatut",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_Artisans.Controllers.CommandeController",
     "Method": "DeleteOrder",
     "RelativePath": "api/Commande/Delete/{id}",
     "HttpMethod": "DELETE",

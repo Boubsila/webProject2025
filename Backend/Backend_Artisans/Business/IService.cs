@@ -22,6 +22,7 @@ namespace Business
         void addProduct(string nom, string description, double prix, string categorie, string image, int quantite, string artisan, string statut);
         void updateProduct(int id, string nom, string description, double prix, string categorie, string image, int quantite);
 
+        // Orders
         public void AddCommande(Commande commande);
         public List<Commande> GetCommandeList();
         void UpdateCommande(int id, string statut, bool isOrdered, string numeroCommande, string? adresseLivraison=null , string? dateLivraison=null );
@@ -30,7 +31,12 @@ namespace Business
         // récupère les commandes d'un artisan
         List<Commande> GetCommandesByArtisanName(string artisanName);
 
+        //update order status
 
+        public void ChangeOrderStatus(string numeroCommande, string nouveauStatut);
+
+        // update commande multi artisan
+        void ChangeCommandeStatusByProductAndArtisan(string numeroCommande, string artisanName, string nouveauStatut);
 
 
     }

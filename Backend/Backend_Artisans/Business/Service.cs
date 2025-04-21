@@ -87,5 +87,15 @@ namespace Business
             return _repository.GetCommandeList().Where(c => c.artisanName.Equals(artisanName, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
+        public void ChangeOrderStatus(string numeroCommande, string nouveauStatut)
+        {
+            _repository.ChangeOrderStatus(numeroCommande,nouveauStatut);
+        }
+
+        //update statut commande multi artisan 
+        public void ChangeCommandeStatusByProductAndArtisan(string numeroCommande, string artisanName, string nouveauStatut)
+        {
+            _repository.ChangeCommandeStatusByProductAndArtisan(numeroCommande,artisanName,nouveauStatut);
+        }
     }
 }

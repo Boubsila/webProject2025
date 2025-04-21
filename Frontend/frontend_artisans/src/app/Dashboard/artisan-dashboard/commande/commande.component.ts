@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../Authentification/auth.service';
 import { OrderService } from '../../../services/order.service';
-import { tap } from 'rxjs/operators'; // Importer l'opérateur tap pour déboguer
 
 @Component({
   selector: 'app-commande',
@@ -14,64 +13,26 @@ import { tap } from 'rxjs/operators'; // Importer l'opérateur tap pour débogue
   styleUrls: ['./commande.component.css']
 })
 export class CommandeComponent implements OnInit {
-  orders: any[] = []; // Tableau pour stocker les commandes regroupées
-  selectedOrder: any = null; // Pour stocker la commande sélectionnée
+  orders: any[] = [];
+  selectedOrder: any = null;
+  user: any = null;
 
-  user: any = null; // Nom de l'artisan
-
-  constructor(private router: Router, private artisanName: AuthService, private ordersByArtisan: OrderService) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private orderService: OrderService
+  ) { }
 
   ngOnInit(): void {
-    // Récupérer le nom de l'artisan
-    this.user = this.artisanName.getUserName();
+    this.user = this.authService.getUserName();
+    console.log(this.user);
+    this.loadOrders();
+  }
 
-    // Récupérer les commandes associées à cet artisan
-    this.ordersByArtisan.getOrdersByArtisan(this.user).pipe(
-      tap(data => console.log('Données reçues de l\'API :', data)) // Log des données pour le débogage
-    ).subscribe({
+  loadOrders(): void {
+    this.orderService.getOrdersByArtisan(this.user).subscribe({
       next: (data: any[]) => {
-        // Regrouper les items par numéro de commande
-        const commandesGrouped: { [key: string]: any } = {};
-
-        data.forEach((item: any) => {
-          const numeroCommande = item.numeroCommande;
-
-          // Si un groupe pour ce numéro de commande n'existe pas, on le crée
-          if (!commandesGrouped[numeroCommande]) {
-            commandesGrouped[numeroCommande] = {
-              orderNumber: numeroCommande,
-              orderDate: item.dateCommande,
-              status: item.statut,
-              items: [], // Tableau pour stocker les produits de cette commande
-              totalPrice: 0,
-              totalQuantity: 0,
-              artisanName: item.artisanName,
-              shippingAddress: item.adresseLivraison || 'Adresse inconnue',
-            };
-          }
-
-          // Ajouter l'item actuel au tableau des items de la commande correspondante
-          commandesGrouped[numeroCommande].items.push({
-            productName: item.produitName,
-            quantity: item.quantite,
-            unitPrice: item.prix,
-          });
-
-          // Mettre à jour le prix total et la quantité totale de la commande
-          commandesGrouped[numeroCommande].totalPrice += item.prix * item.quantite;
-          commandesGrouped[numeroCommande].totalQuantity += item.quantite;
-        });
-
-        // Convertir l'objet de commandes regroupées en un tableau pour l'affichage
-        this.orders = Object.values(commandesGrouped).map(order => {
-          // Ajouter les frais de port si le prix total est inférieur à 100
-          if (order.totalPrice < 100) {
-            order.totalPrice += 5;
-          }
-          return order;
-        });
-
-        console.log('Commandes regroupées :', this.orders); // Log des commandes regroupées
+        this.orders = this.processOrders(data);
       },
       error: (err: any) => {
         console.error('Erreur lors de la récupération des commandes :', err);
@@ -79,33 +40,79 @@ export class CommandeComponent implements OnInit {
     });
   }
 
-  // Méthode pour naviguer vers le tableau de bord
+  processOrders(data: any[]): any[] {
+    const processedOrders: any[] = [];
+
+    data.forEach((item: any) => {
+      const orderKey = `${item.numeroCommande}_${item.artisanName}`;
+
+      let existingOrder = processedOrders.find(o => o.orderKey === orderKey);
+
+      if (!existingOrder) {
+        existingOrder = {
+          orderKey: orderKey,
+          orderNumber: item.numeroCommande,
+          orderDate: item.dateCommande,
+          status: item.statut,
+          items: [],
+          totalPrice: 0,
+          totalQuantity: 0,
+          artisanName: item.artisanName,
+          shippingAddress: item.adresseLivraison || 'Adresse inconnue',
+          clientName: item.clientName || 'Client inconnu',
+        };
+        processedOrders.push(existingOrder);
+      }
+
+      existingOrder.items.push({
+        productName: item.produitName,
+        quantity: item.quantite,
+        unitPrice: item.prix
+      });
+
+      existingOrder.totalPrice += item.prix * item.quantite;
+      existingOrder.totalQuantity += item.quantite;
+    });
+
+    return processedOrders;
+  }
+
+  // Méthodes utilitaires inchangées
   goToDashboard() {
     this.router.navigate(['/dashboard']);
   }
 
-  // Afficher les détails de la commande
   viewOrderDetails(order: any) {
     this.selectedOrder = { ...order };
     this.openModal('orderDetailsModal');
   }
 
-  // Mise à jour du statut de la commande
   updateOrderStatus(order: any) {
     this.selectedOrder = { ...order };
     this.openModal('updateStatusModal');
   }
 
-  // Sauvegarder le statut de la commande
   saveOrderStatus() {
-    const index = this.orders.findIndex(o => o.orderNumber === this.selectedOrder.orderNumber);
-    if (index !== -1) {
-      this.orders[index] = { ...this.selectedOrder };
+    if (this.selectedOrder && this.selectedOrder.status) {
+      this.orderService.updateOrderStatusMulti(
+        this.selectedOrder.orderNumber,
+        this.selectedOrder.artisanName,
+        this.selectedOrder.status
+      ).subscribe({
+        next: () => {
+          const index = this.orders.findIndex(o => o.orderKey === this.selectedOrder.orderKey);
+          if (index !== -1) {
+            this.orders[index].status = this.selectedOrder.status;
+          }
+          this.closeModal();
+        },
+        error: (error: any) => {
+          console.error('Erreur lors de la mise à jour du statut:', error);
+        }
+      });
     }
-    this.closeModal();
   }
 
-  // Ouvrir une modal
   openModal(modalId: string) {
     const modal = document.getElementById(modalId);
     if (modal) {
@@ -115,21 +122,15 @@ export class CommandeComponent implements OnInit {
     }
   }
 
-  // Fermer la modal
   closeModal() {
-    const orderDetailsModal = document.getElementById('orderDetailsModal');
-    const updateStatusModal = document.getElementById('updateStatusModal');
-
-    if (orderDetailsModal && orderDetailsModal.classList.contains('show')) {
-      orderDetailsModal.classList.remove('show');
-      orderDetailsModal.style.display = 'none';
-    }
-
-    if (updateStatusModal && updateStatusModal.classList.contains('show')) {
-      updateStatusModal.classList.remove('show');
-      updateStatusModal.style.display = 'none';
-    }
-
+    const modals = ['orderDetailsModal', 'updateStatusModal'];
+    modals.forEach(id => {
+      const modal = document.getElementById(id);
+      if (modal && modal.classList.contains('show')) {
+        modal.classList.remove('show');
+        modal.style.display = 'none';
+      }
+    });
     document.body.classList.remove('modal-open');
     this.selectedOrder = null;
   }

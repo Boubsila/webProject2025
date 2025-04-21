@@ -1,97 +1,148 @@
+import { SuccessAlertService } from './../../../Authentification/alerts/success-alert.service';
+import { ErreurAlertService } from './../../../Authentification/alerts/erreur-alert.service';
+import { AuthService } from './../../../Authentification/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrderService } from '../../../services/order.service';
-import { tap } from 'rxjs/operators'; // Importez l'opérateur tap pour le débogage
 
 @Component({
   selector: 'app-commande-client',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './commande-client.component.html',
-  styleUrl: './commande-client.component.css'
+  styleUrls: ['./commande-client.component.css']
 })
 export class CommandeClientComponent implements OnInit {
-  orders: any[] = []; // Tableau pour stocker les commandes regroupées
-  selectedOrder: any = null; // Utilisé pour stocker la commande sélectionnée pour afficher les détails
+  orders: any[] = [];
+  selectedOrder: any = null;
+  user: string | null = null;
 
-  constructor(private router: Router, private orderService: OrderService) { }
+  colors = [
+    'rgba(227, 242, 253, 0.5)',
+    'rgba(255, 248, 225, 0.5)',
+    'rgba(241, 248, 233, 0.5)',
+    'rgba(252, 228, 236, 0.5)',
+    'rgba(232, 245, 233, 0.5)',
+    'rgba(255, 243, 224, 0.5)'
+  ];
+
+  borderColors = [
+    '#2196F3',
+    '#FFC107',
+    '#4CAF50',
+    '#E91E63',
+    '#00E676',
+    '#FF9800'
+  ];
+
+  constructor(
+    private router: Router,
+    private orderService: OrderService,
+    private AuthService: AuthService,
+    private ErreurAlertService: ErreurAlertService,
+    private SuccessAlertService: SuccessAlertService,
+  ) {}
 
   ngOnInit(): void {
-    // Récupérer l'historique des commandes du client (API) au chargement du composant
-    this.getOrderedItems();
+    this.user = this.AuthService.getUserName();
+    this.getClientOrders();
   }
 
-  getOrderedItems() {
-    this.orderService.getOrders().pipe(
-      tap(data => console.log('Données brutes reçues de l\'API :', data)) // Log des données brutes pour le débogage
-    ).subscribe((data: any[]) => {
-      // Filtrer uniquement les éléments marqués comme ayant été commandés (isOrderd à true)
-      const commandesValidees = data.filter((item: any) => item.isOrderd);
-      console.log('Commandes validées (isOrderd à true) :', commandesValidees); // Log des commandes filtrées
+  // Cette méthode récupère les commandes du client
+  getClientOrders() {
+    if (this.user) {
+      this.orderService.getOrders().subscribe({
+        next: (data: any[]) => {
+          const clientOrders = data.filter(item => item.clientName === this.user && item.isOrderd);
+          const ordersGrouped: { [key: string]: any } = {};
 
-      // Utiliser un objet pour regrouper les produits par numéro de commande
-      const commandesGrouped: { [key: string]: any } = {};
+          // Regroupement des commandes par numéro de commande et artisan
+          clientOrders.forEach(item => {
+            const orderKey = `${item.numeroCommande}_${item.artisanName}`;
 
-      // Parcourir les commandes validées pour les regrouper
-      commandesValidees.forEach((item: any) => {
-        const numeroCommande = item.numeroCommande;
-        // Si un groupe pour ce numéro de commande n'existe pas, le créer
-        if (!commandesGrouped[numeroCommande]) {
-          commandesGrouped[numeroCommande] = {
-            orderNumber: numeroCommande,
-            orderDate: item.dateCommande,
-            status: item.statut,
-            items: [], // Tableau pour stocker les produits de cette commande
-            totalPrice: 0,
-            totalQuantity: 0,
-            artisanName: item.artisanName,
-            shippingAddress: item.adresseLivraison || 'Adresse inconnue',
-          };
+            if (!ordersGrouped[orderKey]) {
+              ordersGrouped[orderKey] = {
+                orderNumber: item.numeroCommande,
+                orderDate: item.dateCommande,
+                status: item.statut,
+                items: [],
+                subtotal: 0,
+                totalQuantity: 0,
+                artisanName: item.artisanName,
+                shippingAddress: item.adresseLivraison || 'Adresse inconnue'
+              };
+            }
+
+            const itemTotal = item.prix * item.quantite;
+            ordersGrouped[orderKey].items.push({
+              productName: item.produitName,
+              quantity: item.quantite,
+              unitPrice: item.prix
+            });
+
+            ordersGrouped[orderKey].subtotal += itemTotal;
+            ordersGrouped[orderKey].totalQuantity += item.quantite;
+          });
+
+          this.orders = Object.values(ordersGrouped).sort((a, b) =>
+            new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime()
+          );
+        },
+        error: (error: any) => {
+          this.ErreurAlertService.erreurAlert('Erreur lors de la récupération des commandes.');
         }
-        // Ajouter l'item actuel au tableau des items de la commande correspondante
-        commandesGrouped[numeroCommande].items.push({
-          productName: item.produitName,
-          quantity: item.quantite,
-          unitPrice: item.prix,
-        });
-        // Mettre à jour le prix total et la quantité totale de la commande
-        commandesGrouped[numeroCommande].totalPrice += item.prix * item.quantite;
-        commandesGrouped[numeroCommande].totalQuantity += item.quantite;
       });
+    } else {
+      this.ErreurAlertService.erreurAlert('Nom d\'utilisateur non trouvé.');
+      this.orders = [];
+    }
+  }
 
-      console.log('Commandes regroupées par numeroCommande :', commandesGrouped); // Log des commandes regroupées
+  // Cette méthode groupe les commandes par numéro de commande
+  getOrderGroups() {
+    const groups: { [key: string]: any[] } = {};
 
-      // Convertir l'objet de commandes regroupées en un tableau pour l'affichage
-      this.orders = Object.values(commandesGrouped).map(order => {
-        // Ajouter les frais de port si le prix total est inférieur à 100
-        if (order.totalPrice < 100) {
-          order.totalPrice += 5;
-        }
-        return order;
-      });
-
-      console.log('Tableau final des commandes à afficher :', this.orders); // Log du tableau final des commandes
-    }, (error: any) => {
-      console.error('Erreur lors de la récupération des commandes:', error);
+    this.orders.forEach(order => {
+      if (!groups[order.orderNumber]) {
+        groups[order.orderNumber] = [];
+      }
+      groups[order.orderNumber].push(order);
     });
+
+    return Object.values(groups);
   }
 
+  // Cette méthode définit la couleur de fond des groupes de commandes
+  getGroupBackgroundColor(index: number): string {
+    return this.colors[index % this.colors.length];
+  }
+
+  // Cette méthode définit la couleur de bordure des groupes de commandes
+  getGroupBorderColor(index: number): string {
+    return this.borderColors[index % this.borderColors.length];
+  }
+
+  // Cette méthode calcule le total d'un groupe de commandes
+  getGroupTotal(group: any[]): number {
+    return group.reduce((total, order) => total + order.subtotal, 0);
+  }
+
+  // Navigue vers le tableau de bord
   goToDashboard() {
     this.router.navigate(['/dashboard']);
   }
 
+  // Affiche les détails d'une commande dans un modal
   viewOrderDetails(order: any) {
-    // Lorsqu'on clique sur le bouton "Détails", on stocke la commande sélectionnée
     this.selectedOrder = { ...order };
-    // Et on ouvre la modal
-    this.openModal();
+    this.openModal('orderDetailsModal');
   }
 
-  openModal() {
-    // Méthode pour afficher la modal des détails de la commande
-    const modal = document.getElementById('orderDetailsModal');
+  // Ouvre un modal en fonction de l'ID
+  openModal(modalId: string) {
+    const modal = document.getElementById(modalId);
     if (modal) {
       modal.classList.add('show');
       modal.style.display = 'block';
@@ -99,15 +150,14 @@ export class CommandeClientComponent implements OnInit {
     }
   }
 
+  // Ferme le modal et réinitialise les détails de la commande sélectionnée
   closeModal() {
-    // Méthode pour fermer la modal des détails de la commande
     const modal = document.getElementById('orderDetailsModal');
     if (modal) {
       modal.classList.remove('show');
       modal.style.display = 'none';
       document.body.classList.remove('modal-open');
     }
-    // Réinitialiser la commande sélectionnée après la fermeture de la modal
     this.selectedOrder = null;
   }
 }

@@ -1,0 +1,22 @@
+.rating {
+    display: inline-flex; /* Pour aligner les étoiles horizontalement */
+    gap: 0.3rem; /* Espacement entre les étoiles */
+    cursor: pointer; /* Indiquer que les étoiles sont cliquables */
+  }
+  
+  .rating i {
+    font-size: 1.5rem; /* Taille des étoiles */
+    color: #ccc; /* Couleur des étoiles non sélectionnées */
+  }
+  
+  .rating i.bi-star-fill {
+    color: gold; /* Couleur des étoiles sélectionnées */
+  }
+  
+  .rating i:hover {
+    color: orange; /* Couleur au survol */
+  }
+  
+  .rating i.hovered {
+    color: orange; /* Couleur des étoiles survolées avant le clic */
+  }

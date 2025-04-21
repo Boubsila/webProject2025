@@ -25,16 +25,23 @@ namespace Data
         void addProduct(string nom, string description, double prix, string categorie, string image, int quantite, string artisan, string statut);
 
         void updateProduct(int id, string nom, string description, double prix, string categorie, string image, int quantite);
-        
+
         //commandes
         public void AddCommande(Commande commande);
         public List<Commande> GetCommandeList();
-        void UpdateCommande(int id, string statut, bool isOrdered, string numeroCommande, string? adresseLivraison=null , string? dateLivraison=null );
-       void DeleteCommande(int id);
+        void UpdateCommande(int id, string statut, bool isOrdered, string numeroCommande, string? adresseLivraison = null, string? dateLivraison = null);
+        void DeleteCommande(int id);
 
         // recuperer les commandes par nom d'artisan
         List<Commande> GetCommandesByArtisanName(string artisanName);
 
+        // update le statut de la commande  ,
+
+        public void ChangeOrderStatus(string numeroCommande, string nouveauStatut);
+
+        // update le statut de la commande multi artisan
+
+        void ChangeCommandeStatusByProductAndArtisan(string numeroCommande, string artisanName, string nouveauStatut);
 
     }
 }

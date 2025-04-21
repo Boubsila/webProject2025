@@ -17,6 +17,12 @@ export class OrderService {
 
   updateOrderUrl = 'https://localhost:7128/api/Commande/updateOrder'
 
+  updateOrderStatusUrl = 'https://localhost:7128/api/Commande/ChangeOrderStatus';
+
+  updateOrderStatusMultiUrl = 'https://localhost:7128/api/Commande/ChangeCommandeStatut';
+
+ 
+
   getOrders(): any {
 
     return this.http.get<any[]>(this.getOrdersUrl);
@@ -35,4 +41,13 @@ export class OrderService {
     return this.http.put(`${this.updateOrderUrl}/${order.id}`, order);
   }
   
+
+  updateOrderStatus(order: string, status: string): any {
+    return this.http.put(`${this.updateOrderStatusUrl}/${order}/${status}`,null);
+  }
+
+  updateOrderStatusMulti(orderNumber: string, artisanName:string, status:string): any {
+    return this.http.put(`${this.updateOrderStatusMultiUrl}/${orderNumber}/${artisanName}/${status}`,null);
+  }
+
 }

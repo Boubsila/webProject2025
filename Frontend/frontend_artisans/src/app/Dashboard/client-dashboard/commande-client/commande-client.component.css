@@ -1,0 +1,15 @@
+/* Dans votre fichier CSS */
+.order-group {
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+  }
+  
+  .order-group:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+  
+  .group-header {
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+  }

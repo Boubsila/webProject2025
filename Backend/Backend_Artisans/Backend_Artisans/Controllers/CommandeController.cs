@@ -45,28 +45,7 @@ namespace Backend_Artisans.Controllers
             }
         }
 
-        //[HttpPut("updateOrder/{id}")]
-        //public ActionResult UpdateOrder(int id, [FromBody] Commande updatedData)
-        //{
-        //    try
-        //    {
-        //        _service.UpdateCommande(
-        //            id,
-
-        //            updatedData.statut,
-        //            updatedData.isOrderd,
-        //            updatedData.numeroCommande,
-        //            updatedData.adresseLivraison,
-        //            updatedData.dateLivraison
-        //        );
-
-        //        return Ok(new { message = "Commande mise à jour avec succès." });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, "Erreur lors de la mise à jour de la commande.");
-        //    }
-        //}
+ 
 
         [HttpPut("updateOrder/{id}")]
         public IActionResult UpdateCommande(int id, [FromBody] Commande updatedCommande)
@@ -123,6 +102,33 @@ namespace Backend_Artisans.Controllers
                 return StatusCode(500, "Erreur interne du serveur.");
             }
         }
+
+        //update order status 
+
+        [HttpPut("ChangeOrderStatus/{numeroCommande}/{nouveauStatut}")]
+        public ActionResult ChangeOrderStatus(string numeroCommande, string nouveauStatut)
+        {
+            try
+            {
+                _service.ChangeOrderStatus(numeroCommande, nouveauStatut);
+                return Ok(new { message = $"Statut de la commande '{numeroCommande}' mis à jour avec succès à '{nouveauStatut}'." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erreur interne du serveur lors de la mise à jour du statut de la commande '{numeroCommande}'.");
+            }
+        }
+
+
+        // update status order multi artisan 
+
+        [HttpPut("ChangeCommandeStatut/{numeroCommande}/{artisanName}/{nouveauStatut}")]
+        public IActionResult ChangeCommandeStatut(string numeroCommande, string artisanName, string nouveauStatut)
+        {
+            _service.ChangeCommandeStatusByProductAndArtisan(numeroCommande, artisanName, nouveauStatut);
+            return Ok();
+        }
+
 
     }
 }
