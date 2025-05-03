@@ -1,0 +1,92 @@
+/* Styles généraux */
+.filter-card {
+    background-color: #f8f9fa;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+  
+  .filter-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  /* Cartes produits */
+  .product-card {
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+  
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  .product-image-container {
+    height: 220px;
+    background-color: #f5f5f5;
+  }
+  
+  .product-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .product-card:hover .product-image {
+    transform: scale(1.05);
+  }
+  
+  /* Boutons */
+  .btn-primary {
+    background-color: #4e73df;
+    border-color: #4e73df;
+  }
+  
+  .btn-primary:hover {
+    background-color: #3b5cb8;
+    border-color: #3b5cb8;
+  }
+  
+  /* Avatar artisan */
+  .avatar-sm {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Animation ajout panier */
+  @keyframes bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  
+  .added-to-cart {
+    animation: bounce 0.5s ease;
+  }
+  
+  /* État vide */
+  .empty-state {
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .product-image-container {
+      height: 180px;
+    }
+    
+    .card-body {
+      padding: 1.25rem;
+    }
+  }
+  
+  /* Pipe de raccourcissement */
+  .truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }

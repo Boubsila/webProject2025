@@ -7,11 +7,32 @@ import { ProductService } from '../../services/product.service';
 import { AuthService } from '../../Authentification/auth.service';
 import { SuccessAlertService } from '../../Authentification/alerts/success-alert.service';
 import { FormsModule } from '@angular/forms';
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'shorten',
+  standalone: true
+})
+export class ShortenPipe implements PipeTransform {
+  transform(value: string | null | undefined, maxLength: number = 50, ellipsis: string = '...'): string {
+    if (value == null) return '';
+    if (value.length <= maxLength) return value;
+    
+    let shortened = value.substring(0, maxLength);
+    const lastSpace = shortened.lastIndexOf(' ');
+    
+    if (lastSpace > 0) {
+      shortened = shortened.substring(0, lastSpace);
+    }
+    
+    return shortened + ellipsis;
+  }
+}
 
 @Component({
   selector: 'app-produits',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule, ShortenPipe],
   templateUrl: './produits.component.html',
   styleUrls: ['./produits.component.css']
 })
@@ -29,6 +50,7 @@ export class ProduitsComponent implements OnInit {
   artisans: string[] = [];
   produits: any[] = [];
   produitsFiltres: any[] = [];
+  isLoading: boolean = true;
 
   categorieSelectionnee: string = '';
   artisanSelectionne: string = '';
@@ -36,19 +58,23 @@ export class ProduitsComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private successAlert: SuccessAlertService,
-    private userName: AuthService,
+    private authService: AuthService,
     private http: HttpClient
   ) {}
 
   ngOnInit(): void {
+    this.chargerDonnees();
+  }
+
+  chargerDonnees(): void {
+    this.isLoading = true;
     this.chargerProduits();
     this.chargerArtisans();
   }
 
-  // Charger les produits
   chargerProduits(): void {
-    this.productService.getProducts().subscribe(
-      (data: any[]) => {
+    this.productService.getProducts().subscribe({
+      next: (data: any[]) => {
         this.produits = data
           .filter(p => p.statut === 'approved')
           .map(p => ({
@@ -57,59 +83,70 @@ export class ProduitsComponent implements OnInit {
             description: p.description,
             prix: p.prix,
             categorie: p.categorie,
-            url: p.image,
+            url: p.image || 'assets/images/default-product.jpg',
             quantite: p.quantite || 0,
-            ArtisanName: p.artisanName,
-            statut: p.statut || 'pending'
+            ArtisanName: p.artisanName || 'Artisan inconnu',
+            statut: p.statut
           }));
 
-        // Définir la catégorie par défaut si elle n'est pas déjà sélectionnée
         if (!this.categorieSelectionnee && this.categories.length > 0) {
           this.categorieSelectionnee = this.categories[0];
         }
 
-        // Appliquer le filtre par catégorie et artisan
         this.filtrerProduits();
       },
-      (error: any) => console.error('Erreur chargement produits', error)
-    );
+      error: (error: any) => {
+        console.error('Erreur chargement produits', error);
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
+    });
   }
 
-  // Charger les artisans
   chargerArtisans(): void {
-    this.userName.getAllUsers().subscribe(
-      (users: any[]) => {
-        const artisansFiltrés = users.filter(u => u.role === 'artisan');
-        this.artisans = artisansFiltrés.map(u => u.username);
+    this.authService.getAllUsers().subscribe({
+      next: (users: any[]) => {
+        this.artisans = users
+          .filter(u => u.role === 'artisan')
+          .map(u => u.username);
 
-        if (this.artisans.length > 0) {
+        if (this.artisans.length > 0 && !this.artisanSelectionne) {
           this.artisanSelectionne = this.artisans[0];
         }
 
         this.filtrerProduits();
       },
-      error => console.error('Erreur chargement artisans', error)
-    );
+      error: (error) => {
+        console.error('Erreur chargement artisans', error);
+      }
+    });
   }
 
-  // Filtrer les produits par catégorie et artisan
   filtrerProduits(): void {
-    this.produitsFiltres = this.produits.filter(produit =>
-      (this.categorieSelectionnee === 'Autres'
+    if (!this.categorieSelectionnee || !this.artisanSelectionne) return;
+    
+    this.produitsFiltres = this.produits.filter(produit => {
+      const matchCategorie = this.categorieSelectionnee === 'Autres'
         ? !this.categories.slice(0, 6).includes(produit.categorie)
-        : produit.categorie === this.categorieSelectionnee) &&
-      produit.ArtisanName === this.artisanSelectionne
-    );
+        : produit.categorie === this.categorieSelectionnee;
+      
+      const matchArtisan = produit.ArtisanName === this.artisanSelectionne;
+      
+      return matchCategorie && matchArtisan;
+    });
   }
 
-  // Ajouter un produit au panier
   ajouterAuPanier(produit: any): void {
+    if (produit.quantite <= 0) return;
+
     const commande = {
       id: 0,
       produitId: produit.id,
       produitName: produit.nom,
       artisanName: produit.ArtisanName,
-      clientName: this.userName.getUserName(),
+      clientName: this.authService.getUserName(),
       livreurName: '',
       dateCommande: new Date().toISOString(),
       statut: 'pending',
@@ -124,11 +161,26 @@ export class ProduitsComponent implements OnInit {
       .pipe(
         catchError(error => {
           console.error('Erreur ajout commande', error);
-          return throwError(error);
+          return throwError(() => new Error('Erreur lors de l\'ajout au panier'));
         })
       )
-      .subscribe(() => {
-        this.successAlert.successAlert(`${produit.nom} ajouté au panier avec succès!`);
+      .subscribe({
+        next: () => {
+
+          this.successAlert.successAlert(`✓ "${produit.nom}" ajouté au panier!`);
+          this.jouerAnimationAjout(produit.id);
+        },
+        error: (err) => {
+          console.error('Erreur:', err);
+        }
       });
+  }
+
+  private jouerAnimationAjout(productId: number): void {
+    const button = document.querySelector(`button[data-product-id="${productId}"]`);
+    if (button) {
+      button.classList.add('added-to-cart');
+      setTimeout(() => button.classList.remove('added-to-cart'), 1000);
+    }
   }
 }

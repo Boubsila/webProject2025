@@ -1,7 +1,3 @@
-import { PanierComponent } from './../panier/panier.component';
-import { SuccessAlertService } from './../../../Authentification/alerts/success-alert.service';
-import { ErreurAlertService } from './../../../Authentification/alerts/erreur-alert.service';
-import { AuthService } from './../../../Authentification/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -10,6 +6,9 @@ import { OrderService } from '../../../services/order.service';
 import { AvisService } from '../../../services/avis.service';
 import { Observable, forkJoin, of } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
+import { AuthService } from './../../../Authentification/auth.service';
+import { ErreurAlertService } from './../../../Authentification/alerts/erreur-alert.service';
+import { SuccessAlertService } from './../../../Authentification/alerts/success-alert.service';
 
 @Component({
   selector: 'app-avis-client',
@@ -67,6 +66,7 @@ export class AvisClientComponent implements OnInit {
 
             commandesGrouped[numeroCommande].items.push({
               id: item.produitId,
+              artisanName: item.artisanName,
               name: item.produitName,
               rating: 0,
               comment: '',
@@ -198,13 +198,16 @@ export class AvisClientComponent implements OnInit {
       return;
     }
 
+    // Formatage du commentaire avec le nom d'utilisateur
+    const formattedComment = `${this.user}: ${item.comment.trim()}, ${this.formatDate(new Date())}`;
+
     const avis = {
       id: 0,
       numeroCommande: this.orders[orderIndex].orderNumber,
       produitName: item.name,
       userName: this.user,
       note: item.rating,
-      commentaire: [item.comment],
+      commentaire: [formattedComment],
       dateAvis: this.formatDate(new Date())
     };
 
@@ -214,11 +217,8 @@ export class AvisClientComponent implements OnInit {
       next: () => {
         item.avisSubmitted = true;
         item.isSubmitting = false;
-
         this.successAlertService.successAlert('Votre avis a été soumis avec succès !');
         item.comment = '';
-
-        // Recharger les données au lieu de naviguer
         this.loadProductData(this.orders[orderIndex].orderNumber, item);
       },
       error: (error) => {
@@ -233,8 +233,6 @@ export class AvisClientComponent implements OnInit {
     });
   }
 
-
-  //******************************************************************************************* */
   addCommentToProduct(orderIndex: number, itemIndex: number) {
     const order = this.orders[orderIndex];
     const item = order.items[itemIndex];
@@ -244,28 +242,28 @@ export class AvisClientComponent implements OnInit {
       return;
     }
 
+    // Formatage du nouveau commentaire avec le nom d'utilisateur
+    const formattedComment = `${this.user}: ${this.newComment.trim()}, ${this.formatDate(new Date())}`;
+
     item.isAddingComment = true;
-    this.avisService.addComment(order.orderNumber, item.name, this.newComment).subscribe({
+    this.avisService.addComment(order.orderNumber, item.name, formattedComment).subscribe({
       next: () => {
         this.successAlertService.successAlert('Commentaire ajouté avec succès !');
         this.newComment = '';
-        // Recharger les données au lieu de naviguer
         this.loadProductData(order.orderNumber, item);
-
       },
       error: (error) => {
         item.isAddingComment = false;
         if (error.status === 400) {
           this.erreurAlertService.erreurAlert("Vous devez d'abord soumettre un avis initial.");
         } else {
-
-          this.erreurAlertService.erreurAlert('Erreur lors de l\'ajout du commentaire.ici erreur');
-
+          this.erreurAlertService.erreurAlert('Erreur lors de l\'ajout du commentaire.');
         }
+      },
+      complete: () => {
+        item.isAddingComment = false; // <-- Solution alternative
       }
     });
-
-    item.isAddingComment = false;
   }
 
   getStarClass(star: number, currentRating: number, hoverRating: number | null, isDisabled: boolean): string {
@@ -276,41 +274,32 @@ export class AvisClientComponent implements OnInit {
     return filled ? 'bi-star-fill text-warning' : 'bi-star text-muted';
   }
 
-
-  getCommentBorderStyle(index: number): string {
-    const colors = [
-      '5px solid #0d6efd',  // Bleu Bootstrap
-      '5px solid #198754',  // Vert Bootstrap
-      '5px solid #6f42c1',  // Violet Bootstrap
-      '5px solid #fd7e14',  // Orange Bootstrap
-      '5px solid #d63384'   // Rose Bootstrap
-    ];
-    return colors[index % colors.length];
-  }
-  // Méthodes utilitaires pour le nouveau design
   getCommentColor(index: number): string {
     const colors = ['#6366f1', '#10b981', '#0ea5e9', '#f59e0b', '#ef4444'];
     return colors[index % colors.length];
   }
 
-
-
-  extractCommentText(comment: string): string {
-    const parts = comment.split(',');
-    return parts[0]?.trim() || '';
+  getCommentAuthor(comment: string): string {
+    const parts = comment.split(':');
+    return parts[0]?.trim() || 'Utilisateur';
   }
-  
-  
+
+  getCommentText(comment: string): string {
+    const parts = comment.split(':');
+    if (parts.length < 2) return comment;
+    
+    const textParts = parts[1].split(',');
+    return textParts[0]?.trim() || '';
+  }
 
   getFormattedDateFromComment(comment: string): string {
     const parts = comment.split(',');
-    if (parts.length < 3) return '';
-  
-    const date = parts[1].trim(); // "03-05-25"
-    const time = parts[2].trim(); // "15:49:29"
-  
+    if (parts.length < 2) return '';
+    
+    const dateTime = parts[1]?.trim();
+    if (!dateTime) return '';
+    
+    const [date, time] = dateTime.split(' ');
     return `${date} à ${time}`;
   }
-  
-
 }

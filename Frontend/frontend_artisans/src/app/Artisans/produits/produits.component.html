@@ -1,62 +1,103 @@
 <div class="container mt-4">
-    <!-- Filtres -->
-    <div class="row mb-4">
-      <div class="col-md-6">
-        <label for="categorieSelect" class="form-label fw-bold">Filtrer par Catégorie</label>
-        <select class="form-select" id="categorieSelect" [(ngModel)]="categorieSelectionnee" (change)="filtrerProduits()">
+  <!-- Filtres améliorés -->
+  <div class="row mb-4 g-3">
+    <div class="col-md-6">
+      <div class="filter-card shadow-sm rounded-4 p-3 h-100">
+        <label for="categorieSelect" class="form-label fw-bold text-primary mb-2">
+          <i class="bi bi-tags me-2"></i>Catégorie
+        </label>
+        <select class="form-select border-3 rounded-3 py-2" id="categorieSelect" 
+                [(ngModel)]="categorieSelectionnee" (change)="filtrerProduits()">
           <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
         </select>
       </div>
-      <div class="col-md-6">
-        <label for="artisanSelect" class="form-label fw-bold">Filtrer par Artisan</label>
-        <select class="form-select" id="artisanSelect" [(ngModel)]="artisanSelectionne" (change)="filtrerProduits()">
+    </div>
+    <div class="col-md-6">
+      <div class="filter-card shadow-sm rounded-4 p-3 h-100">
+        <label for="artisanSelect" class="form-label fw-bold text-primary mb-2">
+          <i class="bi bi-person-workspace me-2"></i>Artisan
+        </label>
+        <select class="form-select border-3 rounded-3 py-2" id="artisanSelect" 
+                [(ngModel)]="artisanSelectionne" (change)="filtrerProduits()">
           <option *ngFor="let artisan of artisans" [value]="artisan">{{ artisan }}</option>
         </select>
       </div>
     </div>
-  
-    <!-- Produits -->
-    <div class="row justify-content-center">
-      <div *ngFor="let produit of produitsFiltres" class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm">
-          <img [src]="produit.url" class="card-img-top img-fluid" alt="{{produit.nom}}" style="height: 200px; object-fit: cover;">
-          <div class="card-body">
-            <h5 class="card-title text-primary fw-bold">
-              <i class="bi bi-box-seam me-2"></i> {{produit.nom}}
+  </div>
+
+  <!-- Produits - Grille améliorée -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div *ngFor="let produit of produitsFiltres" class="col">
+      <div class="card h-100 product-card shadow-sm border-0 rounded-4 overflow-hidden">
+        <!-- Badge de statut -->
+        <div class="position-absolute top-0 end-0 m-2">
+          <span class="badge bg-success rounded-pill px-3 py-2" *ngIf="produit.quantite > 0">
+            <i class="bi bi-check-circle me-1"></i> Disponible
+          </span>
+          <span class="badge bg-danger rounded-pill px-3 py-2" *ngIf="produit.quantite <= 0">
+            <i class="bi bi-exclamation-triangle me-1"></i> Rupture
+          </span>
+        </div>
+
+        <!-- Image avec effet de zoom -->
+        <div class="product-image-container overflow-hidden">
+          <img [src]="produit.url" class="card-img-top img-fluid product-image" 
+               alt="{{produit.nom}}" loading="lazy">
+        </div>
+
+        <!-- Corps de la carte -->
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <h5 class="card-title fw-bold text-dark mb-0">
+              <i class="bi bi-box-seam text-primary me-2"></i> {{produit.nom}}
             </h5>
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <h6 class="text-success mb-0">
-                <i class="bi bi-cash-stack me-1"></i> {{produit.prix | number:'1.2-2'}} €
-              </h6>
-              <span class="badge bg-primary">
-                <i class="bi bi-box2 me-1"></i> {{produit.quantite}} unité(s)
-              </span>
-            </div>
-            <p class="card-text text-muted">{{ produit.description }}</p>
-            <div class="d-flex align-items-center mt-3">
-              <i class="bi bi-person-gear me-2 text-secondary"></i>
-              <small class="text-muted">Fabriqué par: {{ produit.ArtisanName }}</small>
-            </div>
+            <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3">
+              {{produit.categorie | shorten:20}}
+            </span>
           </div>
-          <div class="card-footer bg-transparent border-0">
-            <div class="d-grid gap-2">
-              <button 
-                class="btn"
-                [class.btn-outline-primary]="produit.quantite > 0" 
-                [class.btn-danger]="produit.quantite <= 0"
-                (click)="ajouterAuPanier(produit)"
-                [disabled]="produit.quantite <= 0">
-                <i 
-                  class="bi me-2" 
-                  [class.bi-cart-plus]="produit.quantite > 0" 
-                  [class.bi-exclamation-triangle]="produit.quantite <= 0">
-                </i> 
-                {{ produit.quantite > 0 ? 'Ajouter au panier' : 'Rupture' }}
-              </button>
-            </div>
+
+          <p class="card-text text-muted mb-4">{{ produit.description | shorten:100 }}</p>
+
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="text-success fw-bold mb-0">
+              {{produit.prix | number:'1.2-2'}} €
+            </h4>
+            <small class="text-muted">
+              <i class="bi bi-box2 me-1"></i> {{produit.quantite}} en stock
+            </small>
           </div>
+
+          <div class="d-flex align-items-center mb-4">
+            <div class="avatar-sm bg-light-primary rounded-circle me-2">
+              <i class="bi bi-person-gear text-primary"></i>
+            </div>
+            <small class="text-muted">Artisan: {{ produit.ArtisanName }}</small>
+          </div>
+        </div>
+
+        <!-- Bouton d'action -->
+        <div class="card-footer bg-transparent border-top-0 pb-4 px-4">
+          <button class="btn w-100 rounded-pill py-2 fw-bold"
+                  [class.btn-primary]="produit.quantite > 0" 
+                  [class.btn-outline-danger]="produit.quantite <= 0"
+                  (click)="ajouterAuPanier(produit)"
+                  [disabled]="produit.quantite <= 0">
+            <i class="bi me-2" 
+               [class.bi-cart-plus]="produit.quantite > 0" 
+               [class.bi-exclamation-circle]="produit.quantite <= 0"></i> 
+            {{ produit.quantite > 0 ? 'Ajouter au panier' : 'En rupture' }}
+          </button>
         </div>
       </div>
     </div>
+
+    <!-- Message si aucun produit -->
+    <div *ngIf="produitsFiltres.length === 0" class="col-12 text-center py-5">
+      <div class="empty-state">
+        <i class="bi bi-box-seam display-4 text-muted mb-3"></i>
+        <h4 class="text-muted mb-2">Aucun produit trouvé</h4>
+        <p class="text-muted">Essayez de modifier vos filtres de recherche</p>
+      </div>
+    </div>
   </div>
-  
+</div>

@@ -1,0 +1,199 @@
+/* Styles généraux */
+.container {
+    max-width: 1200px;
+  }
+  
+  /* Bouton Retour */
+  .btn-outline-primary {
+    border-width: 1.5px;
+    transition: all 0.3s;
+  }
+  
+  .btn-outline-primary:hover {
+    background-color: #4e73df;
+    box-shadow: 0 4px 8px rgba(78, 115, 223, 0.2);
+    transform: translateY(-1px);
+  }
+  
+  /* Styles pour la table améliorée */
+  .table {
+    --bs-table-bg: transparent;
+  }
+  
+  .bg-light-primary {
+    background-color: rgba(78, 115, 223, 0.1);
+  }
+  
+  .avatar-sm {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .rating {
+    display: flex;
+    align-items: center;
+  }
+  
+  .stars {
+    color: #ffc107;
+    font-size: 1rem;
+  }
+  
+  .stars .filled {
+    color: #ffc107;
+  }
+  
+  .stars .empty {
+    color: #e4e5e9;
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: rgba(78, 115, 223, 0.05);
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+  }
+  
+  .border-light {
+    border-color: rgba(0, 0, 0, 0.03) !important;
+  }
+  
+  /* Styles pour le modal amélioré */
+  .modal-content {
+    border: none;
+    overflow: hidden;
+  }
+  
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+  }
+  
+  .avatar {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .comment-bubble {
+    position: relative;
+    border-left: 3px solid #4e73df;
+  }
+  
+  .comment-bubble:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-right-color: white;
+    border-left: 0;
+    margin-top: -10px;
+    margin-left: -10px;
+  }
+  
+  .comment-section {
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+  }
+  
+  .response-section textarea {
+    min-height: 120px;
+    resize: vertical;
+    border-color: #dee2e6;
+    transition: all 0.3s;
+  }
+  
+  .response-section textarea:focus {
+    border-color: #4e73df;
+    box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+  }
+  
+  /* Animation d'ouverture du modal */
+  .modal.fade .modal-dialog {
+    transform: translateY(-50px);
+    opacity: 0;
+    transition: all 0.3s ease-out;
+  }
+  
+  .modal.show .modal-dialog {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .table-responsive {
+      border: 0;
+    }
+    
+    .table thead {
+      display: none;
+    }
+    
+    .table tr {
+      display: block;
+      margin-bottom: 1rem;
+      border: 1px solid #dee2e6;
+      border-radius: 0.5rem;
+    }
+    
+    .table td {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem;
+      border-bottom: 1px solid #f8f9fa;
+    }
+    
+    .table td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      margin-right: 1rem;
+      color: #4e73df;
+    }
+    
+    .table td:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  /* Styles pour le modal amélioré */
+.comment-bubble {
+  border-left: 3px solid #4e73df;
+  transition: all 0.2s ease;
+}
+
+.comment-bubble:hover {
+  transform: translateX(3px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(78, 115, 223, 0.1);
+}
+
+/* Style pour la date */
+.text-muted small {
+  font-size: 0.8rem;
+}
+
+/* Animation d'entrée des commentaires */
+.comment-section div {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

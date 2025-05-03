@@ -18,9 +18,9 @@ namespace Domain
         // Relations
        
 
-        public Artisan? Artisan { get; set; }
-        public Client? Client { get; set; }
-        public PartenaireLivraison? PartenaireLivraison { get; set; }
+        //public Artisan? Artisan { get; set; }
+        //public Client? Client { get; set; }
+        //public PartenaireLivraison? PartenaireLivraison { get; set; }
 
 
         //migration test 

@@ -20,12 +20,14 @@
         <div *ngFor="let order of orders; let orderIndex = index" class="mb-5">
           <h3 class="mb-3">
             Commande {{ order.orderNumber }} - {{ order.orderDate | date:'mediumDate' }}
-            <span class="text-muted fs-6">(Artisan: {{ order.artisanName }})</span>
+            
           </h3>
           <div class="row row-cols-1 row-cols-md-2 g-4">
             <div class="col" *ngFor="let item of order.items; let itemIndex = index">
               <div class="card h-100">
                 <div class="card-body">
+
+                  <p class="text-muted mb-2"><i class="bi bi-person"></i> Artisan : {{ item.artisanName }}</p>
                   <h5 class="card-title">{{ item.name }}</h5>
 
                   <!-- Affichage de la note actuelle -->
@@ -41,10 +43,7 @@
                         <ng-container *ngFor="let star of [1,2,3,4,5]">
                           <i class="bi" [ngClass]="getStarClass(star, item.note, null, true)"></i>
                         </ng-container>
-                        
                         <span class="ms-2 text-muted fw-semibold fs-4">{{ getRatingText(item.note) }}</span>
-
-
                       </div>
                       <div *ngIf="!item.note || item.note === 0" class="text-muted">
                         Aucune note pour ce produit.
@@ -61,21 +60,19 @@
                     </div>
 
                     <div *ngIf="!item.isLoadingComments" class="comment-container">
-                      <!-- Nouveau style pour les commentaires -->
                       <div *ngFor="let comment of item.existingComments; let i = index"
                         class="comment-card mb-3 p-3 rounded-3 shadow-sm"
                         [style.border-left]="'4px solid ' + getCommentColor(i)">
                         <div class="d-flex align-items-center mb-2">
                           <span class="comment-author-badge me-2" [style.background]="getCommentColor(i)">
-                            {{user | slice:0:1 | uppercase}}
+                            {{ getCommentAuthor(comment) | slice:0:1 | uppercase }}
                           </span>
-                          <strong class="text-muted">{{user}}:</strong>
+                          <strong class="text-muted">{{ getCommentAuthor(comment) }}:</strong>
                           <span class="comment-date ms-auto text-muted small">
                             {{ getFormattedDateFromComment(comment) }}
                           </span>
-
                         </div>
-                        <p class="comment-text mb-0">{{extractCommentText(comment)}}</p>
+                        <p class="comment-text mb-0">{{ getCommentText(comment) }}</p>
                       </div>
 
                       <div *ngIf="!item.existingComments || item.existingComments.length === 0"
@@ -88,7 +85,6 @@
 
                   <!-- Formulaire d'avis initial -->
                   <form *ngIf="!item.avisSubmitted" (ngSubmit)="submitFirstReview(orderIndex, itemIndex)">
-
                     <div class="mb-3">
                       <label class="form-label">Note</label>
                       <div class="star-rating">
@@ -108,8 +104,7 @@
                     </div>
 
                     <div class="mb-3">
-                      <label for="comment-{{orderIndex}}-{{itemIndex}}" class="form-label">Votre premier
-                        commentaire</label>
+                      <label for="comment-{{orderIndex}}-{{itemIndex}}" class="form-label">Votre premier commentaire</label>
                       <textarea class="form-control" id="comment-{{orderIndex}}-{{itemIndex}}"
                         [(ngModel)]="item.comment" name="comment" rows="3" placeholder="Écrivez votre premier avis..."
                         [disabled]="item.avisSubmitted"></textarea>
@@ -133,7 +128,6 @@
                       <label for="newComment" class="form-label">Ajouter un commentaire supplémentaire</label>
                       <textarea class="form-control" id="newComment" [(ngModel)]="newComment" name="newComment" rows="2"
                         placeholder="Ajouter un autre commentaire..." [disabled]="item.isAddingComment"></textarea>
-
                     </div>
                     <div class="text-end">
                       <button type="button" class="btn btn-outline-primary rounded-pill px-4"
@@ -152,7 +146,6 @@
                     <i class="bi bi-info-circle me-2"></i>
                     Veuillez soumettre un avis initial avant d'ajouter des commentaires supplémentaires.
                   </div>
-
                 </div>
               </div>
             </div>
