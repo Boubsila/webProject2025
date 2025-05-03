@@ -135,6 +135,110 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Backend_Artisans.Controllers.AvisController",
+    "Method": "AjouterAvis",
+    "RelativePath": "api/Avis/AjouterAvis",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "avis",
+        "Type": "Domain.Avis",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_Artisans.Controllers.AvisController",
+    "Method": "ajouterCommentaire",
+    "RelativePath": "api/Avis/ajouterCommentaire",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ORD",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "produitName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "commentaire",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_Artisans.Controllers.AvisController",
+    "Method": "GetAvis",
+    "RelativePath": "api/Avis/GetComent",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ORD",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "produitName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Domain.Avis, Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Backend_Artisans.Controllers.AvisController",
+    "Method": "GetNote",
+    "RelativePath": "api/Avis/GetNote",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ORD",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "produitName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Int32",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "Backend_Artisans.Controllers.CommandeController",
     "Method": "AddCommande",
     "RelativePath": "api/Commande/addOrder",

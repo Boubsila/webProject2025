@@ -32,25 +32,27 @@ export class LoginComponent {
   constructor(private router: Router, private authentication: AuthService,private success:SuccessAlertService,private erreur:ErreurAlertService) { }
 
   onSubmit() {
-    let email = this.myForm.value.Email ?? '';
-    let password = this.myForm.value.Password ?? '';
-
-    this.authentication.login(email, password).subscribe(response => {
-      if (response.token) {
-        sessionStorage.setItem("jwt", response.token);
-       this.success.successAlert('Connexion réussie');
-
-      }else
-      {
-        this.erreur.erreurAlert('Erreur de connexion');
+    const email = this.myForm.value.Email ?? '';
+    const password = this.myForm.value.Password ?? '';
+  
+    this.authentication.login(email, password).subscribe({
+      next: (response) => {
+        if (response.token) {
+          sessionStorage.setItem("jwt", response.token);
+          this.success.successAlert('Connexion réussie');
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.erreur.erreurAlert('Email ou mot de passe incorrect');
+          this.myForm.reset();
+        }
+      },
+      error: (err) => {
+        let errorMessage = 'Une erreur est survenue lors de la connexion';
+        
+        this.erreur.erreurAlert(errorMessage);
+        this.myForm.reset();
       }
-
-      this.router.navigate(['/dashboard']);
-      email = '';
-      password = '';
     });
-
-
   }
 
 }

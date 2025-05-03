@@ -189,6 +189,174 @@
         }
       }
     },
+    "/api/Avis/GetComent": {
+      "get": {
+        "tags": [
+          "Avis"
+        ],
+        "parameters": [
+          {
+            "name": "ORD",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "produitName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Avis"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Avis"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Avis"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Avis/AjouterAvis": {
+      "post": {
+        "tags": [
+          "Avis"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Avis"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Avis"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Avis"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Avis/GetNote": {
+      "get": {
+        "tags": [
+          "Avis"
+        ],
+        "parameters": [
+          {
+            "name": "ORD",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "produitName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Avis/ajouterCommentaire": {
+      "post": {
+        "tags": [
+          "Avis"
+        ],
+        "parameters": [
+          {
+            "name": "ORD",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "produitName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "commentaire",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Commande/GetOrder": {
       "get": {
         "tags": [
@@ -725,26 +893,28 @@
             "type": "integer",
             "format": "int32"
           },
-          "clientId": {
-            "type": "integer",
-            "format": "int32"
+          "numeroCommande": {
+            "type": "string",
+            "nullable": true
           },
-          "client": {
-            "$ref": "#/components/schemas/Client"
+          "produitName": {
+            "type": "string",
+            "nullable": true
           },
-          "produitId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "produit": {
-            "$ref": "#/components/schemas/Produit"
+          "userName": {
+            "type": "string",
+            "nullable": true
           },
           "note": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "commentaire": {
-            "type": "string",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           },
           "dateAvis": {

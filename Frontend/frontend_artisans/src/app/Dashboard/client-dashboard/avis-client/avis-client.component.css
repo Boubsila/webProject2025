@@ -1,22 +1,121 @@
-.rating {
-    display: inline-flex; /* Pour aligner les étoiles horizontalement */
-    gap: 0.3rem; /* Espacement entre les étoiles */
-    cursor: pointer; /* Indiquer que les étoiles sont cliquables */
-  }
-  
-  .rating i {
-    font-size: 1.5rem; /* Taille des étoiles */
-    color: #ccc; /* Couleur des étoiles non sélectionnées */
-  }
-  
-  .rating i.bi-star-fill {
-    color: gold; /* Couleur des étoiles sélectionnées */
-  }
-  
-  .rating i:hover {
-    color: orange; /* Couleur au survol */
-  }
-  
-  .rating i.hovered {
-    color: orange; /* Couleur des étoiles survolées avant le clic */
-  }
+.star-rating {
+  display: flex;
+  align-items: center;
+}
+
+.star-rating .stars {
+  display: flex;
+}
+
+.star-rating .bi {
+  font-size: 1.8rem;
+  transition: all 0.2s ease;
+  margin-right: 3px;
+}
+
+.star-rating .bi:not(.text-light):not(.text-secondary):hover {
+  transform: scale(1.1);
+}
+
+.rating-text {
+  font-size: 0.9rem;
+  min-width: 120px;
+}
+
+.avis-history {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.card {
+  transition: transform 0.3s ease;
+  border: none;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background-color: #4285F4;
+  border-color: #4285F4;
+}
+
+.btn-primary:hover {
+  background-color: #3367D6;
+  border-color: #3367D6;
+}
+
+.btn-outline-primary {
+  color: #4285F4;
+  border-color: #4285F4;
+}
+
+.btn-outline-primary:hover {
+  background-color: #4285F4;
+  color: white;
+}
+
+textarea:focus {
+  border-color: #4285F4;
+  box-shadow: 0 0 0 0.2rem rgba(66, 133, 244, 0.25);
+}
+
+.avis-history .bg-white {
+  border-left: 3px solid #4285F4;
+}
+
+.text-secondary {
+  color: #68e316 !important;
+}
+
+.text-light {
+  color: #bcc9d6 !important;
+}
+
+/* Animation pour les étoiles sélectionnées */
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+.star-rating .bi.text-warning {
+  animation: bounce 0.5s ease;
+}
+
+/* Styles modernes pour les commentaires */
+.comment-container {
+  background-color: #f8fafc;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.comment-card {
+  background-color: white;
+  transition: transform 0.2s;
+  border-left: 4px solid;
+}
+
+.comment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.comment-author-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.comment-text {
+  color: #334155;
+  line-height: 1.5;
+  padding-left: 36px; /* Alignement avec le texte */
+}

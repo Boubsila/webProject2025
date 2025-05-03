@@ -97,5 +97,30 @@ namespace Business
         {
             _repository.ChangeCommandeStatusByProductAndArtisan(numeroCommande,artisanName,nouveauStatut);
         }
+
+
+        //**************************************************** AVIS ****************************************************//
+
+        // Avis
+
+        public void AjouterAvis(Avis avis)
+        {
+            _repository.AjouterAvis(avis);
+        }
+       public List<string> GetComent(string ORD, string produitName)
+        {
+            return _repository.GetComent(ORD,produitName);
+        }
+
+       public int GetNote(string ORD, string produitName)
+        {
+            return _repository.GetNote(ORD, produitName);
+        }
+
+        public void ajouterCommentaire(string ORD, string produitName, string commentaire)
+        {
+            _repository.ajouterCommentaire(ORD,produitName,commentaire);
+        }
+
     }
 }

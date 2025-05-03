@@ -32,7 +32,7 @@ namespace Data
         //user list 
         private static List<User> users = new List<User>
         {
-           // new User ( 1,  "admin@artisans.be",  "admin", Guid.NewGuid().ToString(), "Admin",  true ),
+           
             new User ( 1,"su@artisans.be","4326FACBD8C1467C6FC7","f6893125-485c-4439-a443-d4600865f788","Admin",true),
             new User ( 2,"client","BD605BE48F3DDE7AEE95","399f10b0-f976-4079-b0a0-1461f45fa58e","client",true),
             new User ( 3,"artisan","C32665DFD1F098F185D4","d264db82-396a-4ffa-9671-f3cc7fee2489","artisan",true),
@@ -66,33 +66,37 @@ namespace Data
         private static List<Commande> commandes = new List<Commande>
         {
 
-            new Commande(0,"ORD_test_Order",1,"test","artisan","client","","12/04/25","Pending",false,10,20,"",""),
+            new Commande(0,"ORD_test_Order",1,"test","artisan","client","","12/04/25","Expédiée",false,10,20,"",""),
+
 
         };
 
         // Avis liste 
 
-        private static List<Avis> avis = new List<Avis>
+        private static List<Avis> avisList = new List<Avis>
         {
-            new Avis (0,"ORD_test_Order","product test order", "client","artisan",5,new List<string> { "Top product" }, "16/06/2025")
+            new Avis (0,"ORD1","product1", "client",5,new List<string> { "Top product"}, "16/06/2025"),
+            new Avis (1,"ORD2","product1", "client2",5,new List<string> { "Merci"}, "17/06/2025")
 
         };
 
 
         //public IEnumerable<livraisonTest> GetLivraisons() => livraisons;
 
-        //migration test
+        //******************* USERS *************************
+
+        
         public List<User> GetUsers()
         {
             return users;
         }
-        //migration test
+        
         public void AddUser(User user)
         {
             users.Add(user);
         }
 
-        //migration test 
+        
         public void DeleteUser(int Id)
         {
             var user = users.FirstOrDefault(x => x.Id == Id);
@@ -102,6 +106,7 @@ namespace Data
             }
         }
 
+        //******************* Products *************************
         public List<Produit> getAllProducts()
         {
             return produits;
@@ -175,6 +180,7 @@ namespace Data
             }
         }
 
+        //******************* Order *************************
 
         //get commande
         public List<Commande> GetCommandeList()
@@ -261,6 +267,72 @@ namespace Data
         }
 
 
+        //+++++++************** AVIS ********************//
+
+        public void AjouterAvis(Avis avis)
+        {
+            // Vérifier si l'avis existe déjà pour la même commande et le même produit  
+            var avisExistant = avisList.FirstOrDefault(a =>
+                a.NumeroCommande == avis.NumeroCommande &&
+                a.ProduitName == avis.ProduitName);
+
+            if (avisExistant != null )
+            {
+                throw new ArgumentException("Vous avez déjà soumis un avis pour ce produit.");
+            }
+                // Ajouter un ID unique à l'avis  
+                avis.Id = avisList.Count > 0 ? avisList.Max(a => a.Id) + 1 : 1;
+
+                // Formater le commentaire initial et l'ajouter à la liste des commentaires  
+                string commentaireFormate = $"{avis.Commentaire.FirstOrDefault()}, {DateTime.Now:dd-MM-yy, HH:mm:ss}";
+                avis.Commentaire = new List<string> { commentaireFormate };
+
+                // Ajouter l'avis à la liste  
+                avisList.Add(avis);
+            
+
+        }
+
+        public void ajouterCommentaire(string ORD, string produitName, string commentaire)
+        {
+            // Trouver l'avis correspondant à la commande et au produit
+            var avis = avisList.FirstOrDefault(a =>
+                a.NumeroCommande == ORD &&
+                a.ProduitName == produitName);
+
+            if (avis != null)
+            {
+                // Formater le nouveau commentaire avec la date/heure actuelle
+                string commentaireFormate = $"{commentaire} , {DateTime.Now:dd-MM-yy, HH:mm:ss}";
+
+                // Ajouter le commentaire formaté à la liste des commentaires de l'avis
+                avis.Commentaire.Add(commentaireFormate);
+            }
+            else
+            {
+               
+                throw new InvalidOperationException($"Avis non trouvé pour la commande {ORD} et le produit {produitName}");
+            }
+        }
+
+        public List<string> GetComent(string ORD, string produitName)
+        {
+            return avisList
+                .Where(a => a.NumeroCommande == ORD && a.ProduitName == produitName)
+                .SelectMany(a => a.Commentaire) 
+                .ToList();
+        }
+
+
+        public int GetNote(string ORD, string produitName)
+        {
+            // Recherche de l'avis correspondant à la commande et au produit
+            var avis = avisList
+                .FirstOrDefault(a => a.NumeroCommande == ORD && a.ProduitName == produitName);
+
+            // Si un avis a été trouvé, retourner la note, sinon retourner une valeur par défaut (par exemple, 0)
+            return avis?.Note ?? 0; // Si avis est null, retourne 0
+        }
 
 
     }

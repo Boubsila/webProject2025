@@ -23,6 +23,8 @@ export class RegisterComponent {
   users: { email: string; password: string; role: string }[] = [];
 
   constructor(private router: Router, private fb: FormBuilder,private r : AuthService,private success:SuccessAlertService,private erreur:ErreurAlertService,private register:AuthService) { 
+    
+    
     // Initialisez le formulaire réactif
     this.registerForm = this.fb.group({
       email: ['@artisans.be', [Validators.required]], // Champ obligatoire et format email
@@ -37,7 +39,11 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       // Vérifiez si les mots de passe correspondent
       if (this.registerForm.value.password !== this.registerForm.value.confirmPassword) {
-        alert('Les mots de passe ne correspondent pas.');
+        this.erreur.erreurAlert('Les mots de passe ne correspondent pas.');
+        return;
+      }
+      if(this.registerForm.value.email == '@artisans.be'){
+        this.erreur.erreurAlert('Email invalide.');
         return;
       }
 

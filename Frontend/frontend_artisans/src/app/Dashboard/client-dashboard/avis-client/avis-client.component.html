@@ -3,49 +3,169 @@
     <button class="btn btn-outline-secondary fw-bold rounded-pill" (click)="goToDashboard()">
       <i class="bi bi-arrow-left me-2"></i> Retour au tableau de bord
     </button>
-   
   </div>
 
   <h2 class="text-center mb-4 text-primary fw-bold">Laisser un Avis</h2>
 
   <div class="card shadow-lg rounded-4">
     <div class="card-body p-4">
-      <div *ngIf="orders && orders.length > 0; else noOrders">
-        <div *ngFor="let order of orders; let orderIndex = index">
+      <div *ngIf="isLoading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Chargement...</span>
+        </div>
+        <p class="mt-3">Chargement de vos commandes...</p>
+      </div>
+
+      <div *ngIf="!isLoading && orders && orders.length > 0; else noOrders">
+        <div *ngFor="let order of orders; let orderIndex = index" class="mb-5">
           <h3 class="mb-3">
-            Commande {{ order.orderNumber }} - {{ order.orderDate | date }}
+            Commande {{ order.orderNumber }} - {{ order.orderDate | date:'mediumDate' }}
+            <span class="text-muted fs-6">(Artisan: {{ order.artisanName }})</span>
           </h3>
           <div class="row row-cols-1 row-cols-md-2 g-4">
             <div class="col" *ngFor="let item of order.items; let itemIndex = index">
               <div class="card h-100">
                 <div class="card-body">
                   <h5 class="card-title">{{ item.name }}</h5>
-                  <form (ngSubmit)="submitReview(orderIndex, itemIndex)">
-                    <div class="mb-3">
-                      <label class="form-label">Note</label>
-                      <div class="rating">
-                        <i class="bi bi-star" *ngFor="let i of [1, 2, 3, 4, 5]" (click)="setRating(i, orderIndex, itemIndex)"
-                          [class.bi-star-fill]="i <= getRating(orderIndex, itemIndex)"></i>
+
+                  <!-- Affichage de la note actuelle -->
+                  <div class="mb-3">
+                    <h6>Note :</h6>
+                    <div *ngIf="item.isLoadingComments" class="text-center my-2">
+                      <div class="spinner-border spinner-border-sm text-primary" role="status">
+                        <span class="visually-hidden">Chargement...</span>
                       </div>
                     </div>
-                    <div class="mb-3">
-                      <label for="comment" class="form-label">Commentaire</label>
-                      <textarea class="form-control" id="comment" [(ngModel)]="item.comment" name="comment" rows="3"></textarea>
+                    <div *ngIf="!item.isLoadingComments">
+                      <div *ngIf="item.note && item.note > 0" class="d-flex align-items-center">
+                        <ng-container *ngFor="let star of [1,2,3,4,5]">
+                          <i class="bi" [ngClass]="getStarClass(star, item.note, null, true)"></i>
+                        </ng-container>
+                        
+                        <span class="ms-2 text-muted fw-semibold fs-4">{{ getRatingText(item.note) }}</span>
+
+
+                      </div>
+                      <div *ngIf="!item.note || item.note === 0" class="text-muted">
+                        Aucune note pour ce produit.
+                      </div>
                     </div>
-                    <div class="text-end">
-                      <button type="submit" class="btn btn-primary rounded-pill">
-                        Envoyer
+                  </div>
+
+                  <!-- Historique des commentaires -->
+                  <div class="mb-4">
+                    <h6 class="fw-bold mb-3 text-muted text-uppercase small">Historique des commentaires</h6>
+                    <div *ngIf="item.isLoadingComments" class="text-center my-3">
+                      <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                      <p class="mt-2 mb-0 text-muted">Chargement des commentaires...</p>
+                    </div>
+
+                    <div *ngIf="!item.isLoadingComments" class="comment-container">
+                      <!-- Nouveau style pour les commentaires -->
+                      <div *ngFor="let comment of item.existingComments; let i = index"
+                        class="comment-card mb-3 p-3 rounded-3 shadow-sm"
+                        [style.border-left]="'4px solid ' + getCommentColor(i)">
+                        <div class="d-flex align-items-center mb-2">
+                          <span class="comment-author-badge me-2" [style.background]="getCommentColor(i)">
+                            {{user | slice:0:1 | uppercase}}
+                          </span>
+                          <strong class="text-muted">{{user}}:</strong>
+                          <span class="comment-date ms-auto text-muted small">
+                            {{ getFormattedDateFromComment(comment) }}
+                          </span>
+
+                        </div>
+                        <p class="comment-text mb-0">{{extractCommentText(comment)}}</p>
+                      </div>
+
+                      <div *ngIf="!item.existingComments || item.existingComments.length === 0"
+                        class="text-center py-4">
+                        <i class="bi bi-chat-square-text text-muted fs-3"></i>
+                        <p class="text-muted mt-2 mb-0">Aucun commentaire pour ce produit</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Formulaire d'avis initial -->
+                  <form *ngIf="!item.avisSubmitted" (ngSubmit)="submitFirstReview(orderIndex, itemIndex)">
+
+                    <div class="mb-3">
+                      <label class="form-label">Note</label>
+                      <div class="star-rating">
+                        <div class="stars">
+                          <i class="bi" *ngFor="let star of [1,2,3,4,5]; let i = index"
+                            [ngClass]="getStarClass(star, item.rating, hoverRating[orderIndex+'-'+itemIndex], item.avisSubmitted)"
+                            (click)="setRating(star, orderIndex, itemIndex)"
+                            (mouseenter)="setHoverRating(star, orderIndex, itemIndex)"
+                            (mouseleave)="clearHoverRating(orderIndex, itemIndex)"
+                            [style.cursor]="item.avisSubmitted ? 'default' : 'pointer'"></i>
+                        </div>
+                        <div class="rating-text ms-2">
+                          <span *ngIf="item.rating">{{getRatingText(item.rating)}}</span>
+                          <span *ngIf="!item.rating" class="text-muted">Cliquez pour noter</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="comment-{{orderIndex}}-{{itemIndex}}" class="form-label">Votre premier
+                        commentaire</label>
+                      <textarea class="form-control" id="comment-{{orderIndex}}-{{itemIndex}}"
+                        [(ngModel)]="item.comment" name="comment" rows="3" placeholder="Écrivez votre premier avis..."
+                        [disabled]="item.avisSubmitted"></textarea>
+                    </div>
+
+                    <div class="text-end mb-3">
+                      <button type="submit" class="btn btn-primary rounded-pill px-4"
+                        [disabled]="!item.rating || !item.comment || item.avisSubmitted || item.isSubmitting">
+                        <span *ngIf="item.isSubmitting" class="spinner-border spinner-border-sm me-2" role="status"
+                          aria-hidden="true"></span>
+                        <i *ngIf="!item.isSubmitting && !item.avisSubmitted" class="bi bi-send me-2"></i>
+                        <i *ngIf="!item.isSubmitting && item.avisSubmitted" class="bi bi-check-circle me-2"></i>
+                        {{ item.avisSubmitted ? 'Avis soumis' : 'Envoyer l\'avis initial' }}
                       </button>
                     </div>
                   </form>
+
+                  <!-- Formulaire de commentaire supplémentaire -->
+                  <div *ngIf="item.avisSubmitted">
+                    <div class="mb-3">
+                      <label for="newComment" class="form-label">Ajouter un commentaire supplémentaire</label>
+                      <textarea class="form-control" id="newComment" [(ngModel)]="newComment" name="newComment" rows="2"
+                        placeholder="Ajouter un autre commentaire..." [disabled]="item.isAddingComment"></textarea>
+
+                    </div>
+                    <div class="text-end">
+                      <button type="button" class="btn btn-outline-primary rounded-pill px-4"
+                        (click)="addCommentToProduct(orderIndex, itemIndex)"
+                        [disabled]="!newComment || item.isAddingComment">
+                        <span *ngIf="item.isAddingComment" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        <i *ngIf="!item.isAddingComment" class="bi bi-chat-left me-2"></i>
+                        Ajouter un commentaire
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Message si avis non soumis -->
+                  <div *ngIf="!item.avisSubmitted && item.existingComments && item.existingComments.length === 0"
+                    class="mt-3 alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i>
+                    Veuillez soumettre un avis initial avant d'ajouter des commentaires supplémentaires.
+                  </div>
+
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       <ng-template #noOrders>
-        <p class="text-center">Vous n'avez pas de commandes à évaluer.</p>
+        <div *ngIf="!isLoading" class="text-center py-4">
+          <i class="bi bi-chat-square-text display-5 text-muted mb-3"></i>
+          <p class="fs-5">Vous n'avez pas de commandes à évaluer.</p>
+          <p class="text-muted">Les commandes expédiées apparaîtront ici pour évaluation.</p>
+        </div>
       </ng-template>
     </div>
   </div>

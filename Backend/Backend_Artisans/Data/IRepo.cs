@@ -43,5 +43,13 @@ namespace Data
 
         void ChangeCommandeStatusByProductAndArtisan(string numeroCommande, string artisanName, string nouveauStatut);
 
+        //**************************************************** AVIS ****************************************************//
+
+        // Avis
+        void AjouterAvis(Avis avis);
+        List<string> GetComent(string ORD, string produitName);
+        int GetNote(string ORD, string produitName);
+        void ajouterCommentaire(string ORD, string produitName, string commentaire);
+
     }
 }
