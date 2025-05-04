@@ -122,5 +122,9 @@ namespace Business
             _repository.ajouterCommentaire(ORD,produitName,commentaire);
         }
 
+        public void UpdateProductQuantity(int id, int nouvelleQuantite)
+        {
+            _repository.UpdateProductQuantity(id,nouvelleQuantite);
+        }
     }
 }

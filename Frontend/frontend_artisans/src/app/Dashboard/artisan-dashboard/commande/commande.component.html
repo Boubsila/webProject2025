@@ -7,6 +7,83 @@
 
   <h2 class="text-center mb-4 text-primary fw-bold">Gestion de Mes Commandes</h2>
 
+  <div class="row mb-4">
+    <div class="col-md-12 mx-auto">
+      <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+        <div class="card-header bg-white py-3 border-bottom">
+          <h5 class="mb-0 text-primary fw-bold"><i class="bi bi-graph-up me-2"></i> Tableau de Bord des Ventes</h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="row g-0 text-center">
+            <!-- Total des Ventes -->
+            <div class="col-md-3 p-4 border-end bg-light-hover">
+              <div class="d-flex flex-column align-items-center">
+                <div class="icon-circle bg-success-light mb-3">
+                  <i class="bi bi-cash-stack text-success fs-4"></i>
+                </div>
+                <h5 class="text-muted mb-2">Total des Ventes</h5>
+                <h3 class="text-success fw-bold mb-0">{{ totalSales | currency:'EUR':'symbol':'1.2-2' }}</h3>
+                <small class="text-muted">Toutes commandes confondues</small>
+              </div>
+            </div>
+  
+            <!-- Commandes Validées -->
+            <div class="col-md-3 p-4 border-end bg-light-hover">
+              <div class="d-flex flex-column align-items-center">
+                <div class="icon-circle bg-primary-light mb-3">
+                  <i class="bi bi-check-circle text-primary fs-4"></i>
+                </div>
+                <h5 class="text-muted mb-2">Commandes Validées</h5>
+                <h3 class="text-primary fw-bold mb-0">{{ validatedOrdersCount }}</h3>
+                <div class="d-flex align-items-center mt-1">
+                  <span class="badge bg-success bg-opacity-10 text-success small">
+                    {{ (validatedOrdersCount / orders.length * 100) | number:'1.0-0' }}%
+                  </span>
+                  <small class="text-muted ms-2">sur {{ orders.length }} total</small>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Valeur Moyenne -->
+            <div class="col-md-3 p-4 border-end bg-light-hover">
+              <div class="d-flex flex-column align-items-center">
+                <div class="icon-circle bg-info-light mb-3">
+                  <i class="bi bi-currency-euro text-info fs-4"></i>
+                </div>
+                <h5 class="text-muted mb-2">Valeur Moyenne</h5>
+                <h3 class="text-info fw-bold mb-0">{{ averageOrderValue | currency:'EUR':'symbol':'1.2-2' }}</h3>
+                <small class="text-muted">par commande validée</small>
+              </div>
+            </div>
+  
+            <!-- Commandes Annulées -->
+            <div class="col-md-3 p-4 bg-light-hover">
+              <div class="d-flex flex-column align-items-center">
+                <div class="icon-circle bg-danger-light mb-3">
+                  <i class="bi bi-x-circle text-danger fs-4"></i>
+                </div>
+                <h5 class="text-muted mb-2">Commandes Annulées</h5>
+                <h3 class="text-danger fw-bold mb-0">{{ cancelledOrdersCount }}</h3>
+                <div class="d-flex align-items-center mt-1">
+                  <span class="badge bg-danger bg-opacity-10 text-danger small">
+                    {{ (cancelledOrdersCount / orders.length * 100) | number:'1.0-0' }}%
+                  </span>
+                  <small class="text-muted ms-2">perte estimée</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer bg-light py-2 border-top">
+          <small class="text-muted">
+            <i class="bi bi-info-circle me-1"></i> 
+            Mise à jour : {{ today | date:'dd/MM/yyyy à HH:mm' }}
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="card shadow-lg rounded-4">
     <div class="card-body p-4">
       <div class="table-responsive">

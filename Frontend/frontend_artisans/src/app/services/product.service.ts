@@ -12,9 +12,13 @@ export class ProductService {
   deleteProductUrl = 'https://localhost:7128/api/Produit/deleteProduct?id=';
   productByArtisanUrl = 'https://localhost:7128/api/Produit/getProductsByArtisanName?artisanName=';
   updateProductUrl = 'https://localhost:7128/api/Produit/UpdateProduct'
-  
+  updateQuantiteProductUrl ='https://localhost:7128/api/Produit/updateQuantity';
 
   constructor(private http: HttpClient) { }
+
+  updateQuantity(id: number, nouvelleQuantite: number): any {
+    return this.http.put(`${this.updateQuantiteProductUrl}?id=${id}&nouvelleQuantite=${nouvelleQuantite}`,{});
+  }
 
   getProducts(): any {
     return this.http.get<any[]>(this.produitUrl);

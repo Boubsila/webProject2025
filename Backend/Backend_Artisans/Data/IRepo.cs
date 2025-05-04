@@ -26,6 +26,9 @@ namespace Data
 
         void updateProduct(int id, string nom, string description, double prix, string categorie, string image, int quantite);
 
+        void UpdateProductQuantity(int id, int nouvelleQuantite);
+
+
         //commandes
         public void AddCommande(Commande commande);
         public List<Commande> GetCommandeList();

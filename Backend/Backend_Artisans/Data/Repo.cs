@@ -180,6 +180,18 @@ namespace Data
             }
         }
 
+        // update quantity of product
+        public void UpdateProductQuantity(int id, int nouvelleQuantite)
+        {
+            var produit = produits.FirstOrDefault(p => p.Id == id);
+
+            if (produit != null)
+            {
+                produit.Quantite = produit.Quantite - nouvelleQuantite;
+            }
+        }
+
+
         //******************* Order *************************
 
         //get commande

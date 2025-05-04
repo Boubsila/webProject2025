@@ -21,7 +21,7 @@ namespace Business
         void deleteProduct(int id);
         void addProduct(string nom, string description, double prix, string categorie, string image, int quantite, string artisan, string statut);
         void updateProduct(int id, string nom, string description, double prix, string categorie, string image, int quantite);
-
+        void UpdateProductQuantity(int id, int nouvelleQuantite);
         // Orders
         public void AddCommande(Commande commande);
         public List<Commande> GetCommandeList();

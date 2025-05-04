@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { SuccessAlertService } from '../../../Authentification/alerts/success-alert.service';
 import { OrderService } from '../../../services/order.service';
 import { ErreurAlertService } from '../../../Authentification/alerts/erreur-alert.service';
-
+import { ProductService } from '../../../services/product.service';
 @Component({
   selector: 'app-panier',
   standalone: true,
@@ -26,7 +26,8 @@ export class PanierComponent implements OnInit {
     private succeAlert: SuccessAlertService,
     private erreurAlert: ErreurAlertService,
     private orderService: OrderService,
-    private AuthService: AuthService
+    private AuthService: AuthService,
+    private productService: ProductService 
   ) { }
 
   ngOnInit(): void {
@@ -102,9 +103,11 @@ export class PanierComponent implements OnInit {
       String(now.getHours()).padStart(2, '0') +
       String(now.getMinutes()).padStart(2, '0') +
       String(now.getSeconds()).padStart(2, '0');
-
+  
     const dateCommande = now.toISOString();
-
+  
+    let processedCount = 0;
+  
     this.cartItems.forEach(item => {
       const updatedOrder = {
         id: item.id,
@@ -122,24 +125,33 @@ export class PanierComponent implements OnInit {
         adresseLivraison: this.adresseLivraison || '',
         dateLivraison: item.dateLivraison || '',
       };
-
+  
       this.orderService.updateOrder(updatedOrder).subscribe({
         next: () => {
-          this.succeAlert.successAlert('Commande ' + updatedOrder.numeroCommande + ' Ajoutée avec succès !');
+          this.productService.updateQuantity(item.produitId, item.quantity).subscribe({
+            next: () => {
+              processedCount++;
+  
+              if (processedCount === this.cartItems.length) {
+                // Tout est terminé avec succès
+                this.succeAlert.successAlert('Commande ' + orderNummer + ' avec le montant de : ' + this.total + ' € passée avec succès !');
+                this.cartItems = [];
+                this.calculateTotal();
+                this.cartItemCount = 0;
+                this.adresseLivraison = '';
+                this.router.navigate(['/dashboard']);
+              }
+            },
+            error: () => {
+              this.erreurAlert.erreurAlert('Erreur lors de la mise à jour de la quantité pour le produit ' + item.name);
+            }
+          });
         },
-        error: (err: any) => {
-          this.erreurAlert.erreurAlert('Erreur lors de la mise à jour de la commande !');
+        error: () => {
+          this.erreurAlert.erreurAlert('Erreur lors de la mise à jour de la commande pour le produit ' + item.name);
         }
       });
     });
-
-    this.succeAlert.successAlert('Commande ' + orderNummer + ' avec le montant de : ' + this.total + ' € passée avec succès !');
-
-    this.cartItems = [];
-    this.calculateTotal();
-    this.cartItemCount = 0;
-    this.adresseLivraison = '';
-
-    this.router.navigate(['/dashboard']);
   }
+  
 }

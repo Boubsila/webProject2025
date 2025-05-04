@@ -91,5 +91,15 @@ namespace Backend_Artisans.Controllers
             return Ok();
         }
 
+        //update Quantity 
+
+        [HttpPut ("updateQuantity")]
+
+        public ActionResult updateQuantity(int id, int nouvelleQuantite)
+        {
+            _service.UpdateProductQuantity(id,nouvelleQuantite);
+
+            return Ok(new {message = "quantité mise à jour"});
+        }
     }
 }
