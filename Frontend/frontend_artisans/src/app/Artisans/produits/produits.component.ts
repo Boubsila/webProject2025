@@ -151,7 +151,7 @@ export class ProduitsComponent implements OnInit {
       dateCommande: new Date().toISOString(),
       statut: 'pending',
       isOrderd: false,
-      quantite: 1,
+      quantite: produit.quantite, 
       prix: produit.prix,
       adresseLivraison: '',
       dateLivraison: ''

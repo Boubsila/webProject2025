@@ -1,37 +1,100 @@
+/* Style personnalisé pour le panier */
 .text-gradient-primary {
-    background: linear-gradient(to right, #4e54c8, #8f94fb);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(78, 84, 200, 0.05);
+}
+
+.btn-primary {
+  background-color: #4e54c8;
+  border-color: #4e54c8;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #3a3fa0;
+  border-color: #3a3fa0;
+  transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+  color: #4e54c8;
+  border-color: #4e54c8;
+}
+
+.btn-outline-primary:hover {
+  background-color: #4e54c8;
+  color: white;
+}
+
+.input-group .form-control {
+  max-width: 60px;
+}
+
+.badge {
+  font-size: 0.75rem;
+}
+
+/* Animation pour les boutons */
+.btn {
+  transition: all 0.2s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Style pour le panier vide */
+.bi-cart-x {
+  opacity: 0.2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .table-responsive {
+      border: 0;
   }
   
-  .card {
-    transition: all 0.3s ease;
-    border: none;
+  .table thead {
+      display: none;
   }
   
-  .card:hover {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  .table tr {
+      display: block;
+      margin-bottom: 1rem;
+      border: 1px solid #dee2e6;
+      border-radius: 0.5rem;
   }
   
-  .rounded-3 {
-    border-radius: 1rem !important;
+  .table td {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem;
+      border-bottom: 1px solid #dee2e6;
   }
   
-  .btn-outline-danger:hover {
-    color: white !important;
+  .table td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      margin-right: 1rem;
   }
   
-  .input-group input {
-    border-color: #dee2e6;
+  .table td:last-child {
+      border-bottom: 0;
   }
-  
-  .input-group input:focus {
-    box-shadow: none;
-    border-color: #8f94fb;
-  }
-  
-  .form-floating textarea:focus {
-    border-color: #8f94fb;
-    box-shadow: 0 0 0 0.25rem rgba(142, 148, 251, 0.25);
-  }
+}
