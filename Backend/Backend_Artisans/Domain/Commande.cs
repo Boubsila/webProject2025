@@ -25,8 +25,10 @@ namespace Domain
         public string? adresseLivraison { get; set; }
         public string? dateLivraison { get; set; }
 
+        public string? adresseDenlevement { get; set; }
 
-        public Commande(int id, string numeroCommande, int produitId, string produitName, string artisanName, string clientName, string livreurName, string dateCommande, string statut, bool isOrderd, int quantite, double prix, string adresseLivraison, string dateLivraison)
+
+        public Commande(int id, string numeroCommande, int produitId, string produitName, string artisanName, string clientName, string livreurName, string dateCommande, string statut, bool isOrderd, int quantite, double prix, string adresseLivraison, string dateLivraison,string adresseDenlevement)
         {
             this.Id = id;
             this.numeroCommande = numeroCommande;
@@ -42,6 +44,7 @@ namespace Domain
             this.prix = prix;
             this.adresseLivraison = adresseLivraison;
             this.dateLivraison = dateLivraison;
+            this.adresseDenlevement = adresseDenlevement;
         }
 
     }

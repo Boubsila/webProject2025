@@ -119,6 +119,14 @@ namespace Backend_Artisans.Controllers
             }
         }
 
+        [HttpPut("Pickup/{nmOrder}/{adres}")]
+
+        public ActionResult pickup(string nmOrder, string adres)
+        {
+            _service.addPickupAdres(nmOrder, adres);
+
+            return Ok(200);
+        }
 
         // update status order multi artisan 
 

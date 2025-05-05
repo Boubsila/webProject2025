@@ -517,6 +517,36 @@
         }
       }
     },
+    "/api/Commande/Pickup/{nmOrder}/{adres}": {
+      "put": {
+        "tags": [
+          "Commande"
+        ],
+        "parameters": [
+          {
+            "name": "nmOrder",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "adres",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Commande/ChangeCommandeStatut/{numeroCommande}/{artisanName}/{nouveauStatut}": {
       "put": {
         "tags": [
@@ -969,6 +999,10 @@
             "nullable": true
           },
           "dateLivraison": {
+            "type": "string",
+            "nullable": true
+          },
+          "adresseDenlevement": {
             "type": "string",
             "nullable": true
           }

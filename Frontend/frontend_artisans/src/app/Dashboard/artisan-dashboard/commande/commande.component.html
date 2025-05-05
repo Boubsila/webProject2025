@@ -153,6 +153,7 @@
               <div class="col-md-6">
                 <p><strong>Client :</strong> {{ selectedOrder.clientName }}</p>
                 <p><strong>Adresse de Livraison :</strong> {{ selectedOrder.shippingAddress }}</p>
+                <p *ngIf="selectedOrder.pickupAddress"><strong>Adresse d'Enlèvement :</strong> {{ selectedOrder.pickupAddress }}</p>
               </div>
             </div>
 
@@ -205,12 +206,19 @@
             <p class="mb-3">Commande #{{ selectedOrder.orderNumber }} - {{ selectedOrder.artisanName }}</p>
             <div class="mb-3">
               <label for="orderStatus" class="form-label">Nouveau Statut</label>
-              <select class="form-select" id="orderStatus" [(ngModel)]="selectedOrder.status">
+              <select class="form-select" id="orderStatus" [(ngModel)]="selectedOrder.status" (change)="onStatusChange()">
                 <option value="En attente">En attente</option>
                 <option value="En cours de traitement">En cours de traitement</option>
                 <option value="Expédiée">Expédiée</option>
                 <option value="Annulée">Annulée</option>
               </select>
+            </div>
+            
+            <div class="mb-3" *ngIf="selectedOrder.status === 'Expédiée'">
+              <label for="pickupAddress" class="form-label">Adresse d'Enlèvement</label>
+              <input type="text" class="form-control" id="pickupAddress" 
+                    [(ngModel)]="selectedOrder.pickupAddress" 
+                    placeholder="Entrez l'adresse où le livreur peut récupérer la commande">
             </div>
           </div>
         </div>

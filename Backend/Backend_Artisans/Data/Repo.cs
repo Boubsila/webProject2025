@@ -66,7 +66,7 @@ namespace Data
         private static List<Commande> commandes = new List<Commande>
         {
 
-            new Commande(0,"ORD_test_Order",1,"test","artisan","client","","12/04/25","Expédiée",false,10,20,"",""),
+            new Commande(0,"ORD_test_Order",1,"test","artisan","client","","12/04/25","Expédiée",false,10,20,"","",""),
 
 
         };
@@ -264,6 +264,17 @@ namespace Data
             }
         }
 
+        //ajouter l'adresse d'enlevment 
+
+        public void addPickupAdres(string nmOrder, string adresse)
+        {
+            var commande = commandes.FirstOrDefault(c => c.numeroCommande == nmOrder);
+            if (commande != null)
+            {
+                commande.adresseDenlevement = adresse;
+            }
+        }
+
         //Change le statut de la commande multi artisan 
 
         public void ChangeCommandeStatusByProductAndArtisan(string numeroCommande, string artisanName, string nouveauStatut)
@@ -278,7 +289,7 @@ namespace Data
             }
         }
 
-
+        
         //+++++++************** AVIS ********************//
 
         public void AjouterAvis(Avis avis)

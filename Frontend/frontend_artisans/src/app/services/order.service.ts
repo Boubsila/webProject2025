@@ -22,8 +22,15 @@ export class OrderService {
   updateOrderStatusMultiUrl = 'https://localhost:7128/api/Commande/ChangeCommandeStatut';
 
  
+addPickupUrl = 'https://localhost:7128/api/Commande/Pickup';
+  
+addpickupAddress(order : string, address : string): any {
+    return this.http.put(`${this.addPickupUrl}/${order}/${address}`,null);
+  
+}
 
-  getOrders(): any {
+
+getOrders(): any {
 
     return this.http.get<any[]>(this.getOrdersUrl);
   }

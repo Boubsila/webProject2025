@@ -345,6 +345,27 @@
   },
   {
     "ContainingType": "Backend_Artisans.Controllers.CommandeController",
+    "Method": "pickup",
+    "RelativePath": "api/Commande/Pickup/{nmOrder}/{adres}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nmOrder",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "adres",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_Artisans.Controllers.CommandeController",
     "Method": "UpdateCommande",
     "RelativePath": "api/Commande/updateOrder/{id}",
     "HttpMethod": "PUT",

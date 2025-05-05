@@ -70,6 +70,11 @@ namespace Business
             return _repository.GetCommandeList();
         }
 
+        public void addPickupAdres(string nmOrder, string adresse)
+        {
+            _repository.addPickupAdres(nmOrder, adresse);
+        }
+
         public void UpdateCommande(int id, string statut, bool isOrdered,string numeroCommande, string? adresseLivraison = null, string? dateLivraison = null)
         {
             _repository.UpdateCommande(id, statut, isOrdered, numeroCommande, adresseLivraison, dateLivraison);
