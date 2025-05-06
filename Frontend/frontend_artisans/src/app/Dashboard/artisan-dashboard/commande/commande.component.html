@@ -194,39 +194,52 @@
   </div>
 
   <!-- Modal Modifier le statut -->
-  <div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="updateStatusModalLabel">Modifier le Statut</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
-        </div>
-        <div class="modal-body">
-          <div *ngIf="selectedOrder">
-            <p class="mb-3">Commande #{{ selectedOrder.orderNumber }} - {{ selectedOrder.artisanName }}</p>
+<div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateStatusModalLabel">Modifier le Statut</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="selectedOrder">
+          <p class="mb-3">Commande #{{ selectedOrder.orderNumber }} - {{ selectedOrder.artisanName }}</p>
+
+          <div class="mb-3">
+            <label for="orderStatus" class="form-label">Nouveau Statut</label>
+            <select class="form-select" id="orderStatus" [(ngModel)]="selectedOrder.status" (change)="onStatusChange()">
+              <option value="En attente">En attente</option>
+              <option value="En cours de traitement">En cours de traitement</option>
+              <option value="Expédiée">Expédiée</option>
+              <option value="Annulée">Annulée</option>
+            </select>
+          </div>
+
+          <!-- Champ d'adresse d'enlèvement si Expédiée -->
+          <div *ngIf="selectedOrder.status === 'Expédiée'">
             <div class="mb-3">
-              <label for="orderStatus" class="form-label">Nouveau Statut</label>
-              <select class="form-select" id="orderStatus" [(ngModel)]="selectedOrder.status" (change)="onStatusChange()">
-                <option value="En attente">En attente</option>
-                <option value="En cours de traitement">En cours de traitement</option>
-                <option value="Expédiée">Expédiée</option>
-                <option value="Annulée">Annulée</option>
-              </select>
-            </div>
-            
-            <div class="mb-3" *ngIf="selectedOrder.status === 'Expédiée'">
               <label for="pickupAddress" class="form-label">Adresse d'Enlèvement</label>
-              <input type="text" class="form-control" id="pickupAddress" 
-                    [(ngModel)]="selectedOrder.pickupAddress" 
-                    placeholder="Entrez l'adresse où le livreur peut récupérer la commande">
+              <input type="text" class="form-control" id="pickupAddress"
+                     [(ngModel)]="selectedOrder.pickupAddress"
+                     placeholder="Entrez l'adresse où le livreur peut récupérer la commande">
+            </div>
+
+            <div class="mb-3">
+              <label for="livreurSelect" class="form-label">Livreur Assigné</label>
+              <select class="form-select" id="livreurSelect" [(ngModel)]="selectedOrder.livreur">
+                <option [ngValue]="null" disabled selected>Choisissez un livreur</option>
+                <option *ngFor="let livreur of livreurlist" [ngValue]="livreur">{{ livreur }}</option>
+              </select>
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal" (click)="closeModal()">Annuler</button>
-          <button type="button" class="btn btn-primary rounded-pill" (click)="saveOrderStatus()">Enregistrer</button>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal" (click)="closeModal()">Annuler</button>
+        <button type="button" class="btn btn-primary rounded-pill" (click)="saveOrderStatus()">Enregistrer</button>
       </div>
     </div>
   </div>
+</div>
+
 </div>

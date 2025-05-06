@@ -2,74 +2,147 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../../Authentification/auth.service';
+import { OrderService } from '../../../services/order.service';
 
 @Component({
   selector: 'app-commandes',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './commandes.component.html',
-  styleUrl: './commandes.component.css'
+  styleUrls: ['./commandes.component.css']
 })
 export class CommandesComponent implements OnInit {
-  orders: any[] = [
-    {
-      orderNumber: 'ORD123',
-      customerName: 'Client A',
-      orderDate: new Date(),
-      status: 'pending',
-      items: [{ productName: 'Produit X', quantity: 2, unitPrice: 25 }],
-      shippingAddress: 'Adresse A'
-    },
-    {
-      orderNumber: 'ORD456',
-      customerName: 'Client B',
-      orderDate: new Date(),
-      status: 'processing',
-      items: [{ productName: 'Produit Y', quantity: 1, unitPrice: 30 }],
-      shippingAddress: 'Adresse B'
-    },
-    {
-      orderNumber: 'ORD789',
-      customerName: 'Client C',
-      orderDate: new Date(),
-      status: 'shipped',
-      items: [{ productName: 'Produit Z', quantity: 3, unitPrice: 40 }],
-      shippingAddress: 'Adresse C'
-    }
-  ];
-
+  orders: any[] = [];
+  groupedOrders: any[] = [];
   selectedOrder: any = null;
+  currentUser: string = '';
+  isLoading: boolean = true;
+  errorMessage: string = '';
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private orderService: OrderService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
-    // Récupérer les commandes de l'artisan (API)
+    this.currentUser = this.authService.getUserName();
+    this.loadDeliveryPersonOrders();
   }
 
-  goToDashboard() {
-    this.router.navigate(['/dashboard']);
+  loadDeliveryPersonOrders(): void {
+    this.isLoading = true;
+    this.errorMessage = '';
+    
+    this.orderService.getOrders().subscribe({
+      next: (apiOrders: any[]) => {
+        // Filtrer les commandes pour le livreur connecté
+        const filteredOrders = apiOrders.filter(order => 
+          order.livreurName === this.currentUser
+        );
+
+        if (filteredOrders.length === 0) {
+          this.errorMessage = 'Aucune commande trouvée pour ce livreur';
+        }
+
+        // Grouper les commandes par numéro de commande
+        this.groupOrdersByNumber(filteredOrders);
+        this.isLoading = false;
+      },
+      error: (err:any) => {
+        console.error('Erreur lors du chargement des commandes:', err);
+        this.errorMessage = 'Erreur lors du chargement des commandes';
+        this.isLoading = false;
+      }
+    });
   }
 
-  viewOrderDetails(order: any) {
+  groupOrdersByNumber(orders: any[]): void {
+    const grouped: {[key: string]: any} = {};
+
+    orders.forEach(order => {
+      if (!grouped[order.numeroCommande]) {
+        grouped[order.numeroCommande] = {
+          orderNumber: order.numeroCommande,
+          orderDate: order.dateCommande,
+          status: order.statut,
+          items: [],
+          totalPrice: 0,
+          totalQuantity: 0,
+          artisanName: order.artisanName,
+          clientName: order.clientName,
+          shippingAddress: order.adresseLivraison,
+          pickupAddress: order.adresseDenlevement,
+          deliveryPerson: order.livreurName,
+          dateLivraison: order.dateLivraison
+        };
+      }
+
+      grouped[order.numeroCommande].items.push({
+        productId: order.produitId,
+        productName: order.produitName,
+        quantity: order.quantite,
+        unitPrice: order.prix
+      });
+
+      grouped[order.numeroCommande].totalPrice += order.prix * order.quantite;
+      grouped[order.numeroCommande].totalQuantity += order.quantite;
+    });
+
+    this.groupedOrders = Object.values(grouped);
+    this.orders = this.groupedOrders; // Pour compatibilité avec l'existant
+  }
+
+  viewOrderDetails(order: any): void {
     this.selectedOrder = { ...order };
     this.openModal('orderDetailsModal');
   }
 
-  updateOrderStatus(order: any) {
+  updateOrderStatus(order: any): void {
     this.selectedOrder = { ...order };
     this.openModal('updateStatusModal');
   }
 
-  saveOrderStatus() {
-    // Mettre à jour le statut de la commande (API)
-    const index = this.orders.findIndex(o => o.orderNumber === this.selectedOrder.orderNumber);
-    if (index !== -1) {
-      this.orders[index] = { ...this.selectedOrder };
+  saveOrderStatus(): void {
+    if (!this.selectedOrder) return;
+
+    if (this.selectedOrder.status === 'Expédiée') {
+      if (!this.selectedOrder.pickupAddress || !this.selectedOrder.deliveryPerson) {
+        alert('Veuillez spécifier une adresse d\'enlèvement et un livreur');
+        return;
+      }
+      
+      this.orderService.addpickupAddress(
+        this.selectedOrder.orderNumber,
+        this.selectedOrder.pickupAddress,
+        this.selectedOrder.deliveryPerson
+      ).subscribe({
+        next: () => {
+          console.log('Adresse et livreur enregistrés');
+        },
+        error: (err:any) => {
+          console.error('Erreur:', err);
+        }
+      });
     }
-    this.closeModal();
+
+    this.orderService.updateOrderStatusMulti(
+      this.selectedOrder.orderNumber,
+      this.selectedOrder.artisanName,
+      this.selectedOrder.status
+    ).subscribe({
+      next: () => {
+        this.loadDeliveryPersonOrders();
+        this.closeModal();
+      },
+      error: (err:any) => {
+        console.error('Erreur:', err);
+      }
+    });
   }
 
-  openModal(modalId: string) {
+  openModal(modalId: string): void {
     const modal = document.getElementById(modalId);
     if (modal) {
       modal.classList.add('show');
@@ -78,21 +151,19 @@ export class CommandesComponent implements OnInit {
     }
   }
 
-  closeModal() {
-    const orderDetailsModal = document.getElementById('orderDetailsModal');
-    const updateStatusModal = document.getElementById('updateStatusModal');
-
-    if (orderDetailsModal && orderDetailsModal.classList.contains('show')) {
-      orderDetailsModal.classList.remove('show');
-      orderDetailsModal.style.display = 'none';
-    }
-
-    if (updateStatusModal && updateStatusModal.classList.contains('show')) {
-      updateStatusModal.classList.remove('show');
-      updateStatusModal.style.display = 'none';
-    }
-
+  closeModal(): void {
+    ['orderDetailsModal', 'updateStatusModal'].forEach(id => {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.classList.remove('show');
+        modal.style.display = 'none';
+      }
+    });
     document.body.classList.remove('modal-open');
     this.selectedOrder = null;
+  }
+
+  goToDashboard(): void {
+    this.router.navigate(['/dashboard']);
   }
 }

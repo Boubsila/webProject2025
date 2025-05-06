@@ -18,6 +18,7 @@ export class CommandeComponent implements OnInit {
   user: any = null;
   totalSales: number = 0;
   today: Date = new Date();
+  livreurlist: string[] = []; 
 
   constructor(
     private router: Router,
@@ -25,9 +26,17 @@ export class CommandeComponent implements OnInit {
     private orderService: OrderService
   ) { }
 
+ 
+
   ngOnInit(): void {
     this.user = this.authService.getUserName();
     this.loadOrders();
+
+    this.authService.getAllUsers().subscribe((users: any[]) => {
+      this.livreurlist = users
+        .filter(user => user.role === 'livreur')
+        .map(user => user.username);
+    });
   }
 
   loadOrders(): void {
@@ -121,8 +130,10 @@ export class CommandeComponent implements OnInit {
         // Appel à la nouvelle méthode pour ajouter l'adresse d'enlèvement
         this.orderService.addpickupAddress(
           this.selectedOrder.orderNumber,
-          this.selectedOrder.pickupAddress
-        ).subscribe({
+          this.selectedOrder.pickupAddress,
+          this.selectedOrder.livreur // livreur sélectionné
+        )
+        .subscribe({
           next: () => {
             // Mise à jour du statut après l'ajout de l'adresse
             this.updateOrderStatusAfterAddressAdded();

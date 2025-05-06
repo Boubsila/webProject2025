@@ -119,11 +119,11 @@ namespace Backend_Artisans.Controllers
             }
         }
 
-        [HttpPut("Pickup/{nmOrder}/{adres}")]
+        [HttpPut("Pickup/{nmOrder}/{adres}/{livreur}")]
 
-        public ActionResult pickup(string nmOrder, string adres)
+        public ActionResult pickup(string nmOrder, string adres, string livreur)
         {
-            _service.addPickupAdres(nmOrder, adres);
+            _service.addPickupAdres(nmOrder, adres,livreur);
 
             return Ok(200);
         }

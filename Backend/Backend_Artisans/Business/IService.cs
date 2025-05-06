@@ -28,7 +28,7 @@ namespace Business
         void UpdateCommande(int id, string statut, bool isOrdered, string numeroCommande, string? adresseLivraison=null , string? dateLivraison=null );
         void DeleteCommande(int id);
 
-        void addPickupAdres(string nmOrder, string adresse);
+        void addPickupAdres(string nmOrder, string adresse, string livreur);
 
         // récupère les commandes d'un artisan
         List<Commande> GetCommandesByArtisanName(string artisanName);

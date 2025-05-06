@@ -266,12 +266,13 @@ namespace Data
 
         //ajouter l'adresse d'enlevment 
 
-        public void addPickupAdres(string nmOrder, string adresse)
+        public void addPickupAdres(string nmOrder, string adresse,string livreur)
         {
             var commande = commandes.FirstOrDefault(c => c.numeroCommande == nmOrder);
             if (commande != null)
             {
                 commande.adresseDenlevement = adresse;
+                commande.livreurName = livreur;
             }
         }
 

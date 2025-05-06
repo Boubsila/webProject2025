@@ -517,7 +517,7 @@
         }
       }
     },
-    "/api/Commande/Pickup/{nmOrder}/{adres}": {
+    "/api/Commande/Pickup/{nmOrder}/{adres}/{livreur}": {
       "put": {
         "tags": [
           "Commande"
@@ -533,6 +533,14 @@
           },
           {
             "name": "adres",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "livreur",
             "in": "path",
             "required": true,
             "schema": {

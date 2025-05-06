@@ -346,7 +346,7 @@
   {
     "ContainingType": "Backend_Artisans.Controllers.CommandeController",
     "Method": "pickup",
-    "RelativePath": "api/Commande/Pickup/{nmOrder}/{adres}",
+    "RelativePath": "api/Commande/Pickup/{nmOrder}/{adres}/{livreur}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -358,6 +358,11 @@
       },
       {
         "Name": "adres",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "livreur",
         "Type": "System.String",
         "IsRequired": true
       }

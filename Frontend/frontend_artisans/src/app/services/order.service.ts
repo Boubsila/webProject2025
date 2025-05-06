@@ -24,8 +24,8 @@ export class OrderService {
  
 addPickupUrl = 'https://localhost:7128/api/Commande/Pickup';
   
-addpickupAddress(order : string, address : string): any {
-    return this.http.put(`${this.addPickupUrl}/${order}/${address}`,null);
+addpickupAddress(order : string, address : string,livreur:string): any {
+    return this.http.put(`${this.addPickupUrl}/${order}/${address}/${livreur}`,null);
   
 }
 
