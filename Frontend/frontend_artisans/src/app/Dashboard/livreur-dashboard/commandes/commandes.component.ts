@@ -34,23 +34,22 @@ export class CommandesComponent implements OnInit {
   loadDeliveryPersonOrders(): void {
     this.isLoading = true;
     this.errorMessage = '';
-    
+
     this.orderService.getOrders().subscribe({
       next: (apiOrders: any[]) => {
-        // Filtrer les commandes pour le livreur connecté
-        const filteredOrders = apiOrders.filter(order => 
-          order.livreurName === this.currentUser
+        // Filtrer par livreur
+        const filteredOrders = apiOrders.filter(order =>
+          order.livreurName === this.currentUser || order.livreurName === ''
         );
 
         if (filteredOrders.length === 0) {
           this.errorMessage = 'Aucune commande trouvée pour ce livreur';
         }
 
-        // Grouper les commandes par numéro de commande
         this.groupOrdersByNumber(filteredOrders);
         this.isLoading = false;
       },
-      error: (err:any) => {
+      error: (err: any) => {
         console.error('Erreur lors du chargement des commandes:', err);
         this.errorMessage = 'Erreur lors du chargement des commandes';
         this.isLoading = false;
@@ -59,7 +58,7 @@ export class CommandesComponent implements OnInit {
   }
 
   groupOrdersByNumber(orders: any[]): void {
-    const grouped: {[key: string]: any} = {};
+    const grouped: { [key: string]: any } = {};
 
     orders.forEach(order => {
       if (!grouped[order.numeroCommande]) {
@@ -73,9 +72,9 @@ export class CommandesComponent implements OnInit {
           artisanName: order.artisanName,
           clientName: order.clientName,
           shippingAddress: order.adresseLivraison,
-          pickupAddress: order.adresseDenlevement,
-          deliveryPerson: order.livreurName,
-          dateLivraison: order.dateLivraison
+          pickupAddress: order.adresseDenlevement || '',
+          deliveryPerson: order.livreurName || '',
+          dateLivraison: order.dateLivraison || ''
         };
       }
 
@@ -91,7 +90,7 @@ export class CommandesComponent implements OnInit {
     });
 
     this.groupedOrders = Object.values(grouped);
-    this.orders = this.groupedOrders; // Pour compatibilité avec l'existant
+    this.orders = this.groupedOrders;
   }
 
   viewOrderDetails(order: any): void {
@@ -112,7 +111,7 @@ export class CommandesComponent implements OnInit {
         alert('Veuillez spécifier une adresse d\'enlèvement et un livreur');
         return;
       }
-      
+
       this.orderService.addpickupAddress(
         this.selectedOrder.orderNumber,
         this.selectedOrder.pickupAddress,
@@ -121,7 +120,7 @@ export class CommandesComponent implements OnInit {
         next: () => {
           console.log('Adresse et livreur enregistrés');
         },
-        error: (err:any) => {
+        error: (err: any) => {
           console.error('Erreur:', err);
         }
       });
@@ -136,7 +135,7 @@ export class CommandesComponent implements OnInit {
         this.loadDeliveryPersonOrders();
         this.closeModal();
       },
-      error: (err:any) => {
+      error: (err: any) => {
         console.error('Erreur:', err);
       }
     });

@@ -59,8 +59,7 @@
               "RelativeToolTip": "Business\\Service.cs",
               "ViewState": "AgIAAEEAAAAAAAAAAAAUwEoAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T20:20:04.538Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T20:20:04.538Z"
             },
             {
               "$type": "Document",
@@ -72,8 +71,7 @@
               "RelativeToolTip": "Business\\IService.cs",
               "ViewState": "AgIAABcAAAAAAAAAAAA9wB4AAABKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T20:19:28.981Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T20:19:28.981Z"
             },
             {
               "$type": "Document",
@@ -85,8 +83,7 @@
               "RelativeToolTip": "Data\\IRepo.cs",
               "ViewState": "AgIAAB8AAAAAAAAAAAAYwCUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T20:17:05.396Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T20:17:05.396Z"
             },
             {
               "$type": "Document",
@@ -98,8 +95,7 @@
               "RelativeToolTip": "Data\\Repo.cs",
               "ViewState": "AgIAAAgBAAAAAAAAAAAUwAwBAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T18:34:33.694Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T18:34:33.694Z"
             },
             {
               "$type": "Document",
@@ -111,8 +107,7 @@
               "RelativeToolTip": "Domain\\Commande.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAA9wC4AAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T20:13:48.421Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-05T20:13:48.421Z"
             }
           ]
         }

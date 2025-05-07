@@ -6,10 +6,11 @@
   </div>
 
   <h2 class="text-center mb-4 text-primary fw-bold">Commandes Assignées</h2>
-
   <p class="text-center mb-4">Consultez les commandes à livrer.</p>
 
-  <div class="card shadow-lg rounded-4">
+  <div *ngIf="errorMessage" class="alert alert-warning text-center">{{ errorMessage }}</div>
+
+  <div class="card shadow-lg rounded-4" *ngIf="!isLoading && orders.length > 0">
     <div class="card-body p-4">
       <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
@@ -23,7 +24,7 @@
           <tbody>
             <tr *ngFor="let order of orders">
               <td>{{ order.orderNumber }}</td>
-              <td>{{ order.orderDate | date }}</td>
+              <td>{{ order.orderDate | date:'dd/MM/yyyy HH:mm' }}</td>
               <td class="text-center">
                 <button class="btn btn-sm btn-primary rounded-pill" (click)="viewOrderDetails(order)">
                   <i class="bi bi-eye me-1"></i> Voir la Commande
@@ -42,7 +43,8 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="orderDetailsModalLabel">Détails de la Commande #{{selectedOrder?.orderNumber}}
+          <h5 class="modal-title" id="orderDetailsModalLabel">
+            Détails de la Commande #{{ selectedOrder?.orderNumber }}
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
             (click)="closeModal()"></button>
@@ -53,11 +55,11 @@
               <div class="col-md-6">
                 <p><strong>Statut :</strong>
                   <span class="badge ms-2" [ngClass]="{
-                  'bg-warning': selectedOrder.status === 'En attente', 
-                  'bg-info': selectedOrder.status === 'En cours de traitement', 
-                  'bg-success': selectedOrder.status === 'Expédiée', 
-                  'bg-danger': selectedOrder.status === 'Annulée'
-                }">{{ selectedOrder.status }}</span>
+                    'bg-warning': selectedOrder.status === 'En attente',
+                    'bg-info': selectedOrder.status === 'En cours de traitement',
+                    'bg-success': selectedOrder.status === 'Expédiée',
+                    'bg-danger': selectedOrder.status === 'Annulée'
+                  }">{{ selectedOrder.status }}</span>
                 </p>
                 <p><strong>Date de Commande :</strong> {{ selectedOrder.orderDate | date:'dd/MM/yyyy à HH:mm' }}</p>
                 <p><strong>Artisan :</strong> {{ selectedOrder.artisanName }}</p>
@@ -66,7 +68,6 @@
                 <p><strong>Client :</strong> {{ selectedOrder.clientName }}</p>
                 <p><strong>Adresse de Livraison :</strong> {{ selectedOrder.shippingAddress || 'Non spécifiée' }}</p>
                 <p><strong>Adresse d'Enlèvement :</strong> {{ selectedOrder.pickupAddress || 'Non spécifiée' }}</p>
-                <p><strong>Livreur :</strong> {{ selectedOrder.deliveryPerson || 'Non assigné' }}</p>
               </div>
             </div>
 
@@ -77,35 +78,21 @@
                   <tr>
                     <th>Produit</th>
                     <th class="text-end">Quantité</th>
-                    <th class="text-end">Prix unitaire</th>
-                    <th class="text-end">Total</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of selectedOrder.items">
                     <td>{{ item.productName }}</td>
                     <td class="text-end">{{ item.quantity }}</td>
-                    <td class="text-end">{{ item.unitPrice | currency:'EUR' }}</td>
-                    <td class="text-end">{{ item.unitPrice * item.quantity | currency:'EUR' }}</td>
                   </tr>
                 </tbody>
-                <tfoot>
-                  <tr>
-                    <td colspan="3" class="text-end fw-bold">Total commande :</td>
-                    <td class="text-end fw-bold">{{ selectedOrder.totalPrice | currency:'EUR' }}</td>
-                  </tr>
-                  <tr>
-                    <td colspan="3" class="text-end fw-bold">Nombre total d'articles :</td>
-                    <td class="text-end fw-bold">{{ selectedOrder.totalQuantity }}</td>
-                  </tr>
-                </tfoot>
+                
               </table>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal"
-            (click)="closeModal()">Fermer</button>
+          <button type="button" class="btn btn-secondary rounded-pill" (click)="closeModal()">Fermer</button>
         </div>
       </div>
     </div>
