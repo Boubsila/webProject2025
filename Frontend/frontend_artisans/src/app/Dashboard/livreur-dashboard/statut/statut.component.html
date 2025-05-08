@@ -1,70 +1,129 @@
-<div class="container mt-4">
-    <div class="mb-3">
-      <button class="btn btn-outline-secondary fw-bold rounded-pill" (click)="goToDashboard()">
-        <i class="bi bi-arrow-left me-2"></i> Retour au tableau de bord
-      </button>
+<div class="container mt-4 animate__animated animate__fadeIn">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <button class="btn btn-outline-primary rounded-pill fw-bold" (click)="goToDashboard()">
+      <i class="bi bi-arrow-left me-2"></i> Retour au tableau de bord
+    </button>
+    
+    <h2 class="text-center mb-0 fw-bold text-gradient">
+      <i class="bi bi-truck me-2"></i>Statut de Livraison
+    </h2>
+    
+    <div class="search-box">
+      <i class="bi bi-search"></i>
+      <input type="text" class="form-control rounded-pill" placeholder="Rechercher..." 
+             [(ngModel)]="searchTerm" (input)="filterOrders()">
     </div>
-  
-    <h2 class="text-center mb-4 text-primary fw-bold">Statut de Livraison</h2>
-  
-    <p class="text-center mb-4">Mettez à jour le statut des livraisons.</p>
-  
-    <div class="card shadow-lg rounded-4">
-      <div class="card-body p-4">
-        <div class="table-responsive">
-          <table class="table table-hover align-middle mb-0">
-            <thead class="table-light">
-              <tr>
-                <th scope="col">Numéro de Commande</th>
-                <th scope="col">Date de Commande</th>
-                <th scope="col">Statut de Livraison</th>
-                <th scope="col" class="text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let order of orders">
-                <td>{{ order.orderNumber }}</td>
-                <td>{{ order.orderDate | date }}</td>
-                <td>
-                  <span class="badge" [ngClass]="{'bg-warning': order.deliveryStatus === 'pending pickup', 'bg-info': order.deliveryStatus === 'in transit', 'bg-success': order.deliveryStatus === 'delivered'}">{{ order.deliveryStatus }}</span>
-                </td>
-                <td class="text-center">
-                  <button class="btn btn-sm btn-secondary rounded-pill" (click)="updateDeliveryStatus(order)">
-                    <i class="bi bi-pencil me-1"></i> Mettre à Jour
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+  </div>
+
+  <div class="card shadow-lg rounded-4 border-0 overflow-hidden">
+    <div class="card-header bg-primary text-white py-3">
+      <h5 class="mb-0"><i class="bi bi-list-check me-2"></i>Commandes assignées</h5>
     </div>
-  
-    <div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="updateStatusModalLabel">Modifier le Statut de Livraison</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModal()"></button>
-          </div>
-          <div class="modal-body">
-            <div *ngIf="selectedOrder">
-              <p><strong>Numéro de Commande :</strong> {{ selectedOrder.orderNumber }}</p>
-              <div class="mb-3">
-                <label for="deliveryStatus" class="form-label">Nouveau Statut de Livraison</label>
-                <select class="form-select" id="deliveryStatus" [(ngModel)]="selectedOrder.deliveryStatus">
-                  <option value="pending pickup">En attente de ramassage</option>
-                  <option value="in transit">En transit</option>
-                  <option value="delivered">Livré</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal" (click)="closeModal()">Annuler</button>
-            <button type="button" class="btn btn-primary rounded-pill" (click)="saveDeliveryStatus()">Enregistrer</button>
-          </div>
-        </div>
+    
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col" class="ps-4">N° Commande</th>
+              <th scope="col">Client</th>
+              <th scope="col">Date</th>
+              <th scope="col">Statut</th>
+              <th scope="col" class="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of filteredOrders" class="animate__animated animate__fadeIn">
+              <td class="ps-4 fw-bold">{{ order.orderNumber }}</td>
+              <td>{{ order.customerName }}</td>
+              <td>{{ order.orderDate | date:'dd/MM/yyyy' }}</td>
+              <td>
+                <span class="badge rounded-pill py-2 px-3" 
+                      [ngClass]="'bg-' + getStatusColor(order.deliveryStatus)">
+                  {{ getStatusLabel(order.deliveryStatus) }}
+                </span>
+              </td>
+              <td class="text-center">
+                <button class="btn btn-sm btn-primary rounded-pill px-3" 
+                        (click)="updateDeliveryStatus(order)">
+                  <i class="bi bi-pencil-square me-1"></i> Mettre à jour
+                </button>
+              </td>
+            </tr>
+            
+            <tr *ngIf="filteredOrders.length === 0" class="text-center">
+              <td colspan="5" class="py-4 text-muted">
+                <i class="bi bi-exclamation-circle fs-4"></i>
+                <p class="mt-2 mb-0">Aucune commande trouvée</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Modal de mise à jour -->
+<div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="updateStatusModalLabel">
+          <i class="bi bi-truck me-2"></i>Mise à jour du statut
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="closeModal()" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body py-4">
+        <div *ngIf="selectedOrder" class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label text-muted">N° Commande</label>
+            <p class="fw-bold">{{ selectedOrder.orderNumber }}</p>
+          </div>
+          
+          <div class="col-md-6">
+            <label class="form-label text-muted">Client</label>
+            <p class="fw-bold">{{ selectedOrder.customerName }}</p>
+          </div>
+          
+          <div class="col-12">
+            <label class="form-label text-muted">Adresse</label>
+            <p class="fw-bold">{{ selectedOrder.deliveryAddress }}</p>
+          </div>
+          
+          <div class="col-md-6">
+            <label class="form-label text-muted">Date commande</label>
+            <p class="fw-bold">{{ selectedOrder.orderDate | date:'dd/MM/yyyy' }}</p>
+          </div>
+          
+          <div class="col-md-6">
+            <label class="form-label text-muted">Livraison estimée</label>
+            <p class="fw-bold">{{ selectedOrder.estimatedDelivery | date:'dd/MM/yyyy' }}</p>
+          </div>
+          
+          <div class="col-12 mt-3">
+            <label for="deliveryStatus" class="form-label fw-bold">Statut de livraison</label>
+            <select class="form-select form-select-lg rounded-3" id="deliveryStatus" 
+                    [(ngModel)]="selectedOrder.deliveryStatus">
+              <option *ngFor="let status of statusOptions" [value]="status.value">
+                {{ status.label }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-outline-secondary rounded-pill px-4" 
+                (click)="closeModal()">
+          Annuler
+        </button>
+        <button type="button" class="btn btn-primary rounded-pill px-4" 
+                (click)="saveDeliveryStatus()">
+          <i class="bi bi-check-circle me-1"></i> Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

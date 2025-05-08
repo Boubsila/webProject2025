@@ -1,34 +1,150 @@
-/* Ajoutez dans votre fichier CSS */
+/* Styles globaux */
+.text-gradient {
+  background: linear-gradient(45deg, #3a7bd5, #00d2ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.search-box {
+  position: relative;
+  width: 250px;
+}
+
+.search-box i {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+}
+
+.search-box input {
+  padding-left: 40px;
+  border: 1px solid #dee2e6;
+  transition: all 0.3s;
+}
+
+.search-box input:focus {
+  width: 300px;
+  border-color: #3a7bd5;
+  box-shadow: 0 0 0 0.25rem rgba(58, 123, 213, 0.25);
+}
+
+/* Animation des lignes du tableau */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate__fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Style des badges de statut */
+.badge {
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+/* Style des cartes d'information */
+.info-card {
+  border-radius: 12px;
+  background-color: #f8f9fa;
+  overflow: hidden;
+  height: 100%;
+}
+
+.info-card-title {
+  background-color: #e9ecef;
+  padding: 0.75rem 1rem;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.info-card-body {
+  padding: 1rem;
+}
+
+.info-card-body p {
+  margin-bottom: 0.5rem;
+}
+
+/* Style des icônes en cercle */
 .icon-circle {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bg-primary-light {
+  background-color: rgba(13, 110, 253, 0.1);
+}
+
+.bg-success-light {
+  background-color: rgba(25, 135, 84, 0.1);
+}
+
+.bg-info-light {
+  background-color: rgba(13, 202, 240, 0.1);
+}
+
+.bg-danger-light {
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+/* Effet de survol */
+.bg-light-hover:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.3s;
+}
+
+/* Style de la modal */
+.modal-content {
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.modal-header {
+  padding: 1.2rem 1.5rem;
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .search-box {
+    width: 100%;
+    margin-top: 1rem;
   }
   
-  .bg-success-light {
-    background-color: rgba(40, 167, 69, 0.1);
+  .search-box input:focus {
+    width: 100%;
   }
   
-  .bg-primary-light {
-    background-color: rgba(13, 110, 253, 0.1);
+  .d-flex {
+    flex-direction: column;
   }
   
-  .bg-info-light {
-    background-color: rgba(23, 162, 184, 0.1);
+  h2 {
+    margin: 1rem 0;
   }
   
-  .bg-danger-light {
-    background-color: rgba(220, 53, 69, 0.1);
+  .info-card {
+    margin-bottom: 1rem;
   }
   
-  .bg-light-hover:hover {
-    background-color: rgba(248, 249, 250, 0.7);
-    transition: background-color 0.3s ease;
+  .col-md-3 {
+    border-right: none !important;
+    border-bottom: 1px solid #dee2e6;
   }
-  
-  .rounded-4 {
-    border-radius: 0.8rem !important;
-  }
+}

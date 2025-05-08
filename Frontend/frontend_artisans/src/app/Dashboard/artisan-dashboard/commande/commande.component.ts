@@ -14,19 +14,26 @@ import { OrderService } from '../../../services/order.service';
 })
 export class CommandeComponent implements OnInit {
   orders: any[] = [];
+  filteredOrders: any[] = [];
   selectedOrder: any = null;
   user: any = null;
   totalSales: number = 0;
   today: Date = new Date();
   livreurlist: string[] = []; 
+  searchTerm: string = '';
+
+  statusOptions = [
+    { value: 'En attente', label: 'En attente', color: 'warning' },
+    { value: 'En cours de traitement', label: 'En traitement', color: 'info' },
+    { value: 'Prêt au ramassage', label: 'Prêt au ramassage', color: 'primary' },
+    { value: 'Annulée', label: 'Annulée', color: 'danger' }
+  ];
 
   constructor(
     private router: Router,
     private authService: AuthService,
     private orderService: OrderService
   ) { }
-
- 
 
   ngOnInit(): void {
     this.user = this.authService.getUserName();
@@ -43,12 +50,27 @@ export class CommandeComponent implements OnInit {
     this.orderService.getOrdersByArtisan(this.user).subscribe({
       next: (data: any[]) => {
         this.orders = this.processOrders(data);
+        this.filteredOrders = [...this.orders];
         this.calculateTotalSales();
       },
       error: (err: any) => {
         console.error('Erreur lors de la récupération des commandes :', err);
       }
     });
+  }
+
+  filterOrders(): void {
+    if (!this.searchTerm) {
+      this.filteredOrders = [...this.orders];
+    } else {
+      const term = this.searchTerm.toLowerCase();
+      this.filteredOrders = this.orders.filter(order => 
+        order.orderNumber.toLowerCase().includes(term) ||
+        order.clientName.toLowerCase().includes(term) ||
+        order.artisanName.toLowerCase().includes(term) ||
+        order.status.toLowerCase().includes(term)
+      );
+    }
   }
 
   processOrders(data: any[]): any[] {
@@ -64,14 +86,15 @@ export class CommandeComponent implements OnInit {
           orderKey: orderKey,
           orderNumber: item.numeroCommande,
           orderDate: item.dateCommande,
-          status: item.statut,
+          status: item.statut === 'Expédiée' ? 'Prêt au ramassage' : item.statut,
           items: [],
           totalPrice: 0,
           totalQuantity: 0,
           artisanName: item.artisanName,
           shippingAddress: item.adresseLivraison || 'Adresse inconnue',
           clientName: item.clientName || 'Client inconnu',
-          pickupAddress: item.adresseDenlevement || ''
+          pickupAddress: item.adresseDenlevement || '',
+          livreur: item.livreurName || ''
         };
         processedOrders.push(existingOrder);
       }
@@ -113,38 +136,35 @@ export class CommandeComponent implements OnInit {
   }
 
   onStatusChange() {
-    if (this.selectedOrder.status !== 'Expédiée') {
+    if (this.selectedOrder.status !== 'Prêt au ramassage') {
       this.selectedOrder.pickupAddress = '';
+      this.selectedOrder.livreur = '';
     }
   }
 
   saveOrderStatus() {
     if (this.selectedOrder && this.selectedOrder.status) {
-      if (this.selectedOrder.status === 'Expédiée') {
-        if (!this.selectedOrder.pickupAddress) {
-          
-          alert('Veuillez saisir une adresse d\'enlèvement pour les commandes expédiées');
+      if (this.selectedOrder.status === 'Prêt au ramassage') {
+        if (!this.selectedOrder.pickupAddress || !this.selectedOrder.livreur) {
+          alert('Veuillez saisir une adresse d\'enlèvement et sélectionner un livreur pour les commandes prêtes au ramassage');
           return;
         }
 
-        // Appel à la nouvelle méthode pour ajouter l'adresse d'enlèvement
         this.orderService.addpickupAddress(
           this.selectedOrder.orderNumber,
           this.selectedOrder.pickupAddress,
-          this.selectedOrder.livreur // livreur sélectionné
+          this.selectedOrder.livreur
         )
         .subscribe({
           next: () => {
-            // Mise à jour du statut après l'ajout de l'adresse
             this.updateOrderStatusAfterAddressAdded();
           },
           error: (error: any) => {
             console.error('Erreur lors de l\'ajout de l\'adresse:', error);
-            alert('Erreur lors de l\'enregistrement de l\'adresse d\'enlèvement');
+            alert('Erreur lors de l\'enregistrement des informations de ramassage');
           }
         });
       } else {
-        // Si le statut n'est pas "Expédiée", mettre à jour normalement
         this.updateOrderStatusAfterAddressAdded();
       }
     }
@@ -157,18 +177,17 @@ export class CommandeComponent implements OnInit {
       this.selectedOrder.status
     ).subscribe({
       next: () => {
-        // Mise à jour de l'interface
         const index = this.orders.findIndex(o => o.orderKey === this.selectedOrder.orderKey);
         if (index !== -1) {
           this.orders[index].status = this.selectedOrder.status;
-          if (this.selectedOrder.pickupAddress) {
-            this.orders[index].pickupAddress = this.selectedOrder.pickupAddress;
-          }
+          this.orders[index].pickupAddress = this.selectedOrder.pickupAddress;
+          this.orders[index].livreur = this.selectedOrder.livreur;
         }
+        this.filterOrders();
         this.calculateTotalSales();
         this.closeModal();
       },
-      error: (error:any) => {
+      error: (error: any) => {
         console.error('Erreur lors de la mise à jour du statut:', error);
         alert('Erreur lors de la mise à jour du statut');
       }
@@ -208,5 +227,15 @@ export class CommandeComponent implements OnInit {
   
   get cancelledOrdersCount(): number {
     return this.orders.filter(o => o.status === 'Annulée').length;
+  }
+
+  getStatusColor(status: string): string {
+    const statusOption = this.statusOptions.find(opt => opt.value === status);
+    return statusOption ? statusOption.color : 'secondary';
+  }
+
+  getStatusLabel(status: string): string {
+    const statusOption = this.statusOptions.find(opt => opt.value === status);
+    return statusOption ? statusOption.label : status;
   }
 }
