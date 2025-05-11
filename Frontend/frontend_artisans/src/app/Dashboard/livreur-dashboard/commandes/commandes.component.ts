@@ -22,11 +22,11 @@ export class CommandesComponent implements OnInit {
   searchTerm: string = '';
 
   statusColors: any = {
-    'En attente': 'warning',
-    'En cours de traitement': 'info',
-    'Prêt au ramassage': 'primary',
+    'Prêt au ramassage': 'warning',
+    'Prélevé': 'info',
+    'En cours de livraison': 'primary',
     'Annulée': 'danger',
-    'Livrée': 'success'
+    'Livré': 'success'
   };
 
   constructor(
@@ -55,10 +55,16 @@ export class CommandesComponent implements OnInit {
         });
 
         const filteredGroups = Object.values(groupedByCommande).filter(group => {
-          const statut = group[0].statut;
-          const assignedToCurrentUser = group.some(order => order.livreurName === this.currentUser);
-          return statut === 'Prêt au ramassage' && assignedToCurrentUser;
-        });
+    const statut = group[0].statut;
+    const assignedToCurrentUser = group.some(order => order.livreurName === this.currentUser);
+    return (
+        (statut === 'Prêt au ramassage' || 
+         statut === 'Prélevé' || 
+         statut === 'En cours de livraison' || 
+         statut === 'Livré') 
+        && assignedToCurrentUser
+    );
+});
 
         this.groupedOrders = filteredGroups.map(group => {
           const first = group[0];

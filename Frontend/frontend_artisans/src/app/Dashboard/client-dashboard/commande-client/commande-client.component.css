@@ -1,31 +1,34 @@
-/* Styles pour la barre de progression du statut - Version améliorée */
+/* Conteneur principal de la barre de progression */
 .status-progress {
   margin: 20px 0;
 }
 
+/* Conteneur global avec padding */
 .progress-container {
   position: relative;
   width: 100%;
-  padding: 0 calc(15px + 1.5%);
+  padding: 0 ;
 }
 
+/* Ligne horizontale des étapes */
 .progress-line {
   display: flex;
   justify-content: space-between;
   position: relative;
   z-index: 2;
-  margin: 0 calc(-15px - 1.5%);
 }
 
+/* Étape individuelle */
 .progress-step {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 1;
   position: relative;
-  padding: 0 15px;
+  text-align: center;
 }
 
+/* Icône de l'étape */
 .step-icon {
   width: 30px;
   height: 30px;
@@ -38,20 +41,23 @@
   color: #6c757d;
   position: relative;
   z-index: 2;
+  font-size: 16px;
 }
 
+/* Icône active */
 .progress-step.active .step-icon {
   background-color: #0d6efd;
   color: white;
 }
 
+/* Texte sous l'icône */
 .step-label {
   font-size: 12px;
-  text-align: center;
   color: #6c757d;
   white-space: nowrap;
 }
 
+/* Texte actif */
 .progress-step.active .step-label {
   color: #0d6efd;
   font-weight: bold;
@@ -60,17 +66,20 @@
 .progress-connector {
   position: absolute;
   top: 15px;
-  left: calc(15px + 1.5%);
-  right: calc(15px + 1.5%);
+  left: 0;
+  right: 0;
   height: 2px;
   background-color: #e9ecef;
   z-index: 1;
 }
 
+
+/* Barre de progression dynamique */
 .progress-bar {
-  height: 100%;
+  height: 2px;
   background-color: #0d6efd;
-  transition: width 0.3s ease;
   position: absolute;
   left: 0;
+  top: 0;
+  transition: width 0.3s ease;
 }

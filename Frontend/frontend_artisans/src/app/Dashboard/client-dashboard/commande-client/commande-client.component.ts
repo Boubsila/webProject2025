@@ -151,7 +151,7 @@ export class CommandeClientComponent implements OnInit {
     this.selectedOrder = null;
   }
 
-  // Nouvelle méthode pour déterminer si un statut est actif
+ 
   isStatusActive(currentStatus: string, statusToCheck: string): boolean {
     const statusOrder = [
       'En attente',
@@ -168,25 +168,25 @@ export class CommandeClientComponent implements OnInit {
     return currentIndex >= checkIndex;
   }
 
-  // Nouvelle méthode pour calculer la largeur de la barre de progression
-  getProgressWidth(status: string): string {
-    const statusOrder = [
-      'En attente',
-      'En traitement',
-      'Prêt au ramassage',
-      'Prélevé',
-      'En cours de livraison',
-      'Livré'
-    ];
-    
-    const currentIndex = statusOrder.indexOf(status);
-    const totalSteps = statusOrder.length - 1;
-    
-    if (currentIndex === -1) return '0%';
-    if (currentIndex === 0) return '0%';
-    if (currentIndex === totalSteps) return '100%';
-    
-    // Calcul précis pour s'aligner avec les cercles
-    return ((currentIndex) / totalSteps * 100) + '%';
-  }
+  
+ getProgressWidth(status: string): string {
+  const statusOrder = [
+    'En attente',
+    'En traitement',
+    'Prêt au ramassage',
+    'Prélevé',
+    'En cours de livraison',
+    'Livré'
+  ];
+
+  const currentIndex = statusOrder.indexOf(status);
+  const totalSteps = statusOrder.length - 1;
+
+  if (currentIndex <= 0) return '0%';
+  if (currentIndex >= totalSteps) return '100%';
+
+  const width = ((currentIndex+0.2) / totalSteps) * 100;
+  return `${width}%`;
+}
+
 }

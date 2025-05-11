@@ -24,7 +24,7 @@
             </span>
           </div>
 
-          <!-- Barre de progression du statut - Version améliorée -->
+          <!-- Barre de progression du statut -->
           <div class="status-progress mb-4">
             <div class="progress-container">
               <div class="progress-connector">
@@ -51,9 +51,9 @@
                 </div>
                 <div class="progress-step" [class.active]="isStatusActive(group[0].status, 'Prélevé')">
                   <div class="step-icon">
-                    <i class="bi bi-check-circle"></i> <!-- Icône modifiée -->
+                    <i class="bi bi-check-circle"></i> 
                   </div>
-                  <div class="step-label">Prélevé</div> <!-- Texte modifié -->
+                  <div class="step-label">Prélevé</div> 
                 </div>
                 <div class="progress-step" [class.active]="isStatusActive(group[0].status, 'En cours de livraison')">
                   <div class="step-icon">

@@ -2,6 +2,7 @@ import { UserService } from './../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
+import { OrderService } from '../../../services/order.service';
 
 @Component({
   selector: 'app-statistics',
@@ -11,7 +12,7 @@ import { ProductService } from '../../../services/product.service';
 })
 export class StatisticsComponent implements OnInit {
 
-  constructor(private router: Router, private statistics: UserService, private productService: ProductService) { }
+  constructor(private router: Router, private statistics: UserService, private productService: ProductService, private orders: OrderService) { }
 
   totalUsers: any = 0;
   artisan: any = 0;
@@ -35,6 +36,14 @@ export class StatisticsComponent implements OnInit {
     this.statistics.getStatisticsUserByRole('livreur').subscribe(data => this.livreur = data);
 
     this.updateProductStats();
+
+    this.orders.getOrders().subscribe((data: any[]) => {
+      const uniqueOrderNumbers = [...new Set(data.map(order => order.numeroCommande))];
+      this.orderStats.totalOrders = uniqueOrderNumbers.length;
+      this.orderStats.completedOrders = uniqueOrderNumbers.filter(num =>
+        data.find(o => o.numeroCommande === num && o.statut === 'Livré')).length;
+      this.orderStats.pendingOrders = uniqueOrderNumbers.length - this.orderStats.completedOrders;
+    });
   }
 
   updateProductStats() {
