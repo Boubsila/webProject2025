@@ -10,11 +10,10 @@
   <div class="card shadow-lg rounded-4">
     <div class="card-body p-4">
       <div *ngIf="orders.length > 0; else noOrders">
-        <div *ngFor="let group of getOrderGroups(); let groupIndex = index" 
-             class="order-group mb-4 rounded-3 p-3"
-             [style.background]="getGroupBackgroundColor(groupIndex)"
-             [style.border-left]="'5px solid ' + getGroupBorderColor(groupIndex)">
-          
+        <div *ngFor="let group of getOrderGroups(); let groupIndex = index" class="order-group mb-4 rounded-3 p-3"
+          [style.background]="getGroupBackgroundColor(groupIndex)"
+          [style.border-left]="'5px solid ' + getGroupBorderColor(groupIndex)">
+
           <div class="group-header d-flex justify-content-between align-items-center mb-3">
             <div>
               <h5 class="mb-0 d-inline-block me-3">Commande #{{group[0].orderNumber}}</h5>
@@ -25,12 +24,58 @@
             </span>
           </div>
 
+          <!-- Barre de progression du statut - Version améliorée -->
+          <div class="status-progress mb-4">
+            <div class="progress-container">
+              <div class="progress-connector">
+                <div class="progress-bar" [style.width]="getProgressWidth(group[0].status)"></div>
+              </div>
+              <div class="progress-line">
+                <div class="progress-step" [class.active]="isStatusActive(group[0].status, 'En attente')">
+                  <div class="step-icon">
+                    <i class="bi bi-hourglass"></i>
+                  </div>
+                  <div class="step-label">En attente</div>
+                </div>
+                <div class="progress-step" [class.active]="isStatusActive(group[0].status, 'En traitement')">
+                  <div class="step-icon">
+                    <i class="bi bi-gear"></i>
+                  </div>
+                  <div class="step-label">En traitement</div>
+                </div>
+                <div class="progress-step" [class.active]="isStatusActive(group[0].status, 'Prêt au ramassage')">
+                  <div class="step-icon">
+                    <i class="bi bi-box-seam"></i>
+                  </div>
+                  <div class="step-label">Prêt</div>
+                </div>
+                <div class="progress-step" [class.active]="isStatusActive(group[0].status, 'Prélevé')">
+                  <div class="step-icon">
+                    <i class="bi bi-check-circle"></i> <!-- Icône modifiée -->
+                  </div>
+                  <div class="step-label">Prélevé</div> <!-- Texte modifié -->
+                </div>
+                <div class="progress-step" [class.active]="isStatusActive(group[0].status, 'En cours de livraison')">
+                  <div class="step-icon">
+                    <i class="bi bi-truck"></i>
+                  </div>
+                  <div class="step-label">En livraison</div>
+                </div>
+                <div class="progress-step" [class.active]="isStatusActive(group[0].status, 'Livré')">
+                  <div class="step-icon">
+                    <i class="bi bi-check-circle"></i>
+                  </div>
+                  <div class="step-label">Livré</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
               <thead class="table-light">
                 <tr>
                   <th>Artisan</th>
-                  <th>Statut</th>
                   <th>Articles</th>
                   <th>Sous-total</th>
                   <th class="text-center">Actions</th>
@@ -39,16 +84,6 @@
               <tbody>
                 <tr *ngFor="let order of group">
                   <td>{{ order.artisanName }}</td>
-                  <td>
-                    <span class="badge" [ngClass]="{
-                      'bg-warning': order.status === 'En attente',
-                      'bg-info': order.status === 'En cours de traitement',
-                      'bg-success': order.status === 'Expédiée',
-                      'bg-danger': order.status === 'Annulée'
-                    }">
-                      {{ order.status }}
-                    </span>
-                  </td>
                   <td>{{ order.totalQuantity }}</td>
                   <td>{{ order.subtotal | currency:'EUR' }}</td>
                   <td class="text-center">
@@ -60,15 +95,14 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <td colspan="3" class="text-end fw-bold">Sous-total commande :</td>
+                  <td colspan="2" class="text-end fw-bold">Sous-total commande :</td>
                   <td class="fw-bold">
                     {{ getGroupTotal(group) | currency:'EUR' }}
                   </td>
                   <td></td>
                 </tr>
-                <!-- Suppression des frais de port dynamiques -->
                 <tr>
-                  <td colspan="3" class="text-end fw-bold">Total (frais de port inclus) :</td>
+                  <td colspan="2" class="text-end fw-bold">Total (frais de port inclus) :</td>
                   <td class="fw-bold">
                     {{ getGroupTotal(group) | currency:'EUR' }}
                   </td>
@@ -87,8 +121,9 @@
     </div>
   </div>
 
-  <!-- Modal  -->
-  <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
+  <!-- Modal -->
+  <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header bg-light">
@@ -102,16 +137,6 @@
             <div class="row mb-4">
               <div class="col-md-6">
                 <p><strong>Date :</strong> {{ selectedOrder.orderDate | date:'dd/MM/yyyy à HH:mm' }}</p>
-                <p><strong>Statut :</strong>
-                  <span class="badge ms-2" [ngClass]="{
-                    'bg-warning': selectedOrder.status === 'En attente',
-                    'bg-info': selectedOrder.status === 'En cours de traitement',
-                    'bg-success': selectedOrder.status === 'Expédiée',
-                    'bg-danger': selectedOrder.status === 'Annulée'
-                  }">
-                    {{ selectedOrder.status }}
-                  </span>
-                </p>
               </div>
               <div class="col-md-6">
                 <p><strong>Artisan :</strong> {{ selectedOrder.artisanName }}</p>
@@ -143,7 +168,6 @@
                     <td colspan="3" class="text-end fw-bold">Sous-total :</td>
                     <td class="text-end fw-bold">{{ selectedOrder.subtotal | currency:'EUR' }}</td>
                   </tr>
-                  <!-- Suppression de l'affichage conditionnel -->
                   <tr>
                     <td colspan="3" class="text-end fw-bold">Total (frais de port inclus) :</td>
                     <td class="text-end fw-bold">{{ selectedOrder.subtotal | currency:'EUR' }}</td>

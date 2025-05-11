@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { OrderService } from '../../../services/order.service';
+import { AuthService } from './../../../Authentification/auth.service';
 
 @Component({
   selector: 'app-statut',
@@ -11,81 +13,117 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./statut.component.css']
 })
 export class StatutComponent implements OnInit {
-  orders: any[] = [
-    {
-      orderNumber: 'ORD123',
-      customerName: 'Jean Dupont',
-      orderDate: new Date('2023-05-15'),
-      deliveryAddress: '12 Rue de la Paix, Paris',
-      deliveryStatus: 'pending pickup',
-      estimatedDelivery: new Date('2023-05-20')
-    },
-    {
-      orderNumber: 'ORD456',
-      customerName: 'Marie Lambert',
-      orderDate: new Date('2023-05-16'),
-      deliveryAddress: '34 Avenue des Champs, Lyon',
-      deliveryStatus: 'in transit',
-      estimatedDelivery: new Date('2023-05-22')
-    },
-    {
-      orderNumber: 'ORD789',
-      customerName: 'Pierre Martin',
-      orderDate: new Date('2023-05-17'),
-      deliveryAddress: '56 Boulevard Voltaire, Marseille',
-      deliveryStatus: 'delivered',
-      estimatedDelivery: new Date('2023-05-23')
-    }
-  ];
-
-  statusOptions = [
-    { value: 'pending pickup', label: 'En attente de ramassage', color: 'warning' },
-    { value: 'in transit', label: 'En cours de livraison', color: 'info' },
-    { value: 'delivered', label: 'Livré', color: 'success' },
-    { value: 'delayed', label: 'Retardé', color: 'danger' }
-  ];
-
-  selectedOrder: any = null;
-  searchTerm: string = '';
+  orders: any[] = [];
   filteredOrders: any[] = [];
+  searchTerm: string = '';
+  currentLivreurName: string = '';
+  isLoading: boolean = true;
+  selectedOrder: any = null;
 
-  constructor(private router: Router) { }
+  // Statuts dans l'ordre du workflow
+  statusOptions = [
+    { value: 'Prêt au ramassage', label: 'Prêt au ramassage', color: 'warning' },
+    { value: 'Prélevé', label: 'Prélevé', color: 'primary' },
+    { value: 'En cours de livraison', label: 'En cours de livraison', color: 'info' },
+    { value: 'Livré', label: 'Livré', color: 'success' }
+  ];
+
+  constructor(
+    private router: Router,
+    private orderService: OrderService,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
-    this.filteredOrders = [...this.orders];
+    this.loadCurrentLivreur();
   }
 
-  goToDashboard() {
-    this.router.navigate(['/dashboard']);
-  }
-
-  updateDeliveryStatus(order: any) {
-    this.selectedOrder = { ...order };
-    this.openModal();
-  }
-
-  saveDeliveryStatus() {
-    const index = this.orders.findIndex(o => o.orderNumber === this.selectedOrder.orderNumber);
-    if (index !== -1) {
-      this.orders[index] = { ...this.selectedOrder };
-      
-      // Si le statut est "livré", mettre à jour la date de livraison
-      if (this.selectedOrder.deliveryStatus === 'delivered') {
-        this.orders[index].deliveryDate = new Date();
-      }
+  loadCurrentLivreur(): void {
+    this.currentLivreurName = this.authService.getUserName();
+    if (this.currentLivreurName) {
+      this.loadOrders();
+    } else {
+      this.router.navigate(['/login']);
     }
-    this.filterOrders();
-    this.closeModal();
   }
 
-  filterOrders() {
+  loadOrders(): void {
+    this.isLoading = true;
+    this.orderService.getOrders().subscribe({
+      next: (data: any[]) => {
+        // Filtrer les commandes pour le livreur connecté avec statut valide
+        this.orders = data.filter(order => 
+          order.livreurName === this.currentLivreurName && 
+          this.isValidStatus(order.statut) &&
+          order.isOrderd === true
+        );
+        this.filteredOrders = [...this.orders];
+        this.isLoading = false;
+      },
+      error: (error:any) => {
+        console.error('Erreur lors du chargement des commandes:', error);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  // Vérifie si le statut fait partie des statuts gérés
+  isValidStatus(status: string): boolean {
+    return this.statusOptions.some(option => option.value === status);
+  }
+
+  updateOrderStatus(): void {
+    if (!this.selectedOrder || !this.selectedOrder.numeroCommande || !this.selectedOrder.artisanName || !this.selectedOrder.statut) {
+      console.error('Données de commande incomplètes');
+      return;
+    }
+
+    this.isLoading = true;
+    this.orderService.updateOrderStatusMulti(
+      this.selectedOrder.numeroCommande, 
+      this.selectedOrder.artisanName, 
+      this.selectedOrder.statut
+    ).subscribe({
+      next: () => {
+        this.loadOrders(); // Recharger les données après mise à jour
+        this.closeModal();
+      },
+      error: (error:any) => {
+        console.error('Erreur lors de la mise à jour du statut:', error);
+        this.isLoading = false;
+      }
+    });
+  }
+
+  openModal(order: any): void {
+    this.selectedOrder = { ...order };
+    const modal = document.getElementById('updateStatusModal');
+    if (modal) {
+      modal.classList.add('show');
+      modal.style.display = 'block';
+      document.body.classList.add('modal-open');
+    }
+  }
+
+  closeModal(): void {
+    const modal = document.getElementById('updateStatusModal');
+    if (modal) {
+      modal.classList.remove('show');
+      modal.style.display = 'none';
+      document.body.classList.remove('modal-open');
+    }
+    this.selectedOrder = null;
+  }
+
+  filterOrders(): void {
     if (!this.searchTerm) {
       this.filteredOrders = [...this.orders];
     } else {
       this.filteredOrders = this.orders.filter(order => 
-        order.orderNumber.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        order.customerName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        order.deliveryStatus.toLowerCase().includes(this.searchTerm.toLowerCase())
+        order.numeroCommande.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        order.artisanName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        order.statut.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        order.produitName.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     }
   }
@@ -100,22 +138,7 @@ export class StatutComponent implements OnInit {
     return status ? status.color : 'secondary';
   }
 
-  openModal() {
-    const modal = document.getElementById('updateStatusModal');
-    if (modal) {
-      modal.classList.add('show');
-      modal.style.display = 'block';
-      document.body.classList.add('modal-open');
-    }
-  }
-
-  closeModal() {
-    const modal = document.getElementById('updateStatusModal');
-    if (modal) {
-      modal.classList.remove('show');
-      modal.style.display = 'none';
-      document.body.classList.remove('modal-open');
-    }
-    this.selectedOrder = null;
+  goToDashboard(): void {
+    this.router.navigate(['/dashboard']);
   }
 }

@@ -24,7 +24,7 @@ export class CommandeComponent implements OnInit {
 
   statusOptions = [
     { value: 'En attente', label: 'En attente', color: 'warning' },
-    { value: 'En cours de traitement', label: 'En traitement', color: 'info' },
+    { value: 'En traitement', label: 'En traitement', color: 'info' },
     { value: 'Prêt au ramassage', label: 'Prêt au ramassage', color: 'primary' },
     { value: 'Annulée', label: 'Annulée', color: 'danger' }
   ];

@@ -5,7 +5,7 @@
     </button>
     
     <h2 class="text-center mb-0 fw-bold text-gradient">
-      <i class="bi bi-truck me-2"></i>Statut de Livraison
+      <i class="bi bi-truck me-2"></i>Commandes Prêtes au Ramassage
     </h2>
     
     <div class="search-box">
@@ -17,7 +17,7 @@
 
   <div class="card shadow-lg rounded-4 border-0 overflow-hidden">
     <div class="card-header bg-primary text-white py-3">
-      <h5 class="mb-0"><i class="bi bi-list-check me-2"></i>Commandes assignées</h5>
+      <h5 class="mb-0"><i class="bi bi-list-check me-2"></i>Liste des Commandes</h5>
     </div>
     
     <div class="card-body p-0">
@@ -26,35 +26,44 @@
           <thead class="table-light">
             <tr>
               <th scope="col" class="ps-4">N° Commande</th>
-              <th scope="col">Client</th>
-              <th scope="col">Date</th>
+              <th scope="col">Artisan</th>
+              <th scope="col">Date Commande</th>
               <th scope="col">Statut</th>
               <th scope="col" class="text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let order of filteredOrders" class="animate__animated animate__fadeIn">
-              <td class="ps-4 fw-bold">{{ order.orderNumber }}</td>
-              <td>{{ order.customerName }}</td>
-              <td>{{ order.orderDate | date:'dd/MM/yyyy' }}</td>
+              <td class="ps-4 fw-bold">{{ order.numeroCommande }}</td>
+              <td>{{ order.artisanName }}</td>
+              <td>{{ order.dateCommande | date:'dd/MM/yyyy' }}</td>
               <td>
                 <span class="badge rounded-pill py-2 px-3" 
-                      [ngClass]="'bg-' + getStatusColor(order.deliveryStatus)">
-                  {{ getStatusLabel(order.deliveryStatus) }}
+                      [ngClass]="'bg-' + getStatusColor(order.statut)">
+                  {{ getStatusLabel(order.statut) }}
                 </span>
               </td>
               <td class="text-center">
                 <button class="btn btn-sm btn-primary rounded-pill px-3" 
-                        (click)="updateDeliveryStatus(order)">
-                  <i class="bi bi-pencil-square me-1"></i> Mettre à jour
+                        (click)="openModal(order)">
+                  <i class="bi bi-pencil-square me-1"></i> Modifier
                 </button>
               </td>
             </tr>
             
-            <tr *ngIf="filteredOrders.length === 0" class="text-center">
+            <tr *ngIf="filteredOrders.length === 0 && !isLoading" class="text-center">
               <td colspan="5" class="py-4 text-muted">
                 <i class="bi bi-exclamation-circle fs-4"></i>
-                <p class="mt-2 mb-0">Aucune commande trouvée</p>
+                <p class="mt-2 mb-0">Aucune commande prête au ramassage</p>
+              </td>
+            </tr>
+            
+            <tr *ngIf="isLoading">
+              <td colspan="5" class="py-4 text-center">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Chargement...</span>
+                </div>
+                <p class="mt-2 mb-0">Chargement des commandes...</p>
               </td>
             </tr>
           </tbody>
@@ -64,7 +73,7 @@
   </div>
 </div>
 
-<!-- Modal de mise à jour -->
+<!-- Modal de mise à jour de statut -->
 <div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content border-0 shadow-lg">
@@ -79,33 +88,32 @@
         <div *ngIf="selectedOrder" class="row g-3">
           <div class="col-md-6">
             <label class="form-label text-muted">N° Commande</label>
-            <p class="fw-bold">{{ selectedOrder.orderNumber }}</p>
+            <p class="fw-bold">{{ selectedOrder.numeroCommande }}</p>
           </div>
           
           <div class="col-md-6">
-            <label class="form-label text-muted">Client</label>
-            <p class="fw-bold">{{ selectedOrder.customerName }}</p>
-          </div>
-          
-          <div class="col-12">
-            <label class="form-label text-muted">Adresse</label>
-            <p class="fw-bold">{{ selectedOrder.deliveryAddress }}</p>
+            <label class="form-label text-muted">Artisan</label>
+            <p class="fw-bold">{{ selectedOrder.artisanName }}</p>
           </div>
           
           <div class="col-md-6">
             <label class="form-label text-muted">Date commande</label>
-            <p class="fw-bold">{{ selectedOrder.orderDate | date:'dd/MM/yyyy' }}</p>
+            <p class="fw-bold">{{ selectedOrder.dateCommande | date:'dd/MM/yyyy' }}</p>
           </div>
           
           <div class="col-md-6">
-            <label class="form-label text-muted">Livraison estimée</label>
-            <p class="fw-bold">{{ selectedOrder.estimatedDelivery | date:'dd/MM/yyyy' }}</p>
+            <label class="form-label text-muted">Statut actuel</label>
+            <p class="fw-bold">
+              <span class="badge" [ngClass]="'bg-' + getStatusColor(selectedOrder.statut)">
+                {{ getStatusLabel(selectedOrder.statut) }}
+              </span>
+            </p>
           </div>
           
           <div class="col-12 mt-3">
-            <label for="deliveryStatus" class="form-label fw-bold">Statut de livraison</label>
+            <label for="deliveryStatus" class="form-label fw-bold">Nouveau statut</label>
             <select class="form-select form-select-lg rounded-3" id="deliveryStatus" 
-                    [(ngModel)]="selectedOrder.deliveryStatus">
+                    [(ngModel)]="selectedOrder.statut">
               <option *ngFor="let status of statusOptions" [value]="status.value">
                 {{ status.label }}
               </option>
@@ -120,8 +128,10 @@
           Annuler
         </button>
         <button type="button" class="btn btn-primary rounded-pill px-4" 
-                (click)="saveDeliveryStatus()">
-          <i class="bi bi-check-circle me-1"></i> Enregistrer
+                (click)="updateOrderStatus()" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+          <i *ngIf="!isLoading" class="bi bi-check-circle me-1"></i>
+          Enregistrer
         </button>
       </div>
     </div>

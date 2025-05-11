@@ -49,7 +49,10 @@ export class AvisClientComponent implements OnInit {
       this.orderService.getOrders().subscribe({
         next: (data: any[]) => {
           const clientOrdersForReview = data.filter((item: any) =>
-            item.clientName === this.user && item.statut === 'Expédiée');
+
+            
+            
+            item.clientName === this.user && item.statut === 'Livré');
 
           const commandesGrouped: { [key: string]: any } = {};
 

@@ -50,7 +50,6 @@ export class CommandeClientComponent implements OnInit {
     this.getClientOrders();
   }
 
-  // Cette méthode récupère les commandes du client
   getClientOrders() {
     if (this.user) {
       this.orderService.getOrders().subscribe({
@@ -58,7 +57,6 @@ export class CommandeClientComponent implements OnInit {
           const clientOrders = data.filter(item => item.clientName === this.user && item.isOrderd);
           const ordersGrouped: { [key: string]: any } = {};
 
-          // Regroupement des commandes par numéro de commande et artisan
           clientOrders.forEach(item => {
             const orderKey = `${item.numeroCommande}_${item.artisanName}`;
 
@@ -100,7 +98,6 @@ export class CommandeClientComponent implements OnInit {
     }
   }
 
-  // Cette méthode groupe les commandes par numéro de commande
   getOrderGroups() {
     const groups: { [key: string]: any[] } = {};
 
@@ -114,33 +111,27 @@ export class CommandeClientComponent implements OnInit {
     return Object.values(groups);
   }
 
-  // Cette méthode définit la couleur de fond des groupes de commandes
   getGroupBackgroundColor(index: number): string {
     return this.colors[index % this.colors.length];
   }
 
-  // Cette méthode définit la couleur de bordure des groupes de commandes
   getGroupBorderColor(index: number): string {
     return this.borderColors[index % this.borderColors.length];
   }
 
-  // Cette méthode calcule le total d'un groupe de commandes
   getGroupTotal(group: any[]): number {
     return group.reduce((total, order) => total + order.subtotal, 0);
   }
 
-  // Navigue vers le tableau de bord
   goToDashboard() {
     this.router.navigate(['/dashboard']);
   }
 
-  // Affiche les détails d'une commande dans un modal
   viewOrderDetails(order: any) {
     this.selectedOrder = { ...order };
     this.openModal('orderDetailsModal');
   }
 
-  // Ouvre un modal en fonction de l'ID
   openModal(modalId: string) {
     const modal = document.getElementById(modalId);
     if (modal) {
@@ -150,7 +141,6 @@ export class CommandeClientComponent implements OnInit {
     }
   }
 
-  // Ferme le modal et réinitialise les détails de la commande sélectionnée
   closeModal() {
     const modal = document.getElementById('orderDetailsModal');
     if (modal) {
@@ -159,5 +149,44 @@ export class CommandeClientComponent implements OnInit {
       document.body.classList.remove('modal-open');
     }
     this.selectedOrder = null;
+  }
+
+  // Nouvelle méthode pour déterminer si un statut est actif
+  isStatusActive(currentStatus: string, statusToCheck: string): boolean {
+    const statusOrder = [
+      'En attente',
+      'En traitement',
+      'Prêt au ramassage',
+      'Prélevé',
+      'En cours de livraison',
+      'Livré'
+    ];
+    
+    const currentIndex = statusOrder.indexOf(currentStatus);
+    const checkIndex = statusOrder.indexOf(statusToCheck);
+    
+    return currentIndex >= checkIndex;
+  }
+
+  // Nouvelle méthode pour calculer la largeur de la barre de progression
+  getProgressWidth(status: string): string {
+    const statusOrder = [
+      'En attente',
+      'En traitement',
+      'Prêt au ramassage',
+      'Prélevé',
+      'En cours de livraison',
+      'Livré'
+    ];
+    
+    const currentIndex = statusOrder.indexOf(status);
+    const totalSteps = statusOrder.length - 1;
+    
+    if (currentIndex === -1) return '0%';
+    if (currentIndex === 0) return '0%';
+    if (currentIndex === totalSteps) return '100%';
+    
+    // Calcul précis pour s'aligner avec les cercles
+    return ((currentIndex) / totalSteps * 100) + '%';
   }
 }

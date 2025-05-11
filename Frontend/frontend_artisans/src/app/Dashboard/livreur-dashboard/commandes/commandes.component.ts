@@ -24,7 +24,7 @@ export class CommandesComponent implements OnInit {
   statusColors: any = {
     'En attente': 'warning',
     'En cours de traitement': 'info',
-    'Expédiée': 'primary',
+    'Prêt au ramassage': 'primary',
     'Annulée': 'danger',
     'Livrée': 'success'
   };
@@ -57,7 +57,7 @@ export class CommandesComponent implements OnInit {
         const filteredGroups = Object.values(groupedByCommande).filter(group => {
           const statut = group[0].statut;
           const assignedToCurrentUser = group.some(order => order.livreurName === this.currentUser);
-          return statut === 'Expédiée' && assignedToCurrentUser;
+          return statut === 'Prêt au ramassage' && assignedToCurrentUser;
         });
 
         this.groupedOrders = filteredGroups.map(group => {
@@ -124,7 +124,7 @@ export class CommandesComponent implements OnInit {
   saveOrderStatus(): void {
     if (!this.selectedOrder) return;
 
-    if (this.selectedOrder.status === 'Expédiée') {
+    if (this.selectedOrder.status === 'Prêt au ramassage') {
       if (!this.selectedOrder.pickupAddress || !this.selectedOrder.deliveryPerson) {
         alert('Veuillez spécifier une adresse d\'enlèvement et un livreur');
         return;
