@@ -1,7 +1,291 @@
-.description-wrap {
-    max-width: 250px; /* Tu peux ajuster la taille selon ton design */
+/* Main Container */
+.product-management {
+    padding: 2rem 0;
+}
+
+/* Header Section */
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #0d6efd, #6610f2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 50px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-back {
+    background-color: transparent;
+    color: #0d6efd;
+    border: 2px solid #0d6efd;
+}
+
+.btn-back:hover {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.btn-add-product {
+    background-color: #0d6efd;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.btn-add-product:hover {
+    background-color: #0b5ed7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);
+}
+
+/* Table Styles */
+.product-table-container {
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.product-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.product-table thead {
+    background: linear-gradient(90deg, #0d6efd, #6610f2);
+    color: white;
+}
+
+.product-table th {
+    padding: 1rem;
+    font-weight: 600;
+    text-align: left;
+}
+
+.product-table td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #eee;
+}
+
+.product-table tr:last-child td {
+    border-bottom: none;
+}
+
+.product-table tbody tr:hover {
+    background-color: #b7c1cb;
+}
+
+/* Table Elements */
+.product-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.product-description {
+    max-width: 250px;
     white-space: normal;
     word-wrap: break-word;
-    word-break: break-word;
-  }
-  
+    color: #6c757d;
+}
+
+/* Badges */
+.quantity-badge,
+.status-badge {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    border-radius: 50px;
+    font-weight: 500;
+}
+
+.quantity-badge {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+.quantity-badge.low-stock {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-badge {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+
+.status-badge.approved {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+/* Action Buttons */
+.actions-cell {
+    white-space: nowrap;
+}
+
+.btn-edit {
+    background-color: transparent;
+    color: #0d6efd;
+    border: 1px solid #0d6efd;
+    margin-right: 0.5rem;
+}
+
+.btn-edit:hover {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.btn-delete {
+    background-color: transparent;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.btn-delete:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* No Products */
+.no-products {
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.no-products i {
+    font-size: 3rem;
+    color: #adb5bd;
+    margin-bottom: 1rem;
+}
+
+.no-products p {
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+}
+
+/* Modal Styles */
+.product-modal .modal-content {
+    border-radius: 1rem;
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    border-bottom: 1px solid #eee;
+    padding: 1.5rem;
+}
+
+.modal-title {
+    font-weight: 600;
+    margin: 0;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-footer {
+    border-top: 1px solid #eee;
+    padding: 1rem 1.5rem;
+}
+
+/* Form Styles */
+.product-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.product-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.product-form input,
+.product-form textarea,
+.product-form select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.5rem;
+    transition: border-color 0.15s ease-in-out;
+}
+
+.product-form input:focus,
+.product-form textarea:focus,
+.product-form select:focus {
+    outline: none;
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.image-preview {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.image-preview img {
+    max-height: 150px;
+    border-radius: 0.5rem;
+}
+
+/* Modal Buttons */
+.btn-cancel {
+    background-color: transparent;
+    color: #6c757d;
+    border: 1px solid #6c757d;
+}
+
+.btn-cancel:hover {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-save {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.btn-save:hover {
+    background-color: #0b5ed7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-section {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .page-title {
+        order: -1;
+    }
+    
+    .btn-back,
+    .btn-add-product {
+        width: 100%;
+    }
+    
+    .product-table {
+        display: block;
+        overflow-x: auto;
+    }
+}

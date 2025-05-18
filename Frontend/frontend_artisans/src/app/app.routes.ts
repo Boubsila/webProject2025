@@ -5,7 +5,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './Authentification/login/login.component';
 import { NavbarComponent } from './NavBar/navbar/navbar.component';
 import { AddProductComponent } from './Artisans/add-product/add-product.component';
-import { DeliveryComponent } from './Patner/delivery/delivery.component';
+
 import { DashboardComponent } from './Dashboard/dashboard/dashboard.component';
 import { AdminDashboardComponent } from './Dashboard/admin-dashboard/admin-dashboard.component';
 import { StatisticsComponent } from './Dashboard/admin-dashboard/statistics/statistics.component';
@@ -31,7 +31,7 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent },
     { path: 'produits', component: ProduitsComponent, canActivate: [adminClientGuard] }, 
     { path: 'addProduct', component: AddProductComponent },
-    { path: 'delivery', component: DeliveryComponent },
+    
     { path: 'home', component: CarouselComponent },
     { path: 'admindashboard', component: AdminDashboardComponent },
     { path: 'dashboard', component:DashboardComponent,canActivate: [authGuard] },

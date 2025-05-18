@@ -1,8 +1,9 @@
+import { AuthService } from './../../Authentification/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { AuthService } from '../../Authentification/auth.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +18,7 @@ export class NavbarComponent {
   cartItemCount = 0;
   
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private clientUser: AuthService) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.activeRoute = event.url; // Met à jour l'état actif en fonction de l'URL
@@ -53,8 +54,14 @@ export class NavbarComponent {
 
   }
 
-  goToDelivery() {
-    this.router.navigate(['/delivery']);
+  isClient()
+  {
+    let user = this.clientUser.getUserRoles();
+
+    if(user =="client")
+      return true 
+    else
+    return false
   }
   goToLogin() {
     this.router.navigate(['/login']);

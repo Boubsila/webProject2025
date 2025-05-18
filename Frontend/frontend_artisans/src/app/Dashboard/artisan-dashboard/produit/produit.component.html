@@ -1,109 +1,127 @@
-<div class="container mt-4">
-    <div class="mb-3">
-        <button class="btn btn-outline-secondary fw-bold rounded-pill" (click)="goToDashboard()">
-            <i class="bi bi-arrow-left me-2"></i> Retour au tableau de bord
+<div class="container mt-4 product-management">
+    <!-- Header Section -->
+    <div class="header-section">
+        <button class="btn btn-back" (click)="goToDashboard()">
+            <i class="bi bi-arrow-left me-2"></i> Retour
+        </button>
+        <h2 class="page-title">Gestion des Produits</h2>
+        <button class="btn btn-add-product" (click)="openAddProductModal()">
+            <i class="bi bi-plus-circle me-2"></i> Ajouter
         </button>
     </div>
 
-    <h2 class="text-center mb-4 text-primary fw-bold">Gestion de Mes Produits</h2>
-
-    <div class="mb-3">
-        <button class="btn btn-primary rounded-pill" (click)="openAddProductModal()">
-            <i class="bi bi-plus-circle me-1"></i> Ajouter un Produit
-        </button>
-    </div>
-
-    <div class="card shadow-lg rounded-4">
-        <div class="card-body p-4">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th scope="col" *ngIf="showId">#</th>
-                            <th scope="col" *ngIf="showImage">Image</th>
-                            <th scope="col" *ngIf="showName">Nom</th>
-                            <th scope="col" *ngIf="showDescription">Description</th>
-                            <th scope="col" *ngIf="showPrice">Prix</th>
-                            <th scope="col" *ngIf="showQuantity">Quantité</th>
-                          
-                            <th scope="col" *ngIf="showStatus">Statut</th>
-                            <th scope="col" class="text-center">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                        <tr *ngFor="let product of products">
-                            <td *ngIf="showId">{{ product.id }}</td>
-                            <td *ngIf="showImage">
-                                <img [src]="product.image" alt="Image du produit" class="img-fluid rounded-2" style="max-width: 50px;">
-                            </td>
-                            
-                            <td *ngIf="showName">{{ product.nom }}</td>
-                            <td *ngIf="showDescription" class="description-wrap">{{ product.description }}</td>
-                            <td *ngIf="showPrice">{{ product.prix }} €</td>
-                            <td *ngIf="showQuantity">{{ product.quantite }}</td>
-                            <td *ngIf="showStatus">
-                                <span class="badge" [ngClass]="{'bg-success': product.statut === 'approved', 'bg-warning': product.statut === 'pending'}">{{ product.statut }}</span>
-                            </td>
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-primary rounded-pill me-2" (click)="openEditProductModal(product)">
-                                    <i class="bi bi-pencil me-1"></i> 
-                                </button>
-                                <button class="btn btn-sm btn-danger rounded-pill" (click)="deleteProduct(product.id)">
-                                    <i class="bi bi-trash me-1"></i> 
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+    <!-- Products Table -->
+    <div class="product-table-container">
+        <div class="table-responsive">
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <th *ngIf="showId">#</th>
+                        <th *ngIf="showImage">Image</th>
+                        <th *ngIf="showName">Nom</th>
+                        <th *ngIf="showDescription">Description</th>
+                        <th *ngIf="showPrice">Prix</th>
+                        <th *ngIf="showQuantity">Quantité</th>
+                        <th *ngIf="showStatus">Statut</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of products">
+                        <td *ngIf="showId">{{ product.id }}</td>
+                        <td *ngIf="showImage">
+                            <img [src]="product.image" alt="Produit" class="product-image">
+                        </td>
+                        <td *ngIf="showName">{{ product.nom }}</td>
+                        <td *ngIf="showDescription" class="product-description">{{ product.description }}</td>
+                        <td *ngIf="showPrice">{{ product.prix }} €</td>
+                        <td *ngIf="showQuantity">
+                            <span class="quantity-badge" [class.low-stock]="product.quantite <= 5">
+                                {{ product.quantite }}
+                            </span>
+                        </td>
+                        <td *ngIf="showStatus">
+                            <span class="status-badge" [class.approved]="product.statut === 'approved'">
+                                {{ product.statut === 'approved' ? 'Approuvé' : 'En attente' }}
+                            </span>
+                        </td>
+                        <td class="text-center actions-cell">
+                            <button class="btn btn-edit" (click)="openEditProductModal(product)">
+                                <i class="bi bi-pencil me-1"></i> Modifier
+                            </button>
+                            <button class="btn btn-delete" (click)="deleteProduct(product.id)">
+                                <i class="bi bi-trash me-1"></i> Supprimer
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="products.length === 0">
+                        <td colspan="8" class="no-products">
+                            <i class="bi bi-box-seam"></i>
+                            <p>Aucun produit enregistré</p>
+                            <button class="btn btn-add-product" (click)="openAddProductModal()">
+                                <i class="bi bi-plus-circle me-2"></i> Ajouter un produit
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <div class="modal fade" #productModal id="productModal" tabindex="-1" 
+    <!-- Product Modal -->
+    <div class="modal fade product-modal" #productModal id="productModal" tabindex="-1" 
          aria-labelledby="productModalLabel" [attr.inert]="!isModalOpen ? 'true' : null">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="productModalLabel">{{ selectedProduct.id ? 'Modifier' : 'Ajouter' }} un Produit</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeModalFromButton()"></button>
+                    <h5 class="modal-title">{{ selectedProduct.id ? 'Modifier' : 'Ajouter' }} un Produit</h5>
+                    <button type="button" class="btn-close" (click)="closeModalFromButton()"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="mb-3" *ngIf="showName">
-                            <label for="productName" class="form-label">Nom du Produit</label>
-                            <input #firstInput type="text" class="form-control" id="productName" [(ngModel)]="selectedProduct.nom" name="nom">
+                    <form class="product-form">
+                        <div class="form-group" *ngIf="showName">
+                            <label for="productName">Nom du Produit</label>
+                            <input #firstInput type="text" id="productName" 
+                                   [(ngModel)]="selectedProduct.nom" name="nom">
                         </div>
-                        <div class="mb-3" *ngIf="showDescription">
-                            <label for="productDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="productDescription" [(ngModel)]="selectedProduct.description" name="description"></textarea>
+                        <div class="form-group" *ngIf="showDescription">
+                            <label for="productDescription">Description</label>
+                            <textarea id="productDescription" 
+                                      [(ngModel)]="selectedProduct.description" name="description"></textarea>
                         </div>
-                        <div class="mb-3" *ngIf="showPrice">
-                            <label for="productPrice" class="form-label">Prix</label>
-                            <input type="number" class="form-control" id="productPrice" [(ngModel)]="selectedProduct.prix" name="prix">
+                        <div class="form-group" *ngIf="showPrice">
+                            <label for="productPrice">Prix</label>
+                            <input type="number" id="productPrice" 
+                                   [(ngModel)]="selectedProduct.prix" name="prix">
                         </div>
-                        <div class="mb-3" *ngIf="showImage">
-                            <label for="productImage" class="form-label">Image</label>
-                            <select class="form-control" id="productImage" [(ngModel)]="selectedProduct.image" name="image">
+                        <div class="form-group" *ngIf="showImage">
+                            <label>Image du produit</label>
+                            <select [(ngModel)]="selectedProduct.image" name="image">
                                 <option *ngFor="let image of imageOptions" [value]="image">{{ image }}</option>
                             </select>
-                            <img *ngIf="selectedProduct.image" [src]="selectedProduct.image" alt="Aperçu de l'image" class="img-fluid mt-2 rounded-2" style="max-height: 100px;">
+                            <div class="image-preview">
+                                <img [src]="selectedProduct.image" alt="Aperçu">
+                            </div>
                         </div>
-                        <div class="mb-3" *ngIf="showQuantity">
-                            <label for="productQuantite" class="form-label">Quantité</label>
-                            <input type="number" class="form-control" id="productQuantite" [(ngModel)]="selectedProduct.quantite" name="quantite">
+                        <div class="form-group" *ngIf="showQuantity">
+                            <label for="productQuantite">Quantité</label>
+                            <input type="number" id="productQuantite" 
+                                   [(ngModel)]="selectedProduct.quantite" name="quantite">
                         </div>
-                        <div class="mb-3" *ngIf="showCategory">
-                            <label for="productCategorie" class="form-label">Catégorie</label>
-                            <select class="form-control" id="productCategorie" [(ngModel)]="selectedProduct.categorie" name="categorie">
+                        <div class="form-group" *ngIf="showCategory">
+                            <label for="productCategorie">Catégorie</label>
+                            <select id="productCategorie" 
+                                    [(ngModel)]="selectedProduct.categorie" name="categorie">
                                 <option *ngFor="let categorie of categories" [value]="categorie">{{ categorie }}</option>
                             </select>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary rounded-pill" (click)="closeModalFromButton()" data-bs-dismiss="modal">Annuler</button>
-                    <button type="button" class="btn btn-primary rounded-pill" (click)="saveProduct()">Enregistrer</button>
+                    <button type="button" class="btn btn-cancel" 
+                            (click)="closeModalFromButton()">Annuler</button>
+                    <button type="button" class="btn btn-save" 
+                            (click)="saveProduct()">Enregistrer</button>
                 </div>
             </div>
         </div>

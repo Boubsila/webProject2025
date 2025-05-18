@@ -52,6 +52,9 @@ export class ProduitComponent implements OnInit {
         for (let i = 1; i <= 10; i++) {
             this.imageOptions.push(`/images/${i}.jpg`);
         }
+        for (let i = 11; i <= 35; i++) {
+            this.imageOptions.push(`/images/${i}.png`);
+        }
 
         this.updateProductList(); // Call the method to update the product list
     }
