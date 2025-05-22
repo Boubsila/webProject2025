@@ -45,33 +45,59 @@ namespace Backend_Artisans.Controllers
             }
         }
 
- 
 
         [HttpPut("updateOrder/{id}")]
         public IActionResult UpdateCommande(int id, [FromBody] Commande updatedCommande)
         {
-            var commande = _service.GetCommandeList().FirstOrDefault(c => c.Id == id);
+            try
+            {
+                // Appel direct à la méthode du service qui gère la logique métier
+                _service.UpdateCommande(
+                    id, 
+                    updatedCommande.statut,
+                    updatedCommande.isOrderd,
+                    updatedCommande.numeroCommande,
+                    updatedCommande.adresseLivraison,
+                    updatedCommande.dateLivraison
+                    
+                );
 
-            if (commande == null)
-                return NotFound();
-
-            // Mise à jour des champs
-            commande.numeroCommande = updatedCommande.numeroCommande ?? commande.numeroCommande;
-            commande.produitId = updatedCommande.produitId;
-            commande.produitName = updatedCommande.produitName;
-            commande.artisanName = updatedCommande.artisanName;
-            commande.clientName = updatedCommande.clientName;
-            commande.livreurName = updatedCommande.livreurName;
-            commande.dateCommande = updatedCommande.dateCommande ?? commande.dateCommande;
-            commande.statut = updatedCommande.statut ?? commande.statut;
-            commande.isOrderd = updatedCommande.isOrderd;
-            commande.quantite = updatedCommande.quantite;
-            commande.prix = updatedCommande.prix;
-            commande.adresseLivraison = updatedCommande.adresseLivraison ?? commande.adresseLivraison;
-            commande.dateLivraison = updatedCommande.dateLivraison ?? commande.dateLivraison;
-
-            return Ok(commande); // ou NoContent()
+                return Ok(new { message = "Commande mise à jour avec succès." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Erreur lors de la mise à jour de la commande.");
+            }
         }
+
+
+
+
+        //[HttpPut("updateOrder/{id}")]
+        //public IActionResult UpdateCommande(int id, [FromBody] Commande updatedCommande)
+        //{
+        //    var commande = _service.GetCommandeList().FirstOrDefault(c => c.Id == id);
+
+        //    if (commande == null)
+        //        return NotFound();
+
+        //    // Mise à jour des champs
+        //    commande.numeroCommande = updatedCommande.numeroCommande ?? commande.numeroCommande;
+        //    commande.produitId = updatedCommande.produitId;
+        //    commande.produitName = updatedCommande.produitName;
+        //    commande.artisanName = updatedCommande.artisanName;
+        //    commande.clientName = updatedCommande.clientName;
+        //    commande.livreurName = updatedCommande.livreurName;
+        //    commande.dateCommande = updatedCommande.dateCommande ?? commande.dateCommande;
+        //    commande.statut = updatedCommande.statut ?? commande.statut;
+        //    commande.isOrderd = updatedCommande.isOrderd;
+        //    commande.quantite = updatedCommande.quantite;
+        //    commande.prix = updatedCommande.prix;
+        //    commande.adresseLivraison = updatedCommande.adresseLivraison ?? commande.adresseLivraison;
+        //    commande.dateLivraison = updatedCommande.dateLivraison ?? commande.dateLivraison;
+
+        //    return Ok(commande); // ou NoContent()
+        //}
 
         [HttpDelete("Delete/{id}")]
 

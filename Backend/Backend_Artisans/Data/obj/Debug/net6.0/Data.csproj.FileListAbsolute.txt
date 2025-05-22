@@ -14,3 +14,5 @@ C:\Users\boubs\Desktop\Ephec\Ephec2025\Projet développement Web\Projets\Web Dev
 C:\Users\boubs\Desktop\Ephec\Ephec2025\Projet développement Web\Projets\Web Development Project 2025\Backend\Backend_Artisans\Data\obj\Debug\net6.0\Data.pdb
 C:\Users\boubs\Desktop\Ephec\Ephec2025\Projet développement Web\Projets\Web Development Project 2025\Backend\Backend_Artisans\Data\obj\Debug\net6.0\ref\Data.dll
 C:\Users\boubs\Desktop\Ephec\Ephec2025\Projet développement Web\Projets\Web Development Project 2025\Backend\Backend_Artisans\Data\obj\Debug\net6.0\Data.sourcelink.json
+C:\Users\boubs\Desktop\Ephec\Ephec2025\Projet développement Web\Projets\Web Development Project 2025\Backend\Backend_Artisans\Data\bin\Debug\net6.0\Data.runtimeconfig.json
+C:\Users\boubs\Desktop\Ephec\Ephec2025\Projet développement Web\Projets\Web Development Project 2025\Backend\Backend_Artisans\Data\obj\Debug\net6.0\Data.genruntimeconfig.cache

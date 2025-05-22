@@ -13,109 +13,141 @@ namespace Data
 {
     public class Repo : IRepo
     {
-       
 
+        private readonly AppDbContext _context;
+
+        public Repo(AppDbContext context)
+        {
+            _context = context;
+        }
 
         //user list 
-        private static List<User> users = new List<User>
-        {
-           
-            new User ( 1,"su@artisans.be","4326FACBD8C1467C6FC7","f6893125-485c-4439-a443-d4600865f788","Admin",true),
-            new User ( 2,"client","BD605BE48F3DDE7AEE95","399f10b0-f976-4079-b0a0-1461f45fa58e","client",true),
-            new User ( 3,"artisan","C32665DFD1F098F185D4","d264db82-396a-4ffa-9671-f3cc7fee2489","artisan",true),
-            new User ( 4,"client2","C530C1D1A88CAD432ED0","e90be96d-2702-4d77-877d-c0e01ede0203","client",true),
-            new User ( 5,"artisan2","3E58AFA6264EF7CBEABA","8b3259fa-956f-488f-ab4e-c6c7505eaa24","artisan",true),
-            new User ( 6,"livreur","F13CF38BDAEF1226A615","b8379950-1121-49de-97e6-32e4efa39227","livreur",true),
-            new User ( 7,"livreur2","A490A041B03D2F38BA9F","1ac810de-3657-4346-a3dd-ff401988214b","livreur",true)
-         
-           
+        //private static List<User> users = new List<User>
+        //{
 
-        };
+        //    new User ( 1,"su@artisans.be","4326FACBD8C1467C6FC7","f6893125-485c-4439-a443-d4600865f788","Admin",true),
+        //    new User ( 2,"client","BD605BE48F3DDE7AEE95","399f10b0-f976-4079-b0a0-1461f45fa58e","client",true),
+        //    new User ( 3,"artisan","C32665DFD1F098F185D4","d264db82-396a-4ffa-9671-f3cc7fee2489","artisan",true),
+        //    new User ( 4,"client2","C530C1D1A88CAD432ED0","e90be96d-2702-4d77-877d-c0e01ede0203","client",true),
+        //    new User ( 5,"artisan2","3E58AFA6264EF7CBEABA","8b3259fa-956f-488f-ab4e-c6c7505eaa24","artisan",true),
+        //    new User ( 6,"livreur","F13CF38BDAEF1226A615","b8379950-1121-49de-97e6-32e4efa39227","livreur",true),
+        //    new User ( 7,"livreur2","A490A041B03D2F38BA9F","1ac810de-3657-4346-a3dd-ff401988214b","livreur",true)
+
+
+
+        //};
 
         //product list
-        private static List<Produit> produits = new List<Produit>
-        {
-            new Produit(1, "Vase en Céramique Tourné à la Main", "Vase unique en céramique, tourné et décoré à la main avec des motifs traditionnels.", 85.00, "Poterie et Céramique", "images/1.jpg", 50, "artisan", "approved"),
-            new Produit(2, "Tapis Berbère en Laine Naturelle", "Tapis berbère authentique, tissé à la main avec de la laine naturelle et des motifs géométriques.", 2500.00, "Tissage et Tapis", "images/2.jpg", 30, "artisan2", "approved"),
-            new Produit(3, "Sac à Main en Cuir Véritable", "Sac à main élégant en cuir véritable, tanné et cousu à la main par des artisans locaux.", 120.00, "Travail du Cuir (Tanneries)", "images/3.jpg", 100, "artisan", "approved"),
-            new Produit(4, "Table Basse en Bois de Cèdre Sculpté", "Table basse unique en bois de cèdre, sculptée à la main avec des motifs floraux et géométriques.", 350.00, "Travail du Bois (Menuiserie et Marqueterie)", "images/4.jpg", 25, "artisan2", "approved"),
-            new Produit(5, "Lanterne en Fer Forgé", "Lanterne artisanale en fer forgé, réalisée à la main avec des motifs traditionnels.", 180.00, "Métallurgie et Ferronnerie", "images/5.jpg", 75, "artisan", "approved"),
-            new Produit(6, "Collier en Argent et Pierres Précieuses", "Collier artisanal en argent, orné de pierres précieuses et réalisé avec des techniques traditionnelles.", 220.00, "Bijouterie et Orfèvrerie", "images/6.jpg", 10, "artisan2", "approved"),
-            new Produit(7, "Écharpe Brodée à la Main", "Écharpe en laine douce, brodée à la main avec des motifs colorés et traditionnels.", 60.00, "Autres", "images/7.jpg", 20, "artisan", "approved"),
-            new Produit(8, "Panier en Osier Tressé", "Panier artisanal en osier, tressé à la main avec des techniques traditionnelles.", 45.00, "Autres", "images/8.jpg", 30, "artisan2", "approved"),
-            new Produit(9, "Panneau Mural en Zellige", "Panneau mural décoratif en zellige, réalisé à la main avec des motifs géométriques complexes.", 300.00, "Autres", "images/9.jpg", 0, "artisan", "approved"),
-            new Produit(10, "Lampe en Tadelakt", "Lampe artisanale en tadelakt, réalisée à la main avec des techniques traditionnelles.", 150.00, "Poterie et Céramique", "images/10.jpg", 0, "artisan2", "approved")
-        };
+        //private static List<Produit> produits = new List<Produit>
+        //{
+        //    new Produit(1, "Vase en Céramique Tourné à la Main", "Vase unique en céramique, tourné et décoré à la main avec des motifs traditionnels.", 85.00, "Poterie et Céramique", "images/1.jpg", 50, "artisan", "approved"),
+        //    new Produit(2, "Tapis Berbère en Laine Naturelle", "Tapis berbère authentique, tissé à la main avec de la laine naturelle et des motifs géométriques.", 2500.00, "Tissage et Tapis", "images/2.jpg", 30, "artisan2", "approved"),
+        //    new Produit(3, "Sac à Main en Cuir Véritable", "Sac à main élégant en cuir véritable, tanné et cousu à la main par des artisans locaux.", 120.00, "Travail du Cuir (Tanneries)", "images/3.jpg", 100, "artisan", "approved"),
+        //    new Produit(4, "Table Basse en Bois de Cèdre Sculpté", "Table basse unique en bois de cèdre, sculptée à la main avec des motifs floraux et géométriques.", 350.00, "Travail du Bois (Menuiserie et Marqueterie)", "images/4.jpg", 25, "artisan2", "approved"),
+        //    new Produit(5, "Lanterne en Fer Forgé", "Lanterne artisanale en fer forgé, réalisée à la main avec des motifs traditionnels.", 180.00, "Métallurgie et Ferronnerie", "images/5.jpg", 75, "artisan", "approved"),
+        //    new Produit(6, "Collier en Argent et Pierres Précieuses", "Collier artisanal en argent, orné de pierres précieuses et réalisé avec des techniques traditionnelles.", 220.00, "Bijouterie et Orfèvrerie", "images/6.jpg", 10, "artisan2", "approved"),
+        //    new Produit(7, "Écharpe Brodée à la Main", "Écharpe en laine douce, brodée à la main avec des motifs colorés et traditionnels.", 60.00, "Autres", "images/7.jpg", 20, "artisan", "approved"),
+        //    new Produit(8, "Panier en Osier Tressé", "Panier artisanal en osier, tressé à la main avec des techniques traditionnelles.", 45.00, "Autres", "images/8.jpg", 30, "artisan2", "approved"),
+        //    new Produit(9, "Panneau Mural en Zellige", "Panneau mural décoratif en zellige, réalisé à la main avec des motifs géométriques complexes.", 300.00, "Autres", "images/9.jpg", 0, "artisan", "approved"),
+        //    new Produit(10, "Lampe en Tadelakt", "Lampe artisanale en tadelakt, réalisée à la main avec des techniques traditionnelles.", 150.00, "Poterie et Céramique", "images/10.jpg", 0, "artisan2", "approved")
+        //};
 
 
         //Order liste
 
-        private static List<Commande> commandes = new List<Commande>
-        {
+        //private static List<Commande> commandes = new List<Commande>
+        //{
 
-            new Commande(0,"ORD_test_Order",1,"test","artisan","client","","12/04/25","Expédiée",false,10,20,"","",""),
+        //    new Commande(0,"ORD_test_Order",1,"test","artisan","client","","12/04/25","Expédiée",false,10,20,"","",""),
 
 
-        };
+        //};
 
         // Avis liste 
 
-        private static List<Avis> avisList = new List<Avis>
-        {
-            new Avis (0,"ORD1","product1", "client",5,new List<string> { "Top product"}, "16/06/2025"),
-            new Avis (1,"ORD2","product1", "client2",5,new List<string> { "Merci"}, "17/06/2025")
+        //private static List<Avis> avisList = new List<Avis>
+        //{
+        //    new Avis (0,"ORD1","product1", "client",5,new List<string> { "Top product"}, "16/06/2025"),
+        //    new Avis (1,"ORD2","product1", "client2",5,new List<string> { "Merci"}, "17/06/2025")
 
-        };
+        //};
 
 
-        //public IEnumerable<livraisonTest> GetLivraisons() => livraisons;
+
 
         //******************* USERS *************************
 
-        
+
         public List<User> GetUsers()
         {
-            return users;
-        }
-        
-        public void AddUser(User user)
-        {
-            users.Add(user);
+            return _context.User.ToList();
         }
 
-        
-        public void DeleteUser(int Id)
+        public void AddUser(User user)
         {
-            var user = users.FirstOrDefault(x => x.Id == Id);
-            if (user != null)
+            try
             {
-                users.Remove(user);
+                _context.User.Add(user);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Erreur lors de l'ajout du user : " + ex.Message);
+
             }
         }
 
+
+
+
+        public void DeleteUser(int Id)
+        {
+            var user = _context.User.Find(Id);  // cherche en base par clé primaire
+            if (user != null)
+            {
+                _context.User.Remove(user);      // supprime de la base
+                _context.SaveChanges();          // sauvegarde les changements
+            }
+        }
+
+
+        public void UpdateUserStatus(int userId, bool newStatus)
+        {
+            var user = _context.User.Find(userId);
+            if (user != null)
+            {
+                user.Statut = newStatus;
+                _context.SaveChanges();
+            }
+        }
+
+
         //******************* Products *************************
+
         public List<Produit> getAllProducts()
         {
-            return produits;
+            return _context.Produits.ToList();
         }
 
         public void changeProductStatus(int id)
         {
-            var produit = produits.FirstOrDefault(p => p.Id == id);
+            var produit = _context.Produits.FirstOrDefault(p => p.Id == id);
 
             if (produit != null)
             {
                 produit.Statut = "approved";
+                _context.SaveChanges();
             }
         }
 
         public void deleteProduct(int id)
         {
-            var produit = produits.FirstOrDefault(p => p.Id == id);
+            var produit = _context.Produits.FirstOrDefault(p => p.Id == id);
 
             if (produit != null)
             {
-                produits.Remove(produit);
+                _context.Produits.Remove(produit);
+                _context.SaveChanges();
             }
         }
 
@@ -123,7 +155,7 @@ namespace Data
         public void addProduct(string nom, string description, double prix, string categorie, string image, int quantite, string artisan, string statut)
         {
             // Générer un nouvel ID unique
-            int nouvelId = produits.Count > 0 ? produits.Max(p => p.Id) + 1 : 1;
+            int nouvelId = _context.Produits.ToList().Count > 0 ? _context.Produits.Max(p => p.Id) + 1 : 1;
 
             // Créer un nouvel objet Produit avec les informations fournies
             Produit nouveauProduit = new Produit(
@@ -139,21 +171,26 @@ namespace Data
             );
 
             // Ajouter le produit à la liste
-            produits.Add(nouveauProduit);
+            _context.Produits.Add(nouveauProduit);
+            _context.SaveChanges();
         }
 
-        //Get product by artisan name  
         public List<Produit> GetProductsByArtisanName(string artisanName)
         {
-            return produits.Where(p => p.ArtisanName.Equals(artisanName, StringComparison.OrdinalIgnoreCase)).ToList();
+            return _context.Produits
+                .Where(p => p.ArtisanName != null &&
+                            p.ArtisanName.ToLower() == artisanName.ToLower())
+                .ToList();
         }
 
+
+        //**************************************Produit**********************************************
 
         //update product 
         public void updateProduct(int id, string nom, string description, double prix, string categorie, string image, int quantite)
         {
 
-            var produit = produits.FirstOrDefault(p => p.Id == id);
+            var produit = _context.Produits.FirstOrDefault(p => p.Id == id);
 
             if (produit != null)
             {
@@ -165,16 +202,18 @@ namespace Data
                 produit.Quantite = quantite;
 
             }
+            _context.SaveChanges();
         }
 
         // update quantity of product
         public void UpdateProductQuantity(int id, int nouvelleQuantite)
         {
-            var produit = produits.FirstOrDefault(p => p.Id == id);
+            var produit = _context.Produits.FirstOrDefault(p => p.Id == id);
 
             if (produit != null)
             {
                 produit.Quantite = produit.Quantite - nouvelleQuantite;
+                _context.SaveChanges();
             }
         }
 
@@ -184,7 +223,7 @@ namespace Data
         //get commande
         public List<Commande> GetCommandeList()
         {
-            return commandes;
+            return _context.Commandes.ToList();
 
         }
 
@@ -192,23 +231,24 @@ namespace Data
         public void AddCommande(Commande commande)
         {
             // Générer un nouvel ID unique
-            int nouvelId = commandes.Count > 0 ? commandes.Max(c => c.Id) + 1 : 1;
+            int nouvelId = _context.Commandes.ToList().Count > 0 ? _context.Commandes.Max(c => c.Id) + 1 : 1;
             commande.Id = nouvelId;
 
-            commandes.Add(commande);
+            _context.Commandes.Add(commande);
+            _context.SaveChanges();
         }
 
 
         //update commande (commander)
         public void UpdateCommande(int id, string statut, bool isOrdered, string numeroCommande, string? adresseLivraison = null, string? dateLivraison = null)
         {
-            var commande = commandes.FirstOrDefault(c => c.Id == id);
+            var commande = _context.Commandes.FirstOrDefault(c => c.Id == id);
 
             if (commande != null)
             {
-                if(statut != null)
+                if (statut != null)
                     commande.statut = statut;
-                if(isOrdered != false)
+                if (isOrdered != false)
                     commande.isOrderd = isOrdered;
 
                 if (adresseLivraison != null)
@@ -216,50 +256,59 @@ namespace Data
 
                 if (dateLivraison != null)
                     commande.dateLivraison = dateLivraison;
-                if(numeroCommande != null)
+                if (numeroCommande != null)
                     commande.numeroCommande = numeroCommande;
+
+
             }
+            _context.SaveChanges();
         }
 
         // Delete order
 
         public void DeleteCommande(int id)
         {
-            var commande = commandes.FirstOrDefault(c => c.Id == id);
+            var commande = _context.Commandes.FirstOrDefault(c => c.Id == id);
 
             if (commande != null)
             {
-                commandes.Remove(commande);
+                _context.Commandes.Remove(commande);
             }
 
-
+            _context.SaveChanges();
         }
 
         // recuperer les commandes par nom d'artisan
         public List<Commande> GetCommandesByArtisanName(string artisanName)
         {
-            return commandes.Where(c => c.artisanName.Equals(artisanName, StringComparison.OrdinalIgnoreCase)).ToList();
+            return _context.Commandes
+                    .Where(c => c.artisanName != null && c.artisanName.ToLower() == artisanName.ToLower())
+                    .ToList();
         }
 
         // change le statut de la commande 
         public void ChangeOrderStatus(string numeroCommande, string nouveauStatut)
         {
-            var commande = commandes.FirstOrDefault(c => c.numeroCommande == numeroCommande);
+            var commande = _context.Commandes
+                .FirstOrDefault(c => c.numeroCommande != null && c.numeroCommande.ToLower() == numeroCommande.ToLower());
             if (commande != null)
             {
                 commande.statut = nouveauStatut;
+                _context.SaveChanges();
             }
         }
 
         //ajouter l'adresse d'enlevment 
 
-        public void addPickupAdres(string nmOrder, string adresse,string livreur)
+        public void addPickupAdres(string nmOrder, string adresse, string livreur)
         {
-            var commande = commandes.FirstOrDefault(c => c.numeroCommande == nmOrder);
+            var commande = _context.Commandes
+                .FirstOrDefault(c => c.numeroCommande != null && c.numeroCommande.ToLower() == nmOrder.ToLower());
             if (commande != null)
             {
                 commande.adresseDenlevement = adresse;
                 commande.livreurName = livreur;
+                _context.SaveChanges();
             }
         }
 
@@ -267,82 +316,150 @@ namespace Data
 
         public void ChangeCommandeStatusByProductAndArtisan(string numeroCommande, string artisanName, string nouveauStatut)
         {
-            var commandesAModifier = commandes.Where(c =>
-                c.numeroCommande == numeroCommande &&
-                c.artisanName.Equals(artisanName, StringComparison.OrdinalIgnoreCase)).ToList();
+            var commandesAModifier = _context.Commandes
+                .Where(c =>
+            c.numeroCommande != null &&
+            c.artisanName != null &&
+            c.numeroCommande.ToLower() == numeroCommande.ToLower() &&
+            c.artisanName.ToLower() == artisanName.ToLower())
+                .ToList();
 
             foreach (var commande in commandesAModifier)
             {
                 commande.statut = nouveauStatut;
             }
+
+            _context.SaveChanges();
         }
 
-        
+
         //+++++++************** AVIS ********************//
+
+        //public void AjouterAvis(Avis avis)
+        //{
+        //    // Vérifier si l'avis existe déjà pour la même commande et le même produit  
+        //    var avisExistant = avisList.FirstOrDefault(a =>
+        //        a.NumeroCommande == avis.NumeroCommande &&
+        //        a.ProduitName == avis.ProduitName);
+
+        //    if (avisExistant != null )
+        //    {
+        //        throw new ArgumentException("Vous avez déjà soumis un avis pour ce produit.");
+        //    }
+        //        // Ajouter un ID unique à l'avis  
+        //        avis.Id = avisList.Count > 0 ? avisList.Max(a => a.Id) + 1 : 1;
+
+        //        // Formater le commentaire initial et l'ajouter à la liste des commentaires  
+        //        string commentaireFormate = $"{avis.Commentaire.FirstOrDefault()}, {DateTime.Now:dd-MM-yy, HH:mm:ss}";
+        //        avis.Commentaire = new List<string> { commentaireFormate };
+
+        //        // Ajouter l'avis à la liste  
+        //        avisList.Add(avis);
+
+
+        //}
+
+        //public void ajouterCommentaire(string ORD, string produitName, string commentaire)
+        //{
+        //    // Trouver l'avis correspondant à la commande et au produit
+        //    var avis = avisList.FirstOrDefault(a =>
+        //        a.NumeroCommande == ORD &&
+        //        a.ProduitName == produitName);
+
+        //    if (avis != null)
+        //    {
+        //        // Formater le nouveau commentaire avec la date/heure actuelle
+        //        string commentaireFormate = $"{commentaire} , {DateTime.Now:dd-MM-yy, HH:mm:ss}";
+
+        //        // Ajouter le commentaire formaté à la liste des commentaires de l'avis
+        //        avis.Commentaire.Add(commentaireFormate);
+        //    }
+        //    else
+        //    {
+
+        //        throw new InvalidOperationException($"Avis non trouvé pour la commande {ORD} et le produit {produitName}");
+        //    }
+        //}
+
+        //public List<string> GetComent(string ORD, string produitName)
+        //{
+        //    return avisList
+        //        .Where(a => a.NumeroCommande == ORD && a.ProduitName == produitName)
+        //        .SelectMany(a => a.Commentaire) 
+        //        .ToList();
+        //}
+
+
+        //public int GetNote(string ORD, string produitName)
+        //{
+        //    _context.Avis
+        //    // Recherche de l'avis correspondant à la commande et au produit
+        //    var avis = avisList
+        //        .FirstOrDefault(a => a.NumeroCommande == ORD && a.ProduitName == produitName);
+
+        //    // Si un avis a été trouvé, retourner la note, sinon retourner une valeur par défaut (par exemple, 0)
+        //    return avis?.Note ?? 0; // Si avis est null, retourne 0
+        //}
 
         public void AjouterAvis(Avis avis)
         {
-            // Vérifier si l'avis existe déjà pour la même commande et le même produit  
-            var avisExistant = avisList.FirstOrDefault(a =>
+            var avisExistant = _context.Avis.FirstOrDefault(a =>
                 a.NumeroCommande == avis.NumeroCommande &&
                 a.ProduitName == avis.ProduitName);
 
-            if (avisExistant != null )
+            if (avisExistant != null)
             {
                 throw new ArgumentException("Vous avez déjà soumis un avis pour ce produit.");
             }
-                // Ajouter un ID unique à l'avis  
-                avis.Id = avisList.Count > 0 ? avisList.Max(a => a.Id) + 1 : 1;
 
-                // Formater le commentaire initial et l'ajouter à la liste des commentaires  
-                string commentaireFormate = $"{avis.Commentaire.FirstOrDefault()}, {DateTime.Now:dd-MM-yy, HH:mm:ss}";
-                avis.Commentaire = new List<string> { commentaireFormate };
+            int maxId = _context.Avis.Any() ? _context.Avis.Max(a => a.Id) + 1 : 1;
+            avis.Id = maxId;
 
-                // Ajouter l'avis à la liste  
-                avisList.Add(avis);
-            
+            string commentaireFormate = $"{avis.Commentaire.FirstOrDefault()}, {DateTime.Now:dd-MM-yy, HH:mm:ss}";
+            avis.Commentaire = new List<string> { commentaireFormate };
 
+            _context.Avis.Add(avis);
+            _context.SaveChanges();
         }
 
         public void ajouterCommentaire(string ORD, string produitName, string commentaire)
         {
-            // Trouver l'avis correspondant à la commande et au produit
-            var avis = avisList.FirstOrDefault(a =>
+            var avis = _context.Avis.FirstOrDefault(a =>
                 a.NumeroCommande == ORD &&
                 a.ProduitName == produitName);
 
             if (avis != null)
             {
-                // Formater le nouveau commentaire avec la date/heure actuelle
                 string commentaireFormate = $"{commentaire} , {DateTime.Now:dd-MM-yy, HH:mm:ss}";
+                var commentaires = avis.Commentaire;
+                commentaires.Add(commentaireFormate);
+                avis.Commentaire = commentaires;
 
-                // Ajouter le commentaire formaté à la liste des commentaires de l'avis
-                avis.Commentaire.Add(commentaireFormate);
+                _context.Avis.Update(avis);
+                _context.SaveChanges();
             }
             else
             {
-               
                 throw new InvalidOperationException($"Avis non trouvé pour la commande {ORD} et le produit {produitName}");
             }
         }
 
         public List<string> GetComent(string ORD, string produitName)
         {
-            return avisList
+            return _context.Avis
                 .Where(a => a.NumeroCommande == ORD && a.ProduitName == produitName)
-                .SelectMany(a => a.Commentaire) 
+                .AsEnumerable() // force l’évaluation en mémoire
+                .SelectMany(a => a.Commentaire)
                 .ToList();
         }
 
 
         public int GetNote(string ORD, string produitName)
         {
-            // Recherche de l'avis correspondant à la commande et au produit
-            var avis = avisList
+            var avis = _context.Avis
                 .FirstOrDefault(a => a.NumeroCommande == ORD && a.ProduitName == produitName);
 
-            // Si un avis a été trouvé, retourner la note, sinon retourner une valeur par défaut (par exemple, 0)
-            return avis?.Note ?? 0; // Si avis est null, retourne 0
+            return avis?.Note ?? 0;
         }
 
 

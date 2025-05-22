@@ -188,5 +188,18 @@ export class CommandeClientComponent implements OnInit {
   const width = ((currentIndex+0.2) / totalSteps) * 100;
   return `${width}%`;
 }
+getExpectedDeliveryDate(orderDate: string | Date): Date {
+  const order = new Date(orderDate);
+  const expected = new Date(order);
+  expected.setDate(order.getDate() + 2);
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // pour comparaison sans heure
+  if (expected < today) {
+    return today;
+  }
+  return expected;
+}
+
 
 }

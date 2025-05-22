@@ -9,11 +9,15 @@ namespace Business
 {
     public interface IService
     {
-        //IEnumerable<livraisonTest> GetLivraisons();
+        //user
         public void DeleteUser(int Id);
         void AddUser(User user);
-        //migration test
         List<User> GetUsers();
+        void SetUserStatus(int id, bool status);
+
+
+
+        //Produit
 
         List<Produit> getAllProducts();
         List<Produit> GetProductsByArtisanName(string artisanName);
@@ -22,7 +26,8 @@ namespace Business
         void addProduct(string nom, string description, double prix, string categorie, string image, int quantite, string artisan, string statut);
         void updateProduct(int id, string nom, string description, double prix, string categorie, string image, int quantite);
         void UpdateProductQuantity(int id, int nouvelleQuantite);
-        // Orders
+       
+        // commande
         public void AddCommande(Commande commande);
         public List<Commande> GetCommandeList();
         void UpdateCommande(int id, string statut, bool isOrdered, string numeroCommande, string? adresseLivraison=null , string? dateLivraison=null );

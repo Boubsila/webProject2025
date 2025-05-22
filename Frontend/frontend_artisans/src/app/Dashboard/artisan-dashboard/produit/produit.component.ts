@@ -56,7 +56,7 @@ export class ProduitComponent implements OnInit {
             this.imageOptions.push(`/images/${i}.png`);
         }
 
-        this.updateProductList(); // Call the method to update the product list
+        this.updateProductList(); 
     }
 
 

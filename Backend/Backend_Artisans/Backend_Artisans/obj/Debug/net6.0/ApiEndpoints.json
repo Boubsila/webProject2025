@@ -1,25 +1,5 @@
 [
   {
-    "ContainingType": "Backend_Artisans.Controllers.ArtisanController",
-    "Method": "Get",
-    "RelativePath": "api/Artisan",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Backend_Artisans.Controllers.ArtisanController",
-    "Method": "Post",
-    "RelativePath": "api/Artisan",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "Backend_Artisans.Controllers.AuthenticationController",
     "Method": "DeleteUser",
     "RelativePath": "api/Authentication/DeleteUser/{id}",

@@ -3,28 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BA8FF98B-A143-417A-B982-BBAD3E2CF29E}|Business\\Business.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\business\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BA8FF98B-A143-417A-B982-BBAD3E2CF29E}|Business\\Business.csproj|solutionrelative:business\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\data\\repo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|solutionrelative:data\\repo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FB597B17-EEE2-46B6-BEBE-CC6B77DD286F}|Domain\\Domain.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\domain\\avis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FB597B17-EEE2-46B6-BEBE-CC6B77DD286F}|Domain\\Domain.csproj|solutionrelative:domain\\avis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BA8FF98B-A143-417A-B982-BBAD3E2CF29E}|Business\\Business.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\business\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BA8FF98B-A143-417A-B982-BBAD3E2CF29E}|Business\\Business.csproj|solutionrelative:business\\service.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\backend_artisans\\controllers\\commandecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|solutionrelative:backend_artisans\\controllers\\commandecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BA8FF98B-A143-417A-B982-BBAD3E2CF29E}|Business\\Business.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\business\\iservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BA8FF98B-A143-417A-B982-BBAD3E2CF29E}|Business\\Business.csproj|solutionrelative:business\\iservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\data\\irepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|solutionrelative:data\\irepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FB597B17-EEE2-46B6-BEBE-CC6B77DD286F}|Domain\\Domain.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\domain\\commande.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FB597B17-EEE2-46B6-BEBE-CC6B77DD286F}|Domain\\Domain.csproj|solutionrelative:domain\\commande.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BA8FF98B-A143-417A-B982-BBAD3E2CF29E}|Business\\Business.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\business\\iservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BA8FF98B-A143-417A-B982-BBAD3E2CF29E}|Business\\Business.csproj|solutionrelative:business\\iservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,45 +34,57 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CommandeController.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\CommandeController.cs",
-              "RelativeDocumentMoniker": "Backend_Artisans\\Controllers\\CommandeController.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\CommandeController.cs",
-              "RelativeToolTip": "Backend_Artisans\\Controllers\\CommandeController.cs",
-              "ViewState": "AgIAAG0AAAAAAAAAAAAwwH4AAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "Avis.cs",
+              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Domain\\Avis.cs",
+              "RelativeDocumentMoniker": "Domain\\Avis.cs",
+              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Domain\\Avis.cs",
+              "RelativeToolTip": "Domain\\Avis.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAIwDUAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T21:02:16.774Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Service.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Business\\Service.cs",
-              "RelativeDocumentMoniker": "Business\\Service.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Business\\Service.cs",
-              "RelativeToolTip": "Business\\Service.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T20:20:04.538Z",
+              "WhenOpened": "2025-05-21T21:41:07.968Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "IService.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Business\\IService.cs",
-              "RelativeDocumentMoniker": "Business\\IService.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Business\\IService.cs",
-              "RelativeToolTip": "Business\\IService.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAA9wB4AAABKAAAAAAAAAA==",
+              "Title": "CommandeController.cs",
+              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\CommandeController.cs",
+              "RelativeDocumentMoniker": "Backend_Artisans\\Controllers\\CommandeController.cs",
+              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\CommandeController.cs",
+              "RelativeToolTip": "Backend_Artisans\\Controllers\\CommandeController.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAADcAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T20:19:28.981Z"
+              "WhenOpened": "2025-05-20T19:47:31.419Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Repo.cs",
+              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\Repo.cs",
+              "RelativeDocumentMoniker": "Data\\Repo.cs",
+              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\Repo.cs",
+              "RelativeToolTip": "Data\\Repo.cs",
+              "ViewState": "AgIAAKYBAAAAAAAAAAAAwMABAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-18T21:32:09.691Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Service.cs",
+              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Business\\Service.cs",
+              "RelativeDocumentMoniker": "Business\\Service.cs",
+              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Business\\Service.cs",
+              "RelativeToolTip": "Business\\Service.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFsAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-19T16:33:29.617Z"
             },
             {
               "$type": "Document",
@@ -82,34 +94,21 @@
               "RelativeDocumentMoniker": "Data\\IRepo.cs",
               "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\IRepo.cs",
               "RelativeToolTip": "Data\\IRepo.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAYwCUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T20:17:05.396Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Repo.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\Repo.cs",
-              "RelativeDocumentMoniker": "Data\\Repo.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\Repo.cs",
-              "RelativeToolTip": "Data\\Repo.cs",
-              "ViewState": "AgIAAIoAAAAAAAAAAAAAAA8AAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T18:34:33.694Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-19T16:28:10.951Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "Commande.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Domain\\Commande.cs",
-              "RelativeDocumentMoniker": "Domain\\Commande.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Domain\\Commande.cs",
-              "RelativeToolTip": "Domain\\Commande.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAA9wC4AAAA5AAAAAAAAAA==",
+              "Title": "IService.cs",
+              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Business\\IService.cs",
+              "RelativeDocumentMoniker": "Business\\IService.cs",
+              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Business\\IService.cs",
+              "RelativeToolTip": "Business\\IService.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T20:13:48.421Z"
+              "WhenOpened": "2025-05-19T16:47:31.11Z"
             }
           ]
         }

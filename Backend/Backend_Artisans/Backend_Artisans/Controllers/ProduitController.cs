@@ -35,7 +35,7 @@ namespace Backend_Artisans.Controllers
 
         //get products by artisan name
         [HttpGet("getProductsByArtisanName")]
-        public IActionResult GetProductsByArtisanName(string artisanName)
+        public ActionResult GetProductsByArtisanName(string artisanName)
         {
             try
             {

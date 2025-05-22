@@ -70,12 +70,21 @@ export class AuthService {
 
 
   getUserRoles(): any {
-    let token = sessionStorage.getItem("jwt") ?? '';
-    let decodedToken: any = jwtDecode(token);
-    let role= decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-    return role;
-
+  let token = sessionStorage.getItem("jwt");
+  if (!token) {
+    return null;  // Pas de token => pas de rôle
   }
+
+  try {
+    let decodedToken: any = jwtDecode(token);
+    let role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    return role;
+  } catch (error) {
+    console.error('JWT invalide ou corrompu:', error);
+    return null;  // En cas d'erreur de décodage, retourne null
+  }
+}
+
 
   /**
    * Récupère le nom d'utilisateur à partir du token JWT stocké dans le session storage.
@@ -85,6 +94,7 @@ export class AuthService {
   getUserName(): string {
     let token = sessionStorage.getItem("jwt") ?? '';
     let decodedToken: any = jwtDecode(token);
+    
     return decodedToken.sub;
   }
 

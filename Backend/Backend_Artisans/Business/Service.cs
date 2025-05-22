@@ -11,7 +11,7 @@ namespace Business
             _repository = repository;
         }
         
-
+        //user
         public void DeleteUser(int Id)
         {
             _repository.DeleteUser(Id);
@@ -26,6 +26,15 @@ namespace Business
         {
             return _repository.GetUsers();
         }
+
+        public void SetUserStatus(int id, bool status)
+        {
+            _repository.UpdateUserStatus(id, status);
+        }
+
+
+
+        //produit
 
         public List<Produit> getAllProducts()
         {

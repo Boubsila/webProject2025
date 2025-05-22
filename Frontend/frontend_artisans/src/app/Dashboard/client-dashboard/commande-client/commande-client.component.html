@@ -24,7 +24,7 @@
             </span>
           </div>
 
-          <!-- Barre de progression du statut -->
+          <!-- Barre de progression -->
           <div class="status-progress mb-4">
             <div class="progress-container">
               <div class="progress-connector">
@@ -32,45 +32,39 @@
               </div>
               <div class="progress-line">
                 <div class="progress-step" [class.active]="isStatusActive(group[0].status, 'En attente')">
-                  <div class="step-icon">
-                    <i class="bi bi-hourglass"></i>
-                  </div>
+                  <div class="step-icon"><i class="bi bi-hourglass"></i></div>
                   <div class="step-label">En attente</div>
                 </div>
                 <div class="progress-step" [class.active]="isStatusActive(group[0].status, 'En traitement')">
-                  <div class="step-icon">
-                    <i class="bi bi-gear"></i>
-                  </div>
+                  <div class="step-icon"><i class="bi bi-gear"></i></div>
                   <div class="step-label">En traitement</div>
                 </div>
                 <div class="progress-step" [class.active]="isStatusActive(group[0].status, 'Prêt au ramassage')">
-                  <div class="step-icon">
-                    <i class="bi bi-box-seam"></i>
-                  </div>
+                  <div class="step-icon"><i class="bi bi-box-seam"></i></div>
                   <div class="step-label">Prêt</div>
                 </div>
                 <div class="progress-step" [class.active]="isStatusActive(group[0].status, 'Prélevé')">
-                  <div class="step-icon">
-                    <i class="bi bi-check-circle"></i> 
-                  </div>
-                  <div class="step-label">Prélevé</div> 
+                  <div class="step-icon"><i class="bi bi-check-circle"></i></div>
+                  <div class="step-label">Prélevé</div>
                 </div>
                 <div class="progress-step" [class.active]="isStatusActive(group[0].status, 'En cours de livraison')">
-                  <div class="step-icon">
-                    <i class="bi bi-truck"></i>
-                  </div>
+                  <div class="step-icon"><i class="bi bi-truck"></i></div>
                   <div class="step-label">En livraison</div>
                 </div>
                 <div class="progress-step" [class.active]="isStatusActive(group[0].status, 'Livré')">
-                  <div class="step-icon">
-                    <i class="bi bi-check-circle"></i>
+                  <div class="step-icon"><i class="bi bi-check-circle"></i></div>
+                  <div class="step-label">
+                    Livré
+                    <div *ngIf="group[0].status !== 'Livré'" class="small text-muted mt-1">
+                      Prévu pour le {{ getExpectedDeliveryDate(group[0].orderDate) | date:'dd/MM/yyyy' }}
+                    </div>
                   </div>
-                  <div class="step-label">Livré</div>
                 </div>
               </div>
             </div>
           </div>
 
+          <!-- Tableau des commandes -->
           <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
               <thead class="table-light">
@@ -96,16 +90,12 @@
               <tfoot>
                 <tr>
                   <td colspan="2" class="text-end fw-bold">Sous-total commande :</td>
-                  <td class="fw-bold">
-                    {{ getGroupTotal(group) | currency:'EUR' }}
-                  </td>
+                  <td class="fw-bold">{{ getGroupTotal(group) | currency:'EUR' }}</td>
                   <td></td>
                 </tr>
                 <tr>
                   <td colspan="2" class="text-end fw-bold">Total (frais de port inclus) :</td>
-                  <td class="fw-bold">
-                    {{ getGroupTotal(group) | currency:'EUR' }}
-                  </td>
+                  <td class="fw-bold">{{ getGroupTotal(group) | currency:'EUR' }}</td>
                   <td></td>
                 </tr>
               </tfoot>
@@ -113,6 +103,8 @@
           </div>
         </div>
       </div>
+
+      <!-- Aucune commande -->
       <ng-template #noOrders>
         <div class="alert alert-info text-center mb-0">
           Vous n'avez aucune commande pour le moment.
@@ -121,9 +113,8 @@
     </div>
   </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel"
-    aria-hidden="true">
+  <!-- Modal Détails de commande -->
+  <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-labelledby="orderDetailsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header bg-light">

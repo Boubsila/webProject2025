@@ -27,7 +27,7 @@ export class RegisterComponent {
     
     // Initialisez le formulaire réactif
     this.registerForm = this.fb.group({
-      email: ['@artisans.be', [Validators.required]], // Champ obligatoire et format email
+      email: ['@ArtMarket.be', [Validators.required]], // Champ obligatoire et format email
       password: ['', Validators.required], // Champ obligatoire
       confirmPassword: ['', Validators.required], // Champ obligatoire
       role: ['', Validators.required], // Champ obligatoire
@@ -42,7 +42,7 @@ export class RegisterComponent {
         this.erreur.erreurAlert('Les mots de passe ne correspondent pas.');
         return;
       }
-      if(this.registerForm.value.email == '@artisans.be'){
+      if(this.registerForm.value.email == '@ArtMarket.be'){
         this.erreur.erreurAlert('Email invalide.');
         return;
       }

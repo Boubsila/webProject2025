@@ -30,12 +30,9 @@ export class NavbarComponent {
   }
 
   islogged(): boolean {
-    if (sessionStorage.getItem('jwt')) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  return !!sessionStorage.getItem('jwt');
+}
+
 
   isAdmin(): string {
     if (sessionStorage.getItem('jwt')) {

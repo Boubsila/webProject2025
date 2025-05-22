@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../auth.service';
-import { jwtDecode } from 'jwt-decode';
+// import { jwtDecode } from 'jwt-decode';
 import { RegisterComponent } from '../register/register.component';
 import { SuccessAlertService } from '../alerts/success-alert.service';
 import { ErreurAlertService } from '../alerts/erreur-alert.service';
@@ -25,7 +25,7 @@ export class LoginComponent {
 
   //reactive form 
   myForm = new FormGroup({
-    Email: new FormControl('@artisans.be', [Validators.required, Validators.maxLength(60)]),
+    Email: new FormControl('@ArtMarket.be', [Validators.required, Validators.maxLength(60)]),
     Password: new FormControl('', [Validators.required, Validators.minLength(1)])
   });
 
@@ -41,16 +41,11 @@ export class LoginComponent {
           sessionStorage.setItem("jwt", response.token);
           this.success.successAlert('Connexion réussie');
           this.router.navigate(['/dashboard']);
-        } else {
-          this.erreur.erreurAlert('Email ou mot de passe incorrect');
-          this.myForm.reset();
-        }
+        } 
       },
       error: (err) => {
-        let errorMessage = 'Une erreur est survenue lors de la connexion';
-        
-        this.erreur.erreurAlert(errorMessage);
-        this.myForm.reset();
+          this.erreur.erreurAlert('Email ou mot de passe incorrect');
+          this.router.navigate(['/login']);
       }
     });
   }

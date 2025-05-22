@@ -57,35 +57,21 @@ namespace Backend_Artisans.Controllers
 
 
         [HttpPut("UpdateUserStatus/{id}")]
-        [Authorize(Roles = "Admin")] 
+        [Authorize(Roles = "Admin")]
         public ActionResult UpdateUserStatus(int id)
         {
             try
             {
-
-                //var users = _authenticationService.GetUsers();
-                //migration test
-                var users = _service.GetUsers();
-                var user = users.FirstOrDefault(u => u.Id == id);
-
-                if (user == null)
-                {
-                    return NotFound($"User with ID {id} not found.");
-                }
-
-                user.Statut = true;
-
-
-
-                return Ok(new { message = "statut changed" }); // Renvoie un objet JSON
-            
+                _service.SetUserStatus(id,true);
+                return Ok(new { message = "statut changed" });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error updating user status.");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = "An error occurred while updating the user status." }); // Renvoie un objet JSON
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
+
 
         [HttpDelete("DeleteUser/{id}")]
         [Authorize(Roles = "Admin")]

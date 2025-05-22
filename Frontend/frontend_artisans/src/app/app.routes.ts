@@ -29,23 +29,23 @@ export const routes: Routes = [
     { path: '', component: CarouselComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'produits', component: ProduitsComponent, canActivate: [adminClientGuard] }, 
+    { path: 'produits', component: ProduitsComponent, canActivate: [adminClientGuard] },
     { path: 'addProduct', component: AddProductComponent },
-    
+
     { path: 'home', component: CarouselComponent },
     { path: 'admindashboard', component: AdminDashboardComponent },
-    { path: 'dashboard', component:DashboardComponent,canActivate: [authGuard] },
-    { path: 'user-management', component:UserManagementComponent },
+    { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
+    { path: 'user-management', component: UserManagementComponent },
     { path: 'moderation', component: ModerationComponent },
     { path: 'statistics', component: StatisticsComponent },
-    {path: 'artisan-dashboard/produit', component: ProduitComponent, canActivate: [authGuard]},
-    {path: 'artisan-dashboard/commande', component: CommandeComponent, canActivate: [authGuard]},
-    {path: 'artisan-dashboard/avis', component: AvisComponent, canActivate: [authGuard]},
-    {path:'livreur-dashboard/commandes', component: CommandesComponent, canActivate: [authGuard]},
-    {path:'livreur-dashboard/statut', component: StatutComponent, canActivate: [authGuard]},
-    {path:'client-dashboard/commande-client', component: CommandeClientComponent, canActivate: [authGuard]},
-    {path:'client-dashboard/panier', component: PanierComponent, canActivate: [authGuard]},
-    {path:'client-dashboard/avis-client', component:AvisClientComponent , canActivate: [authGuard]}
+    { path: 'artisan-dashboard/produit', component: ProduitComponent, canActivate: [authGuard] },
+    { path: 'artisan-dashboard/commande', component: CommandeComponent, canActivate: [authGuard] },
+    { path: 'artisan-dashboard/avis', component: AvisComponent, canActivate: [authGuard] },
+    { path: 'livreur-dashboard/commandes', component: CommandesComponent, canActivate: [authGuard] },
+    { path: 'livreur-dashboard/statut', component: StatutComponent, canActivate: [authGuard] },
+    { path: 'client-dashboard/commande-client', component: CommandeClientComponent, canActivate: [authGuard] },
+    { path: 'client-dashboard/panier', component: PanierComponent, canActivate: [authGuard] },
+    { path: 'client-dashboard/avis-client', component: AvisClientComponent, canActivate: [authGuard] }
 
 
 ];

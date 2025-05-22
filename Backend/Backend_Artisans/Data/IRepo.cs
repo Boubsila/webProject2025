@@ -11,13 +11,16 @@ namespace Data
     {
         //IEnumerable<livraisonTest> GetLivraisons();
 
-        //migration test
+        //***************************************user************************************
         List<User> GetUsers();
 
         void AddUser(User user);
 
         void DeleteUser(int Id);
 
+        void UpdateUserStatus(int userId, bool newStatus);
+
+        //*****************************************Produit*******************************
         List<Produit> getAllProducts();
         List<Produit> GetProductsByArtisanName(string artisanName);
         void changeProductStatus(int id);

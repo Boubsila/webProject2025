@@ -157,6 +157,8 @@ export class ProduitsComponent implements OnInit {
       dateLivraison: ''
     };
 
+    
+
     this.http.post('https://localhost:7128/api/Commande/addOrder', commande)
       .pipe(
         catchError(error => {
