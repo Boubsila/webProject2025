@@ -59,7 +59,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Avis");
+                    b.ToTable("Avis", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Commande", b =>
@@ -119,7 +119,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Commandes");
+                    b.ToTable("Commandes", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Produit", b =>
@@ -162,7 +162,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Produits");
+                    b.ToTable("Produits", (string)null);
                 });
 
             modelBuilder.Entity("Domain.User", b =>
@@ -194,7 +194,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
                 });
 #pragma warning restore 612, 618
         }

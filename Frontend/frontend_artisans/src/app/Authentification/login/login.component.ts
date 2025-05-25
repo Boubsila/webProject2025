@@ -25,7 +25,7 @@ export class LoginComponent {
 
   //reactive form 
   myForm = new FormGroup({
-    Email: new FormControl('@ArtMarket.be', [Validators.required, Validators.maxLength(60)]),
+    Email: new FormControl('@petitshands.be', [Validators.required, Validators.maxLength(60)]),
     Password: new FormControl('', [Validators.required, Validators.minLength(1)])
   });
 

@@ -56,7 +56,7 @@ namespace Backend_Artisans.Authentication
                 jwtIssuer,
                 jwtAudience,
                 claims,
-                expires: DateTime.Now.AddMinutes(120),
+                expires: DateTime.Now.AddMinutes(5),
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

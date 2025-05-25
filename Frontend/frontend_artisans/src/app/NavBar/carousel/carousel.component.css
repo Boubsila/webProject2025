@@ -1,6 +1,6 @@
 .carousel-container {
     position: relative;
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 2rem;
     overflow: hidden;
@@ -8,24 +8,41 @@
 
 .carousel {
     border-radius: 16px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 25px 50px -12px rgba(85, 19, 228, 0.139);
     overflow: hidden;
-    background: linear-gradient(145deg, #ffffff, #f8f9fa);
+    background: rgba(231, 230, 236, 0.386); /* Fond blanc pur au lieu du dégradé gris */
+    
 }
 
 .carousel-inner {
     border-radius: 16px;
     overflow: hidden;
+    transition: transform 0.6s ease-in-out; /* Transition fluide entre les slides */
 }
 
 .carousel-item {
     padding: 4rem 2rem;
     position: relative;
-    transition: all 0.8s ease-in-out;
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
     min-height: 600px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    opacity: 0;
+    transform: translateX(30px); /* Animation d'entrée plus douce */
+}
+
+.carousel-item.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.carousel-item.next,
+.carousel-item.prev {
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
 .carousel-content {
@@ -38,53 +55,73 @@
     position: relative;
     z-index: 2;
     opacity: 0;
-    transform: translateY(30px) scale(0.95);
-    transition: all 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
 }
 
 .carousel-item.active .carousel-content {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
+    transition-delay: 0.3s; /* Délai pour un effet en cascade */
+
 }
 
+/* Conteneur d'image parfait */
 .image-container {
     position: relative;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem auto;
     border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    transition: all 0.5s ease;
-    max-width: 500px;
-    max-height: 300px;
+    overflow: visible;
+    box-shadow: 0 10px 30px rgba(64, 53, 216, 0.15);
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    transition: transform 0.3s ease; /* Micro-interaction au survol */
+}
+
+.image-container:hover {
+    transform: translateY(-5px);
 }
 
 .image-container img {
-    width: 100%;
+    max-width: 100%;
+    max-height: 400px;
+    width: auto;
     height: auto;
+    object-fit: contain;
+    object-position: center;
     display: block;
-    transition: transform 0.8s ease;
-    object-fit: cover;
+    border-radius: 8px;
+    transition: opacity 0.6s ease; /* Transition fluide pour les images */
 }
 
+/* Suppression du fond animé gris */
+.carousel-item::before {
+    content: none; /* Suppression complète du fond gris */
+}
+
+/* Overlay image plus subtil */
 .image-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+    background: linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.1));
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.4s ease;
+    border-radius: 8px;
 }
 
 .carousel-item.active .image-overlay {
     opacity: 1;
 }
 
-.carousel-item.active .image-container img {
-    transform: scale(1.03);
-}
-
+/* Contenu texte */
 .text-content {
     text-align: center;
     padding: 0 1.5rem;
@@ -102,77 +139,57 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    text-shadow: none;
 }
 
 .carousel-item p.lead {
     font-size: 1.3rem;
-    color: #4a5568;
+    color: #050d1a;
     margin-bottom: 2rem;
     line-height: 1.6;
-    font-weight: 400;
-}
-
-.copyright {
-    font-size: 0.9rem;
-    color: #718096;
-    margin-top: 2rem;
-    opacity: 0.8;
-}
-
-/* Arrière-plan animé */
-.carousel-item::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 50%, #f3f4f6 100%);
-    background-size: 200% 200%;
-    opacity: 0.9;
-    z-index: 0;
-    animation: gradientShift 12s ease infinite;
-}
-
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
 }
 
 /* Indicateurs */
 .carousel-indicators {
     bottom: 20px;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
 .carousel-indicators button {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     border: 1px solid #4f46e5;
     background: transparent;
-    margin: 0 5px;
+    margin: 0 6px;
+    cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .carousel-indicators button.active {
     background: #4f46e5;
-    transform: scale(1.3);
+    transform: scale(1.2);
 }
 
-/* Contrôles */
+/* Contrôles navigation */
 .carousel-control-prev,
 .carousel-control-next {
     width: 50px;
     height: 50px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     top: 50%;
     transform: translateY(-50%);
     opacity: 0;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 
 .carousel:hover .carousel-control-prev,
@@ -181,29 +198,19 @@
 }
 
 .carousel-control-prev {
-    left: 20px;
+    left: 25px;
 }
 
 .carousel-control-next {
-    right: 20px;
+    right: 25px;
 }
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    background-size: 60%;
+    width: 20px;
+    height: 20px;
+    background-size: 100%;
     filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(226deg) brightness(104%) contrast(97%);
-}
-
-/* Animation entre les slides */
-.carousel-item {
-    transform: scale(0.95);
-    opacity: 0;
-    transition: all 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-
-.carousel-item.active {
-    transform: scale(1);
-    opacity: 1;
 }
 
 /* Responsive */
@@ -213,12 +220,8 @@
         padding: 3rem 1.5rem;
     }
     
-    .carousel-item h3 {
-        font-size: 2rem;
-    }
-    
-    .carousel-item p.lead {
-        font-size: 1.1rem;
+    .image-container img {
+        max-height: 350px;
     }
 }
 
@@ -226,24 +229,34 @@
     .carousel-container {
         padding: 1rem;
     }
-    
+
     .carousel-item {
         min-height: 450px;
         padding: 2rem 1rem;
     }
-    
-    .carousel-item h3 {
-        font-size: 1.8rem;
+
+    .image-container img {
+        max-height: 300px;
     }
-    
-    .image-container {
-        max-width: 100%;
-    }
-    
+
     .carousel-control-prev,
     .carousel-control-next {
         width: 40px;
         height: 40px;
-        opacity: 0.7;
+    }
+}
+
+@media (max-width: 576px) {
+    .carousel-item {
+        min-height: 400px;
+        padding: 1.5rem 0.5rem;
+    }
+    
+    .image-container img {
+        max-height: 250px;
+    }
+    
+    .carousel-item h3 {
+        font-size: 1.8rem;
     }
 }

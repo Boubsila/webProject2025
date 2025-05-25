@@ -27,7 +27,7 @@ export class RegisterComponent {
     
     // Initialisez le formulaire réactif
     this.registerForm = this.fb.group({
-      email: ['@ArtMarket.be', [Validators.required]], // Champ obligatoire et format email
+      email: ['@petitshands.be', [Validators.required]], // Champ obligatoire et format email
       password: ['', Validators.required], // Champ obligatoire
       confirmPassword: ['', Validators.required], // Champ obligatoire
       role: ['', Validators.required], // Champ obligatoire

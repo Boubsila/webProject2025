@@ -51,6 +51,56 @@ namespace Data
         //    new Produit(9, "Panneau Mural en Zellige", "Panneau mural décoratif en zellige, réalisé à la main avec des motifs géométriques complexes.", 300.00, "Autres", "images/9.jpg", 0, "artisan", "approved"),
         //    new Produit(10, "Lampe en Tadelakt", "Lampe artisanale en tadelakt, réalisée à la main avec des techniques traditionnelles.", 150.00, "Poterie et Céramique", "images/10.jpg", 0, "artisan2", "approved")
         //};
+//        [
+//  { "nom": "Vase traditionnel", "description": "Vase décoratif au style intemporel, parfait pour embellir tout espace de vie.", "prix": 75.00 },
+//  { "nom": "Vase élégant", "description": "Création artisanale au design raffiné, idéale comme pièce centrale ou décorative.", "prix": 80.00 },
+//  { "nom": "Vase artistique", "description": "Un objet décoratif unique qui apporte une touche de charme à votre intérieur.", "prix": 70.00 },
+//  { "nom": "Vase unique", "description": "Vase de caractère au style soigné, adapté à différents styles de décoration.", "prix": 85.00 },
+
+//  { "nom": "Tapis classique", "description": "Tapis décoratif apportant chaleur et authenticité à votre intérieur.", "prix": 2400.00 },
+//  { "nom": "Tapis décoratif", "description": "Accessoire élégant pour habiller le sol et renforcer l'ambiance d'une pièce.", "prix": 2300.00 },
+//  { "nom": "Tapis design", "description": "Pièce textile à motifs soignés, idéale pour compléter votre décoration.", "prix": 2200.00 },
+//  { "nom": "Tapis élégant", "description": "Tapis aux lignes équilibrées, qui crée une atmosphère chaleureuse.", "prix": 2500.00 },
+
+//  { "nom": "Sac chic", "description": "Accessoire pratique et esthétique à porter au quotidien.", "prix": 110.00 },
+//  { "nom": "Sac moderne", "description": "Un sac raffiné qui allie élégance et fonctionnalité.", "prix": 100.00 },
+//  { "nom": "Sac tendance", "description": "Sac polyvalent pour accompagner toutes vos sorties avec style.", "prix": 115.00 },
+//  { "nom": "Sac artisanal", "description": "Pièce de caractère pour compléter votre tenue avec une touche unique.", "prix": 125.00 },
+
+//  { "nom": "Table raffinée", "description": "Table basse qui s’intègre harmonieusement à tout style de décoration.", "prix": 340.00 },
+//  { "nom": "Table décorative", "description": "Meuble décoratif parfait pour agrémenter votre salon ou entrée.", "prix": 330.00 },
+//  { "nom": "Table originale", "description": "Table avec finitions soignées qui attire le regard et suscite l’intérêt.", "prix": 320.00 },
+//  { "nom": "Table élégante", "description": "Mobilier élégant et pratique, idéal pour les espaces de détente.", "prix": 350.00 },
+
+//  { "nom": "Collier précieux", "description": "Bijou délicat qui apporte une note d'élégance à votre look.", "prix": 200.00 },
+//  { "nom": "Collier raffiné", "description": "Accessoire de charme pour accompagner vos tenues préférées.", "prix": 180.00 },
+//  { "nom": "Collier classique", "description": "Bijou au style sobre, idéal pour toutes les occasions.", "prix": 190.00 },
+//  { "nom": "Collier artisanal", "description": "Collier original avec une touche authentique et unique.", "prix": 210.00 },
+
+//  { "nom": "Écharpe fine", "description": "Accessoire textile léger et coloré pour sublimer votre style.", "prix": 55.00 },
+//  { "nom": "Écharpe tendance", "description": "Écharpe douce et confortable, parfaite en toute saison.", "prix": 50.00 },
+//  { "nom": "Écharpe chic", "description": "Élément vestimentaire élégant, adapté à de nombreuses tenues.", "prix": 60.00 },
+//  { "nom": "Écharpe originale", "description": "Pièce textile unique à l’allure authentique et moderne.", "prix": 65.00 },
+
+//  { "nom": "Panier déco", "description": "Panier décoratif pratique pour organiser ou embellir un coin de la maison.", "prix": 45.00 },
+//  { "nom": "Panier élégant", "description": "Accessoire de rangement esthétique qui complète votre intérieur.", "prix": 42.00 },
+//  { "nom": "Panier traditionnel", "description": "Objet utile et charmant qui évoque le savoir-faire artisanal.", "prix": 48.00 },
+//  { "nom": "Panier pratique", "description": "Panier au design simple et fonctionnel pour un usage quotidien.", "prix": 50.00 },
+
+//  { "nom": "Panneau décoratif", "description": "Panneau mural inspiré d’un design classique pour habiller vos murs.", "prix": 280.00 },
+//  { "nom": "Panneau mural", "description": "Élément artistique pour apporter de la personnalité à une pièce.", "prix": 290.00 },
+//  { "nom": "Panneau artistique", "description": "Panneau ornemental idéal pour valoriser un espace vide.", "prix": 300.00 },
+
+//  { "nom": "Lanterne classique", "description": "Source lumineuse douce et élégante pour créer une ambiance chaleureuse.", "prix": 175.00 },
+//  { "nom": "Lanterne décorative", "description": "Objet lumineux au charme artisanal, parfait pour un intérieur apaisant.", "prix": 180.00 },
+//  { "nom": "Lanterne élégante", "description": "Lanterne au design équilibré qui diffuse une lumière agréable.", "prix": 185.00 },
+//  { "nom": "Lanterne charmante", "description": "Lanterne d’ambiance qui enrichit votre décoration avec subtilité.", "prix": 170.00 },
+
+//  { "nom": "Lampe traditionnelle", "description": "Lampe décorative qui s’adapte à tout espace pour une ambiance douce.", "prix": 150.00 },
+//  { "nom": "Lampe magnifique", "description": "Source de lumière élégante pour illuminer avec style vos pièces.", "prix": 160.00 },
+//  { "nom": "Lampe classique", "description": "Lampe polyvalente, parfaite pour une déco sobre et soignée.", "prix": 155.00 },
+//  { "nom": "Lampe design", "description": "Lampe au style affirmé qui complète harmonieusement tout décor.", "prix": 165.00 }
+//]
 
 
         //Order liste

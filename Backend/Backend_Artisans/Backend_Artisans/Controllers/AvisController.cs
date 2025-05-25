@@ -1,6 +1,7 @@
 ﻿using Business;
 using Domain;
 using Domain.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.Design;
@@ -8,6 +9,7 @@ using System.Globalization;
 
 namespace Backend_Artisans.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AvisController : ControllerBase

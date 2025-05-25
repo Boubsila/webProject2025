@@ -38,6 +38,7 @@ export class ProduitComponent implements OnInit {
     showCategory = true;
     showStatus = true;
     isModalOpen = false;
+    
 
     @ViewChild('productModal') productModal: ElementRef | undefined;
     @ViewChild('firstInput') firstInput: ElementRef | undefined;
@@ -49,12 +50,22 @@ export class ProduitComponent implements OnInit {
     ngOnInit(): void {
         this.userConnected = this.authservice.getUserName();
         console.log(this.userConnected);
-        for (let i = 1; i <= 10; i++) {
-            this.imageOptions.push(`/images/${i}.jpg`);
-        }
-        for (let i = 11; i <= 35; i++) {
-            this.imageOptions.push(`/images/${i}.png`);
-        }
+
+        const imageNames = ['vase1','vase2','vase3','vase4',
+                            'tapis1','tapis2','tapis3','tapis4',
+                            'sac1','sac2','sac3','sac4',
+                            'table1','table2','table3','table4',
+                            'collier1','collier2','collier3','collier4',
+                            'echarpe1','echarpe2','echarpe3','echarpe4',
+                            'panier1','panier2','panier3','panier4',
+                            'panneau1','panneau2','panneau3',
+                            'laterne1','laterne2','laterne3','laterne4',
+                            'lampe1','lampe2','lampe3','lampe4'
+                            ];
+
+        this.imageOptions = imageNames.map(name => `/images/produits/${name}.png`);
+
+        
 
         this.updateProductList(); 
     }
