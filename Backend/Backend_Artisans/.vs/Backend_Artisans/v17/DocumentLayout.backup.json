@@ -3,44 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\backend_artisans\\authentication\\authenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|solutionrelative:backend_artisans\\authentication\\authenticationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\backend_artisans\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|solutionrelative:backend_artisans\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\backend_artisans\\controllers\\statisticscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|solutionrelative:backend_artisans\\controllers\\statisticscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\backend_artisans\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|solutionrelative:backend_artisans\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\backend_artisans\\controllers\\produitcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|solutionrelative:backend_artisans\\controllers\\produitcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\backend_artisans\\controllers\\commandecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|solutionrelative:backend_artisans\\controllers\\commandecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\backend_artisans\\controllers\\aviscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|solutionrelative:backend_artisans\\controllers\\aviscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\data\\repo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|solutionrelative:data\\repo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FB597B17-EEE2-46B6-BEBE-CC6B77DD286F}|Domain\\Domain.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\domain\\avis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FB597B17-EEE2-46B6-BEBE-CC6B77DD286F}|Domain\\Domain.csproj|solutionrelative:domain\\avis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -66,131 +30,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "StatisticsController.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\StatisticsController.cs",
-              "RelativeDocumentMoniker": "Backend_Artisans\\Controllers\\StatisticsController.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\StatisticsController.cs",
-              "RelativeToolTip": "Backend_Artisans\\Controllers\\StatisticsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-25T16:00:30.592Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AuthenticationController.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\AuthenticationController.cs",
-              "RelativeDocumentMoniker": "Backend_Artisans\\Controllers\\AuthenticationController.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\AuthenticationController.cs",
-              "RelativeToolTip": "Backend_Artisans\\Controllers\\AuthenticationController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-25T15:51:00.55Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Program.cs",
-              "RelativeDocumentMoniker": "Backend_Artisans\\Program.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Program.cs",
-              "RelativeToolTip": "Backend_Artisans\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-25T15:44:13.285Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AuthenticationService.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Authentication\\AuthenticationService.cs",
-              "RelativeDocumentMoniker": "Backend_Artisans\\Authentication\\AuthenticationService.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Authentication\\AuthenticationService.cs*",
-              "RelativeToolTip": "Backend_Artisans\\Authentication\\AuthenticationService.cs*",
-              "ViewState": "AgIAADAAAAAAAAAAAAAcwDoAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-25T15:42:56.607Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ProduitController.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\ProduitController.cs",
-              "RelativeDocumentMoniker": "Backend_Artisans\\Controllers\\ProduitController.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\ProduitController.cs",
-              "RelativeToolTip": "Backend_Artisans\\Controllers\\ProduitController.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAAAgAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-25T16:00:08.053Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "AvisController.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\AvisController.cs",
-              "RelativeDocumentMoniker": "Backend_Artisans\\Controllers\\AvisController.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\AvisController.cs",
-              "RelativeToolTip": "Backend_Artisans\\Controllers\\AvisController.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAsAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-25T15:51:42.033Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "CommandeController.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\CommandeController.cs",
-              "RelativeDocumentMoniker": "Backend_Artisans\\Controllers\\CommandeController.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\CommandeController.cs",
-              "RelativeToolTip": "Backend_Artisans\\Controllers\\CommandeController.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAAwAkAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-25T15:58:54.997Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
               "Title": "Repo.cs",
               "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\Repo.cs",
               "RelativeDocumentMoniker": "Data\\Repo.cs",
               "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\Repo.cs",
               "RelativeToolTip": "Data\\Repo.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAcwDQAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAQCAAAAAAAAAAAYwA8CAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-24T15:42:02.228Z",
+              "WhenOpened": "2025-05-26T17:43:00.922Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\AppDbContext.cs",
-              "RelativeToolTip": "Data\\AppDbContext.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAowBAAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-24T18:02:19.594Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Avis.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Domain\\Avis.cs",
-              "RelativeDocumentMoniker": "Domain\\Avis.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Domain\\Avis.cs",
-              "RelativeToolTip": "Domain\\Avis.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAACMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-24T15:44:15.577Z"
             }
           ]
         }

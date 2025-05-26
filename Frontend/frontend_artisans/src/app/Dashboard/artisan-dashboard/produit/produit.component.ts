@@ -59,7 +59,7 @@ export class ProduitComponent implements OnInit {
                             'echarpe1','echarpe2','echarpe3','echarpe4',
                             'panier1','panier2','panier3','panier4',
                             'panneau1','panneau2','panneau3',
-                            'laterne1','laterne2','laterne3','laterne4',
+                            'laterne1','laterne2','laterne3',
                             'lampe1','lampe2','lampe3','lampe4'
                             ];
 
