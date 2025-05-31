@@ -29,24 +29,33 @@ export class LoginComponent {
     Password: new FormControl('', [Validators.required, Validators.minLength(1)])
   });
 
-  constructor(private router: Router, private authentication: AuthService,private success:SuccessAlertService,private erreur:ErreurAlertService) { }
+  constructor(private router: Router, private authentication: AuthService, private success: SuccessAlertService, private erreur: ErreurAlertService) { }
 
   onSubmit() {
     const email = this.myForm.value.Email ?? '';
     const password = this.myForm.value.Password ?? '';
-  
+
     this.authentication.login(email, password).subscribe({
       next: (response) => {
         if (response.token) {
           sessionStorage.setItem("jwt", response.token);
           this.success.successAlert('Connexion réussie');
           this.router.navigate(['/dashboard']);
-        } 
+        }
       },
       error: (err) => {
+        if (err.status === 400) {
           this.erreur.erreurAlert('Email ou mot de passe incorrect');
-          this.router.navigate(['/login']);
+        } else if (err.status === 401) {
+          this.erreur.erreurAlert('Accès non autorisé');
+        } else if (err.status === 0) {
+          this.erreur.erreurAlert('Impossible de joindre le serveur');
+        } else {
+          this.erreur.erreurAlert('Une erreur inattendue est survenue');
+        }
       }
+
+
     });
   }
 

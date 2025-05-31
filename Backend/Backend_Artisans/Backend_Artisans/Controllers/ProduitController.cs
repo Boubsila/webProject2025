@@ -18,82 +18,178 @@ namespace Backend_Artisans.Controllers
             _service = service; // injection du service
         }
 
+
+
+
         [HttpGet("getAllProducts")]
-        //[Authorize(Roles ="Admin,Client")]
         public IActionResult GetAllProducts()
         {
             try
             {
-                var produits = _service.getAllProducts(); // récupère tous les produits
-                return Ok(produits);
+                var produits = _service.getAllProducts();
+
+                if (produits == null || !produits.Any())
+                {
+                    return NotFound(); // 404 : aucun produit
+                }
+
+                return Ok(produits); // 200 : produits retournés
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, "Erreur interne du serveur."); // erreur serveur
+                return StatusCode(500); // 500 : erreur serveur
             }
         }
 
-        // obtenir les produits par nom d'artisan
+
+
+
+
+
+
         [HttpGet("getProductsByArtisanName")]
         public ActionResult GetProductsByArtisanName(string artisanName)
         {
             try
             {
-                var produits = _service.GetProductsByArtisanName(artisanName); // récupère les produits d'un artisan donné
-                return Ok(produits);
+                var produits = _service.GetProductsByArtisanName(artisanName);
+
+                if (produits == null || !produits.Any())
+                {
+                    return NotFound(); // 404 : aucun produit pour cet artisan
+                }
+
+                return Ok(produits); // 200
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, "Erreur interne du serveur."); // erreur serveur
+                return StatusCode(500); // 500
             }
         }
 
-        // changer le statut d'un produit
+
+
+
+
+
         [HttpPut("changeStatus")]
         public ActionResult changeProductStatus(int id)
         {
-            _service.changeProductStatus(id); // change le statut d'un produit (actif/inactif)
-            return Ok(new { message = "statut changed" });
+            try
+            {
+                _service.changeProductStatus(id);
+                return Ok(); // 200
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(); // 404
+            }
+            catch (Exception)
+            {
+                return StatusCode(500); // 500
+            }
         }
 
-        // supprimer un produit
+
+
+
+
+
+
         [HttpDelete("deleteProduct")]
         public ActionResult deleteProduct(int id)
         {
-            _service.deleteProduct(id); // supprime un produit via son ID
-            return Ok(new { message = $"{id} : deleted" });
+            try
+            {
+                _service.deleteProduct(id);
+                return Ok(); // 200
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(); // 404
+            }
+            catch (Exception)
+            {
+                return StatusCode(500); // 500
+            }
         }
 
-        // ajouter un produit
+
+
+
+
+
         [HttpPost("AddProduct")]
         public ActionResult addProduct(string nom, string description, double prix, string categorie, string image, int quantite, string artisan, string statut)
         {
-            _service.addProduct(nom, description, prix, categorie, image, quantite, artisan, statut); // ajoute un nouveau produit
-            return Ok(new { message = "product added" });
+            try
+            {
+                _service.addProduct(nom, description, prix, categorie, image, quantite, artisan, statut);
+                return Ok(); // 200
+            }
+            catch (ArgumentException)
+            {
+                return BadRequest(); // 400 : données invalides
+            }
+            catch (Exception)
+            {
+                return StatusCode(500); // 500
+            }
         }
 
-        // mettre à jour un produit
+
+
+
+
         [HttpPut("UpdateProduct")]
         public IActionResult UpdateProduct(
-            int id,
-            string nom,
-            string description,
-            double prix,
-            string categorie,
-            string image,
-            int quantite)
+             int id,
+             string nom,
+             string description,
+             double prix,
+             string categorie,
+             string image,
+             int quantite)
         {
-            _service.updateProduct(id, nom, description, prix, categorie, image, quantite); // met à jour les détails d'un produit
-            return Ok();
+            try
+            {
+                _service.updateProduct(id, nom, description, prix, categorie, image, quantite);
+                return Ok(); // 200
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(); // 404
+            }
+            catch (Exception)
+            {
+                return StatusCode(500); // 500
+            }
         }
 
-        // mettre à jour la quantité d'un produit
+
+
+
         [HttpPut("updateQuantity")]
         public ActionResult updateQuantity(int id, int nouvelleQuantite)
         {
-            _service.UpdateProductQuantity(id, nouvelleQuantite); // met à jour la quantité disponible d'un produit
-
-            return Ok(new { message = "quantité mise à jour" });
+            try
+            {
+                _service.UpdateProductQuantity(id, nouvelleQuantite);
+                return Ok(); // 200
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(); // 404
+            }
+            catch (Exception)
+            {
+                return StatusCode(500); // 500
+            }
         }
+
+
+
+
+
     }
 }

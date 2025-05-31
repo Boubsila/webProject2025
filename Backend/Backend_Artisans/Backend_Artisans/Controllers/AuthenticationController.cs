@@ -28,51 +28,103 @@ namespace Backend_Artisans.Controllers
             _service = service;
         }
 
+
+        //*********************************************************************************
+
         [HttpPost("Register")]
-        [AllowAnonymous] // cette action est accessible sans authentification
-        public void Register(int id, string login, string password, string role, bool statut)
-        {
-            _authenticationService.RegisterUser(login, password, role); // enregistre un nouvel utilisateur
-        }
-
-        [HttpGet("GetUsers")]
-        [AllowAnonymous] // cette action est accessible sans authentification
-        public IEnumerable<User> GetUsers()
-        {
-            //migration test
-            return _service.GetUsers(); // retourne tous les utilisateurs
-        }
-
-        [HttpPost("Login")]
-        [AllowAnonymous] // cette action est accessible sans authentification
-        public ActionResult Login(string login, string password)
-        {
-            var token = _authenticationService.Login(login, password); // génère un token JWT si login réussi
-            return Ok(new { Token = token }); // retourne le token dans la réponse
-        }
-
-        [HttpPut("UpdateUserStatus/{id}")]
-        [Authorize(Roles = "Admin")] // seul un Admin peut modifier le statut d'un utilisateur
-        public ActionResult UpdateUserStatus(int id)
+        [AllowAnonymous]
+        public IActionResult Register(int id, string login, string password, string role, bool statut)
         {
             try
             {
-                _service.SetUserStatus(id, true); // active l'utilisateur (Statut = true)
-                return Ok(new { message = "statut changed" }); // message de succès
+                _authenticationService.RegisterUser(login, password, role);
+                return StatusCode(201); // Created
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex, "Error updating user status."); // enregistre l'erreur
-                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message }); // retourne une erreur 500
+                return Conflict(); // 409 - Conflit : utilisateur déjà existant,
             }
         }
 
-        [HttpDelete("DeleteUser/{id}")]
-        [Authorize(Roles = "Admin")] // seul un Admin peut supprimer un utilisateur
-        public ActionResult DeleteUser(int id)
+
+        [HttpGet("GetUsers")]
+        [AllowAnonymous]
+        public IActionResult GetUsers()
         {
-            _service.DeleteUser(id); // supprime l'utilisateur par ID
-            return Ok(new { message = $"User Id : {id} has been deleted." }); // message de confirmation
+            var users = _service.GetUsers();
+            return Ok(users); // 200
         }
+
+
+
+
+        [HttpPost("Login")]
+        [AllowAnonymous]
+        public IActionResult Login(string login, string password)
+        {
+            try
+            {
+                var token = _authenticationService.Login(login, password);
+                return Ok(new { token }); // 200
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized(); // 401 - Accès refusé
+            }
+            catch (Exception)
+            {
+                return BadRequest(); // 400 - Erreur générale
+               
+            }
+        }
+
+
+        [HttpPut("UpdateUserStatus/{id}")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult UpdateUserStatus(int id)
+        {
+            try
+            {
+                _service.SetUserStatus(id, true);
+                return NoContent(); // 204 - Modification réussie, 
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(); // 404 - Utilisateur non trouvé
+            }
+            catch (Exception)
+            {
+                return StatusCode(500); // 500 - Erreur interne
+            }
+        }
+
+
+
+
+
+
+        [HttpDelete("DeleteUser/{id}")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult DeleteUser(int id)
+        {
+            try
+            {
+                _service.DeleteUser(id);
+                return NoContent(); // 204
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(); // 404
+            }
+            catch (Exception)
+            {
+                return StatusCode(500); // 500
+            }
+        }
+
+
+
+
+
     }
 }

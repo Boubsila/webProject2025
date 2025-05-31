@@ -20,39 +20,64 @@ namespace Backend_Artisans.Controllers
         }
 
         [HttpGet("GetOrder")]
-        public IActionResult GetOrder()
+        public ActionResult GetOrder()
         {
             try
             {
-                var commandes = _service.GetCommandeList(); // récupère la liste des commandes
-                return Ok(commandes);
+                var commandes = _service.GetCommandeList();
+
+                if (commandes == null || !commandes.Any())
+                {
+                    return NotFound(); // 404 : aucune commande
+                }
+
+                return Ok(commandes); // 200 : commandes trouvées
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, "Erreur interne du serveur."); // erreur serveur
+                return StatusCode(500); // 500 : erreur serveur
             }
         }
 
+
+
+
+
+
         [HttpPost("addOrder")]
-        public IActionResult AddCommande([FromBody] Commande commande)
+        public ActionResult AddCommande([FromBody] Commande commande)
         {
+            if (commande == null)
+            {
+                return BadRequest(); // 400 : commande invalide
+            }
+
             try
             {
-                _service.AddCommande(commande); // ajoute une nouvelle commande
-                return Ok(new { message = "Commande ajoutée avec succès." });
+                _service.AddCommande(commande);
+                return Ok(); // 200 : ajout réussi
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, "Erreur interne du serveur."); // erreur serveur
+                return StatusCode(500); // 500 : erreur serveur
             }
         }
+
+
+
+
+
 
         [HttpPut("updateOrder/{id}")]
         public IActionResult UpdateCommande(int id, [FromBody] Commande updatedCommande)
         {
+            if (updatedCommande == null)
+            {
+                return BadRequest(); // 400 : données manquantes
+            }
+
             try
             {
-                // met à jour les champs principaux d'une commande
                 _service.UpdateCommande(
                     id,
                     updatedCommande.statut,
@@ -62,74 +87,130 @@ namespace Backend_Artisans.Controllers
                     updatedCommande.dateLivraison
                 );
 
-                return Ok(new { message = "Commande mise à jour avec succès." });
+                return Ok(); // 200 : mise à jour réussie
             }
-            catch (Exception ex)
+            catch (KeyNotFoundException)
             {
-                return StatusCode(500, "Erreur lors de la mise à jour de la commande."); // erreur serveur
+                return NotFound(); // 404 : commande introuvable
+            }
+            catch (Exception)
+            {
+                return StatusCode(500); // 500 : erreur serveur
             }
         }
 
-        //[HttpPut("updateOrder/{id}")]
-        // Code alternatif de mise à jour complète d'une commande (commenté)
+
+
 
         [HttpDelete("Delete/{id}")]
         public ActionResult DeleteOrder(int id)
         {
-            _service.DeleteCommande(id); // supprime une commande via son ID
-            return Ok();
+            try
+            {
+                _service.DeleteCommande(id);
+                return Ok(); // 200 : suppression réussie
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(); // 404 : commande introuvable
+            }
+            catch (Exception)
+            {
+                return StatusCode(500); // 500 : erreur serveur
+            }
         }
+
+
+
+
+
 
         [HttpGet("GetCommandesByArtisan/{artisanName}")]
         public IActionResult GetCommandesByArtisan(string artisanName)
         {
             try
             {
-                // récupère les commandes liées à un artisan
                 var commandes = _service.GetCommandesByArtisanName(artisanName);
 
                 if (commandes == null || commandes.Count == 0)
                 {
-                    return NotFound(new { message = "Aucune commande trouvée pour cet artisan." });
+                    return NotFound(); // 404 : aucune commande pour cet artisan
                 }
 
-                return Ok(commandes);
+                return Ok(commandes); // 200 : données disponibles
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return StatusCode(500, "Erreur interne du serveur."); // erreur serveur
+                return StatusCode(500); // 500 : erreur serveur
             }
         }
 
-        // mettre à jour le statut d'une commande
+
+
+
+
+
         [HttpPut("ChangeOrderStatus/{numeroCommande}/{nouveauStatut}")]
         public ActionResult ChangeOrderStatus(string numeroCommande, string nouveauStatut)
         {
             try
             {
-                _service.ChangeOrderStatus(numeroCommande, nouveauStatut); // met à jour le statut global d'une commande
-                return Ok(new { message = $"Statut de la commande '{numeroCommande}' mis à jour avec succès à '{nouveauStatut}'." });
+                _service.ChangeOrderStatus(numeroCommande, nouveauStatut);
+                return Ok(); // 200 : statut modifié
             }
-            catch (Exception ex)
+            catch (KeyNotFoundException)
             {
-                return StatusCode(500, $"Erreur interne du serveur lors de la mise à jour du statut de la commande '{numeroCommande}'.");
+                return NotFound(); // 404 : commande non trouvée
+            }
+            catch (Exception)
+            {
+                return StatusCode(500); // 500 : erreur serveur
             }
         }
+
+
+
+
+
 
         [HttpPut("Pickup/{nmOrder}/{adres}/{livreur}")]
         public ActionResult pickup(string nmOrder, string adres, string livreur)
         {
-            _service.addPickupAdres(nmOrder, adres, livreur); // ajoute une adresse de ramassage à une commande
-
-            return Ok(200);
+            try
+            {
+                _service.addPickupAdres(nmOrder, adres, livreur);
+                return Ok(); // 200 : adresse de pickup ajoutée
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(); // 404 : commande non trouvée
+            }
+            catch (Exception)
+            {
+                return StatusCode(500); // 500 : erreur serveur
+            }
         }
 
-        // mise à jour du statut d'une commande spécifique à un artisan
+
+
+
         [HttpPut("ChangeCommandeStatut/{numeroCommande}/{artisanName}/{nouveauStatut}")]
         public IActionResult ChangeCommandeStatut(string numeroCommande, string artisanName, string nouveauStatut)
         {
-            _service.ChangeCommandeStatusByProductAndArtisan(numeroCommande, artisanName, nouveauStatut); // met à jour un statut spécifique par artisan
-            return Ok();
+            try
+            {
+                _service.ChangeCommandeStatusByProductAndArtisan(numeroCommande, artisanName, nouveauStatut);
+                return Ok(); // 200 : statut mis à jour
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(); // 404 : commande ou produit/artisan introuvable
+            }
+            catch (Exception)
+            {
+                return StatusCode(500); // 500 : erreur serveur
+            }
         }
+
     }
 }

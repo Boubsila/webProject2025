@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\data\\repo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|solutionrelative:data\\repo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\backend_artisans\\controllers\\statisticscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B2185A17-D517-401B-946A-2F71DABE4149}|Backend_Artisans\\Backend_Artisans.csproj|solutionrelative:backend_artisans\\controllers\\statisticscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,31 +14,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Repo.cs",
-              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\Repo.cs",
-              "RelativeDocumentMoniker": "Data\\Repo.cs",
-              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\Repo.cs",
-              "RelativeToolTip": "Data\\Repo.cs",
-              "ViewState": "AgIAAGYAAAAAAAAAAAAmwG4AAAByAAAAAAAAAA==",
+              "Title": "StatisticsController.cs",
+              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\StatisticsController.cs",
+              "RelativeDocumentMoniker": "Backend_Artisans\\Controllers\\StatisticsController.cs",
+              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Backend_Artisans\\Controllers\\StatisticsController.cs",
+              "RelativeToolTip": "Backend_Artisans\\Controllers\\StatisticsController.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAqwDsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-26T17:43:00.922Z",
+              "WhenOpened": "2025-05-29T17:25:38.748Z",
               "EditorCaption": ""
             }
           ]

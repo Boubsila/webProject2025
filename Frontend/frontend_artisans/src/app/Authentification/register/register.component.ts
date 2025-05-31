@@ -42,7 +42,7 @@ export class RegisterComponent {
         this.erreur.erreurAlert('Les mots de passe ne correspondent pas.');
         return;
       }
-      if(this.registerForm.value.email == '@ArtMarket.be'){
+      if(this.registerForm.value.email == '@petitshands.be'){
         this.erreur.erreurAlert('Email invalide.');
         return;
       }

@@ -17,20 +17,49 @@ namespace Backend_Artisans.Controllers
             _service = service;
         }
 
-        // Récupère le nombre total d'utilisateurs
+
+
+
+
         [HttpGet("statisticsAllUsers")]
-        public int GetAllUsersCount()
+        public ActionResult<int> GetAllUsersCount()
         {
-            int count = _service.GetUsers().Count; // Compte tous les utilisateurs
-            return count;
+            try
+            {
+                int count = _service.GetUsers().Count;
+                return Ok(count); // 200 OK avec le nombre total
+            }
+            catch (Exception)
+            {
+                return StatusCode(500); // 500 Internal Server Error sans message détaillé
+            }
         }
 
-        // Récupère le nombre d'utilisateurs ayant un rôle spécifique et un statut actif
+
+
+
+
         [HttpGet("statisticsUsers/byRole")]
-        public int GetAllUsersCount(string role)
+        public ActionResult<int> GetAllUsersCount(string role)
         {
-            int count = _service.GetUsers().Count(x => x.Role.ToLower() == role.ToLower() && x.Statut == true);
-            return count;
+            if (string.IsNullOrWhiteSpace(role))
+            {
+                return BadRequest(); // 400 Bad Request si rôle vide ou null
+            }
+
+            try
+            {
+                int count = _service.GetUsers().Count(x => x.Role.ToLower() == role.ToLower() && x.Statut == true);
+                return Ok(count); // 200 OK avec le nombre filtré
+            }
+            catch (Exception)
+            {
+                return StatusCode(500); // 500 Internal Server Error
+            }
         }
+
+
+
+
     }
 }
