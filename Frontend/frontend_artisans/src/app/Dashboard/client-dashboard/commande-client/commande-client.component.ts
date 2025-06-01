@@ -43,7 +43,7 @@ export class CommandeClientComponent implements OnInit {
     private AuthService: AuthService,
     private ErreurAlertService: ErreurAlertService,
     private SuccessAlertService: SuccessAlertService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.user = this.AuthService.getUserName();
@@ -89,7 +89,15 @@ export class CommandeClientComponent implements OnInit {
           );
         },
         error: (error: any) => {
-          this.ErreurAlertService.erreurAlert('Erreur lors de la récupération des commandes.');
+          if (error.status === 0) {
+            this.ErreurAlertService.erreurAlert('Impossible de joindre le serveur');
+          } else if (error.status === 404) {
+            this.ErreurAlertService.erreurAlert('Aucune commande trouvée');
+          } else if (error.status === 500) {
+            this.ErreurAlertService.erreurAlert('Erreur interne du serveur');
+          } else {
+            this.ErreurAlertService.erreurAlert('Erreur inconnue');
+          }
         }
       });
     } else {
@@ -97,6 +105,7 @@ export class CommandeClientComponent implements OnInit {
       this.orders = [];
     }
   }
+
 
   getOrderGroups() {
     const groups: { [key: string]: any[] } = {};
@@ -151,7 +160,7 @@ export class CommandeClientComponent implements OnInit {
     this.selectedOrder = null;
   }
 
- 
+
   isStatusActive(currentStatus: string, statusToCheck: string): boolean {
     const statusOrder = [
       'En attente',
@@ -161,45 +170,45 @@ export class CommandeClientComponent implements OnInit {
       'En cours de livraison',
       'Livré'
     ];
-    
+
     const currentIndex = statusOrder.indexOf(currentStatus);
     const checkIndex = statusOrder.indexOf(statusToCheck);
-    
+
     return currentIndex >= checkIndex;
   }
 
-  
- getProgressWidth(status: string): string {
-  const statusOrder = [
-    'En attente',
-    'En traitement',
-    'Prêt au ramassage',
-    'Prélevé',
-    'En cours de livraison',
-    'Livré'
-  ];
 
-  const currentIndex = statusOrder.indexOf(status);
-  const totalSteps = statusOrder.length - 1;
+  getProgressWidth(status: string): string {
+    const statusOrder = [
+      'En attente',
+      'En traitement',
+      'Prêt au ramassage',
+      'Prélevé',
+      'En cours de livraison',
+      'Livré'
+    ];
 
-  if (currentIndex <= 0) return '0%';
-  if (currentIndex >= totalSteps) return '100%';
+    const currentIndex = statusOrder.indexOf(status);
+    const totalSteps = statusOrder.length - 1;
 
-  const width = ((currentIndex+0.2) / totalSteps) * 100;
-  return `${width}%`;
-}
-getExpectedDeliveryDate(orderDate: string | Date): Date {
-  const order = new Date(orderDate);
-  const expected = new Date(order);
-  expected.setDate(order.getDate() + 2);
+    if (currentIndex <= 0) return '0%';
+    if (currentIndex >= totalSteps) return '100%';
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0); // pour comparaison sans heure
-  if (expected < today) {
-    return today;
+    const width = ((currentIndex + 0.2) / totalSteps) * 100;
+    return `${width}%`;
   }
-  return expected;
-}
+  getExpectedDeliveryDate(orderDate: string | Date): Date {
+    const order = new Date(orderDate);
+    const expected = new Date(order);
+    expected.setDate(order.getDate() + 2);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // pour comparaison sans heure
+    if (expected < today) {
+      return today;
+    }
+    return expected;
+  }
 
 
 }

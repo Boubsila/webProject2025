@@ -1,10 +1,12 @@
+import { SuccessAlertService } from './../../../Authentification/alerts/success-alert.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OrderService } from '../../../services/order.service';
-import { AvisService } from '../../../services/avis.service';  
+import { AvisService } from '../../../services/avis.service';
 import { AuthService } from '../../../Authentification/auth.service';
+import { ErreurAlertService } from '../../../Authentification/alerts/erreur-alert.service';
 
 @Component({
   selector: 'app-avis',
@@ -23,8 +25,10 @@ export class AvisComponent implements OnInit {
     private router: Router,
     private orderService: OrderService,
     private avisService: AvisService,
-    private authService: AuthService 
-  ) {}
+    private authService: AuthService,
+    private erreurAlertService: ErreurAlertService,
+    private successAlertService: SuccessAlertService
+  ) { }
 
   ngOnInit(): void {
     const artisanName = this.authService.getUserName();
@@ -35,7 +39,6 @@ export class AvisComponent implements OnInit {
     this.orderService.getOrdersByArtisan(artisanName).subscribe({
       next: (orders: any[]) => {
         const avisList: any[] = [];
-  
         orders.forEach(order => {
           this.avisService.getAvisList(order.numeroCommande, order.produitName).subscribe({
             next: (commentaires: string[]) => {
@@ -48,25 +51,35 @@ export class AvisComponent implements OnInit {
                       productName: order.produitName || 'Produit inconnu',
                       rating: note || 0,
                       comments: commentaires,
-                      date: order.dateCommande 
+                      date: order.dateCommande
                     });
-  
                     this.reviews = [...avisList];
                   }
                 },
-                error: err => console.error('Erreur getNote:', err)
+                error: err => {
+                  this.erreurAlertService.erreurAlert('Erreur lors de la récupération de la note : ' + err.message);
+                }
               });
             },
-            error: err => console.error('Erreur getAvisList:', err)
+            error: err => {
+              this.erreurAlertService.erreurAlert('Erreur lors de la récupération des commentaires : ' + err.message);
+            }
           });
         });
       },
       error: (error: any) => {
-        console.error('Erreur lors du chargement des commandes :', error);
+        if (error.status === 404) {
+          this.erreurAlertService.erreurAlert('Aucun avis trouvé');
+        } else if (error.status === 500) {
+          this.erreurAlertService.erreurAlert('Erreur interne du serveur');
+        } else {
+          this.erreurAlertService.erreurAlert('Erreur inconnue');
+        }
       }
     });
   }
-  
+
+
   goToDashboard() {
     this.router.navigate(['/dashboard']);
   }
@@ -83,22 +96,36 @@ export class AvisComponent implements OnInit {
       const produitName = this.selectedReview.productName;
       const auteur = this.authService.getUserName();
       const dateNow = new Date();
-      
+
       // Format: "user: message, DD-MM-YY HH:mm:ss"
       const commentaireFinal = `${auteur}: ${this.response.trim()}, ${this.formatDate(dateNow)}`;
-  
+
       this.avisService.addComment(numeroCommande, produitName, commentaireFinal).subscribe({
         next: () => {
           this.selectedReview.comments.push(commentaireFinal);
           this.response = '';
           this.closeModal();
+          this.successAlertService.successAlert('Commentaire ajouté avec succès');
         },
-        error: (err) => {
-          console.error('Erreur lors de lajout du commentaire :', err);
+        error: (error: any) => {
+
+          if (error.status === 400) {
+
+            this.erreurAlertService.erreurAlert('Données invalides');
+          } else if (error.status === 404) {
+
+            this.erreurAlertService.erreurAlert('Produit ou commande non trouvés');
+          } else if (error.status === 500) {
+
+            this.erreurAlertService.erreurAlert('Erreur interne du serveur');
+          } else {
+            this.erreurAlertService.erreurAlert('Erreur inconnue');
+          }
         }
       });
     }
   }
+
 
   getStarArray(rating: number): number[] {
     return Array(rating).fill(0);
@@ -128,13 +155,13 @@ export class AvisComponent implements OnInit {
     this.response = '';
   }
 
-  // Nouvelle méthode pour formater la date complète
+  //  formater la date complète
   getFormattedDate(dateString: string): string {
     if (!dateString) return 'Date inconnue';
-    
+
     const date = new Date(dateString);
     if (isNaN(date.getTime())) return dateString;
-    
+
     return date.toLocaleDateString('fr-FR', {
       day: '2-digit',
       month: '2-digit',
@@ -144,23 +171,23 @@ export class AvisComponent implements OnInit {
     });
   }
 
-  // Méthode pour extraire et formater la date depuis un commentaire
+  //  extraire et formater la date depuis un commentaire
   getFullDateFromComment(comment: string): string {
     const parts = comment.split(',');
     if (parts.length < 2) return 'Date inconnue';
-    
+
     const dateTime = parts[1].trim();
     const [datePart, timePart] = dateTime.split(' ');
-    
+
     if (!datePart || !timePart) return dateTime;
-    
+
     const [day, month, year] = datePart.split('-');
     const [hours, minutes] = timePart.split(':');
-    
+
     const fullDate = new Date(`20${year}-${month}-${day}T${hours}:${minutes}:00`);
-    
+
     if (isNaN(fullDate.getTime())) return dateTime;
-    
+
     return fullDate.toLocaleDateString('fr-FR', {
       day: '2-digit',
       month: '2-digit',
@@ -178,7 +205,7 @@ export class AvisComponent implements OnInit {
   getText(comment: string): string {
     const parts = comment.split(':');
     if (parts.length < 2) return comment;
-    
+
     const textParts = parts[1].split(',');
     return textParts[0]?.trim() || '';
   }
@@ -198,27 +225,27 @@ export class AvisComponent implements OnInit {
   getRelativeTime(comment: string): string {
     const parts = comment.split(',');
     if (parts.length < 2) return 'Récemment';
-    
+
     const dateTime = parts[1].trim();
     const [datePart, timePart] = dateTime.split(' ');
-    
+
     if (!datePart || !timePart) return 'Récemment';
-    
+
     const [day, month, year] = datePart.split('-');
     const [hours, minutes] = timePart.split(':');
-    
+
     const commentDate = new Date(`20${year}-${month}-${day}T${hours}:${minutes}:00`);
-    
+
     if (isNaN(commentDate.getTime())) return 'Récemment';
-    
+
     const now = new Date();
     const diffInSeconds = Math.floor((now.getTime() - commentDate.getTime()) / 1000);
-    
+
     if (diffInSeconds < 60) return 'À l\'instant';
     if (diffInSeconds < 3600) return `Il y a ${Math.floor(diffInSeconds / 60)} min`;
     if (diffInSeconds < 86400) return `Il y a ${Math.floor(diffInSeconds / 3600)} h`;
     if (diffInSeconds < 2592000) return `Il y a ${Math.floor(diffInSeconds / 86400)} j`;
-    
+
     return this.getFullDateFromComment(comment);
   }
 }

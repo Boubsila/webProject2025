@@ -26,7 +26,7 @@ export class LoginComponent {
   //reactive form 
   myForm = new FormGroup({
     Email: new FormControl('@petitshands.be', [Validators.required, Validators.maxLength(60)]),
-    Password: new FormControl('', [Validators.required, Validators.minLength(1)])
+    Password: new FormControl('', [Validators.required, Validators.minLength(4)])
   });
 
   constructor(private router: Router, private authentication: AuthService, private success: SuccessAlertService, private erreur: ErreurAlertService) { }
@@ -44,16 +44,18 @@ export class LoginComponent {
         }
       },
       error: (err) => {
-        if (err.status === 400) {
-          this.erreur.erreurAlert('Email ou mot de passe incorrect');
-        } else if (err.status === 401) {
-          this.erreur.erreurAlert('Accès non autorisé');
-        } else if (err.status === 0) {
-          this.erreur.erreurAlert('Impossible de joindre le serveur');
-        } else {
-          this.erreur.erreurAlert('Une erreur inattendue est survenue');
+        let message = 'Une erreur inattendue est survenue';
+        console.log('erreur : ',err);
+        if (err.status === 0) {
+          message = 'Impossible de joindre le serveur';
+        } else if (err.error?.message) {
+          message = err.error.message;
         }
+
+        this.erreur.erreurAlert(message);
       }
+
+
 
 
     });

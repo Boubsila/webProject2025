@@ -1,3 +1,4 @@
+import { ErreurAlertService } from './../../Authentification/alerts/erreur-alert.service';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -17,14 +18,14 @@ export class ShortenPipe implements PipeTransform {
   transform(value: string | null | undefined, maxLength: number = 50, ellipsis: string = '...'): string {
     if (value == null) return '';
     if (value.length <= maxLength) return value;
-    
+
     let shortened = value.substring(0, maxLength);
     const lastSpace = shortened.lastIndexOf(' ');
-    
+
     if (lastSpace > 0) {
       shortened = shortened.substring(0, lastSpace);
     }
-    
+
     return shortened + ellipsis;
   }
 }
@@ -58,9 +59,10 @@ export class ProduitsComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private successAlert: SuccessAlertService,
+    private ErreurAlertService: ErreurAlertService,
     private authService: AuthService,
     private http: HttpClient
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.chargerDonnees();
@@ -96,14 +98,19 @@ export class ProduitsComponent implements OnInit {
         this.filtrerProduits();
       },
       error: (error: any) => {
-        console.error('Erreur chargement produits', error);
-        this.isLoading = false;
-      },
-      complete: () => {
-        this.isLoading = false;
+        if (error.status === 0) {
+          this.ErreurAlertService.erreurAlert('Impossible de joindre le serveur');
+        } else if (error.status === 404) {
+          this.ErreurAlertService.erreurAlert('Aucun produit trouvé');
+        } else if (error.status === 500) {
+          this.ErreurAlertService.erreurAlert('Erreur interne du serveur');
+        } else {
+          this.ErreurAlertService.erreurAlert('Erreur inconnue');
+        }
       }
     });
   }
+
 
   chargerArtisans(): void {
     this.authService.getAllUsers().subscribe({
@@ -118,22 +125,31 @@ export class ProduitsComponent implements OnInit {
 
         this.filtrerProduits();
       },
-      error: (error) => {
-        console.error('Erreur chargement artisans', error);
+      error: (error: any) => {
+        if (error.status === 0) {
+          this.ErreurAlertService.erreurAlert('Impossible de joindre le serveur');
+        } else if (error.status === 404) {
+          this.ErreurAlertService.erreurAlert('Aucun artisan trouvé');
+        } else if (error.status === 500) {
+          this.ErreurAlertService.erreurAlert('Erreur interne du serveur');
+        } else {
+          this.ErreurAlertService.erreurAlert('Erreur inconnue');
+        }
       }
     });
   }
 
+
   filtrerProduits(): void {
     if (!this.categorieSelectionnee || !this.artisanSelectionne) return;
-    
+
     this.produitsFiltres = this.produits.filter(produit => {
       const matchCategorie = this.categorieSelectionnee === 'Autres'
         ? !this.categories.slice(0, 6).includes(produit.categorie)
         : produit.categorie === this.categorieSelectionnee;
-      
+
       const matchArtisan = produit.ArtisanName === this.artisanSelectionne;
-      
+
       return matchCategorie && matchArtisan;
     });
   }
@@ -151,21 +167,32 @@ export class ProduitsComponent implements OnInit {
       dateCommande: new Date().toISOString(),
       statut: 'pending',
       isOrderd: false,
-      quantite: produit.quantite, 
+      quantite: produit.quantite,
       prix: produit.prix,
       adresseLivraison: '',
       dateLivraison: ''
     };
 
-    
+
 
     this.http.post('https://localhost:7128/api/Commande/addOrder', commande)
       .pipe(
         catchError(error => {
-          console.error('Erreur ajout commande', error);
+          if (error.status === 0) {
+            this.ErreurAlertService.erreurAlert('Impossible de joindre le serveur');
+          } else if (error.status === 400) {
+            this.ErreurAlertService.erreurAlert('Données invalides');
+          } else if (error.status === 404) {
+            this.ErreurAlertService.erreurAlert('Commande non trouvée');
+          } else if (error.status === 500) {
+            this.ErreurAlertService.erreurAlert('Erreur interne du serveur');
+          } else {
+            this.ErreurAlertService.erreurAlert('Erreur inconnue');
+          }
           return throwError(() => new Error('Erreur lors de l\'ajout au panier'));
         })
       )
+
       .subscribe({
         next: () => {
 
@@ -173,7 +200,8 @@ export class ProduitsComponent implements OnInit {
           this.jouerAnimationAjout(produit.id);
         },
         error: (err) => {
-          console.error('Erreur:', err);
+          this.ErreurAlertService.erreurAlert('Erreur lors de l\'ajout au panier');
+
         }
       });
   }

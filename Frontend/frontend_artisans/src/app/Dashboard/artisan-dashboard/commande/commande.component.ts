@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../Authentification/auth.service';
 import { OrderService } from '../../../services/order.service';
+import { ErreurAlertService } from '../../../Authentification/alerts/erreur-alert.service';
 
 @Component({
   selector: 'app-commande',
@@ -19,7 +20,7 @@ export class CommandeComponent implements OnInit {
   user: any = null;
   totalSales: number = 0;
   today: Date = new Date();
-  livreurlist: string[] = []; 
+  livreurlist: string[] = [];
   searchTerm: string = '';
 
   statusOptions = [
@@ -32,7 +33,8 @@ export class CommandeComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private erreurAlertService: ErreurAlertService
   ) { }
 
   ngOnInit(): void {
@@ -54,17 +56,27 @@ export class CommandeComponent implements OnInit {
         this.calculateTotalSales();
       },
       error: (err: any) => {
-        console.error('Erreur lors de la récupération des commandes :', err);
+        if (err.status === 0) {
+          this.erreurAlertService.erreurAlert('Impossible de joindre le serveur');
+        }
+        else if (err.status === 404) {
+          this.erreurAlertService.erreurAlert('Aucune commande trouvée');
+        } else if (err.status === 500) {
+          this.erreurAlertService.erreurAlert('Erreur interne du serveur');
+        } else {
+          this.erreurAlertService.erreurAlert('Erreur inconnue');
+        }
       }
     });
   }
+
 
   filterOrders(): void {
     if (!this.searchTerm) {
       this.filteredOrders = [...this.orders];
     } else {
       const term = this.searchTerm.toLowerCase();
-      this.filteredOrders = this.orders.filter(order => 
+      this.filteredOrders = this.orders.filter(order =>
         order.orderNumber.toLowerCase().includes(term) ||
         order.clientName.toLowerCase().includes(term) ||
         order.artisanName.toLowerCase().includes(term) ||
@@ -155,20 +167,32 @@ export class CommandeComponent implements OnInit {
           this.selectedOrder.pickupAddress,
           this.selectedOrder.livreur
         )
-        .subscribe({
-          next: () => {
-            this.updateOrderStatusAfterAddressAdded();
-          },
-          error: (error: any) => {
-            console.error('Erreur lors de l\'ajout de l\'adresse:', error);
-            alert('Erreur lors de l\'enregistrement des informations de ramassage');
-          }
-        });
+          .subscribe({
+            next: () => {
+              this.updateOrderStatusAfterAddressAdded();
+            },
+            error: (error: any) => {
+
+              if (error.status === 0) {
+                this.erreurAlertService.erreurAlert('Impossible de joindre le serveur');
+              }
+              else if (error.status === 400) {
+                this.erreurAlertService.erreurAlert('Données invalides');
+              } else if (error.status === 404) {
+                this.erreurAlertService.erreurAlert('Commande non trouvée');
+              } else if (error.status === 500) {
+                this.erreurAlertService.erreurAlert('Erreur interne du serveur');
+              } else {
+                this.erreurAlertService.erreurAlert('Erreur inconnue');
+              }
+            }
+          });
       } else {
         this.updateOrderStatusAfterAddressAdded();
       }
     }
   }
+
 
   private updateOrderStatusAfterAddressAdded() {
     this.orderService.updateOrderStatusMulti(
@@ -188,8 +212,18 @@ export class CommandeComponent implements OnInit {
         this.closeModal();
       },
       error: (error: any) => {
-        console.error('Erreur lors de la mise à jour du statut:', error);
-        alert('Erreur lors de la mise à jour du statut');
+        if (error.status === 0) {
+          this.erreurAlertService.erreurAlert('Impossible de joindre le serveur');
+        }
+        else if (error.status === 400) {
+          this.erreurAlertService.erreurAlert('Données invalides');
+        } else if (error.status === 404) {
+          this.erreurAlertService.erreurAlert('Commande non trouvée');
+        } else if (error.status === 500) {
+          this.erreurAlertService.erreurAlert('Erreur interne du serveur');
+        } else {
+          this.erreurAlertService.erreurAlert('Erreur inconnue');
+        }
       }
     });
   }
@@ -219,12 +253,12 @@ export class CommandeComponent implements OnInit {
   get validatedOrdersCount(): number {
     return this.orders.filter(o => o.status !== 'Annulée').length;
   }
-  
+
   get averageOrderValue(): number {
     const validOrders = this.orders.filter(o => o.status !== 'Annulée');
     return validOrders.length > 0 ? this.totalSales / validOrders.length : 0;
   }
-  
+
   get cancelledOrdersCount(): number {
     return this.orders.filter(o => o.status === 'Annulée').length;
   }

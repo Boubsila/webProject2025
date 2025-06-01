@@ -28,7 +28,7 @@ export class RegisterComponent {
     // Initialisez le formulaire réactif
     this.registerForm = this.fb.group({
       email: ['@petitshands.be', [Validators.required]], // Champ obligatoire et format email
-      password: ['', Validators.required], // Champ obligatoire
+      password: ['', [Validators.required,Validators.minLength(4)]], // Champ obligatoire
       confirmPassword: ['', Validators.required], // Champ obligatoire
       role: ['', Validators.required], // Champ obligatoire
     });
@@ -57,7 +57,30 @@ export class RegisterComponent {
 
       
 
-      this.r.Register(this.registerForm.value.email,this.registerForm.value.password,this.registerForm.value.role);
+this.r.Register(this.registerForm.value.email, this.registerForm.value.password, this.registerForm.value.role)
+  .subscribe({
+    next: () => {
+      this.success.successAlert('Utilisateur enregistré avec succès');
+      this.registerForm.reset();
+      this.goToLogin();
+    },
+    error: (error) => {
+      let errorMessage = '';
+
+      if (error.status === 0) {
+        errorMessage = 'Connexion au serveur impossible. Vérifiez votre connexion ou le serveur.';
+      } else if (error.status === 409) {
+        errorMessage = 'Un utilisateur avec ces identifiants existe déjà.';
+      } else if (error.error && error.error.message) {
+        errorMessage = error.error.message;
+      } else {
+        errorMessage = 'Une erreur inattendue est survenue.';
+      }
+
+      this.erreur.erreurAlert(errorMessage);
+    }
+  });
+
      
 
 

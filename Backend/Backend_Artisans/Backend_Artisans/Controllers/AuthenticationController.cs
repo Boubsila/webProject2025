@@ -42,7 +42,8 @@ namespace Backend_Artisans.Controllers
             }
             catch (Exception)
             {
-                return Conflict(); // 409 - Conflit : utilisateur déjà existant,
+                return Conflict(new { message = "Un utilisateur avec ces identifiants existe déjà." });
+                
             }
         }
 
@@ -69,12 +70,12 @@ namespace Backend_Artisans.Controllers
             }
             catch (UnauthorizedAccessException)
             {
-                return Unauthorized(); // 401 - Accès refusé
+                return Unauthorized(new { message = "Identifiants incorrects." });
             }
             catch (Exception)
             {
-                return BadRequest(); // 400 - Erreur générale
-               
+                return BadRequest(new { message = "Une erreur est survenue lors de la tentative de connexion." });//400
+
             }
         }
 
@@ -90,11 +91,11 @@ namespace Backend_Artisans.Controllers
             }
             catch (KeyNotFoundException)
             {
-                return NotFound(); // 404 - Utilisateur non trouvé
+                return NotFound(new { message = "Utilisateur non trouvé." });
             }
             catch (Exception)
             {
-                return StatusCode(500); // 500 - Erreur interne
+                return StatusCode(500, new { message = "Erreur interne lors de la mise à jour du statut." });
             }
         }
 
@@ -114,11 +115,11 @@ namespace Backend_Artisans.Controllers
             }
             catch (KeyNotFoundException)
             {
-                return NotFound(); // 404
+                return NotFound(new { message = "Utilisateur à supprimer introuvable." });
             }
             catch (Exception)
             {
-                return StatusCode(500); // 500
+                return StatusCode(500, new { message = "Erreur interne lors de la suppression de l'utilisateur." });
             }
         }
 

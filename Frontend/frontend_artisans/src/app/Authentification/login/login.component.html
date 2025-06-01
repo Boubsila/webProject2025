@@ -27,7 +27,7 @@
           <input type="password" formControlName="Password" class="form-control form-control-lg rounded-3" id="exampleInputPassword1" placeholder="Entrez votre mot de passe" required />
           <div *ngIf="myForm.get('Password')?.invalid && myForm.get('Password')?.touched" class="text-danger">
             <div *ngIf="myForm.get('Password')?.errors?.['required']">Le mot de passe est requis.</div>
-            <div *ngIf="myForm.get('Password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères.</div>
+            <div *ngIf="myForm.get('Password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 4 caractères.</div>
           </div>
         </div>
 

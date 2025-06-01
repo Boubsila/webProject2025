@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../../services/product.service';
 import { AuthService } from '../../../Authentification/auth.service';
 import { UserService } from '../../../services/user.service';
+import { ErreurAlertService } from '../../../Authentification/alerts/erreur-alert.service';
 
 @Component({
     selector: 'app-produit',
@@ -38,12 +39,12 @@ export class ProduitComponent implements OnInit {
     showCategory = true;
     showStatus = true;
     isModalOpen = false;
-    
+
 
     @ViewChild('productModal') productModal: ElementRef | undefined;
     @ViewChild('firstInput') firstInput: ElementRef | undefined;
 
-    constructor(private userService: UserService, private authservice: AuthService, private productService: ProductService, private router: Router) { }
+    constructor(private userService: UserService, private authservice: AuthService, private productService: ProductService, private router: Router, private confirmation: ErreurAlertService) { }
 
     userConnected: string = '';
 
@@ -51,23 +52,23 @@ export class ProduitComponent implements OnInit {
         this.userConnected = this.authservice.getUserName();
         console.log(this.userConnected);
 
-        const imageNames = ['vase1','vase2','vase3','vase4',
-                            'tapis1','tapis2','tapis3','tapis4',
-                            'sac1','sac2','sac3','sac4',
-                            'table1','table2','table3','table4',
-                            'collier1','collier2','collier3','collier4',
-                            'echarpe1','echarpe2','echarpe3','echarpe4',
-                            'panier1','panier2','panier3','panier4',
-                            'panneau1','panneau2','panneau3',
-                            'laterne1','laterne2','laterne3',
-                            'lampe1','lampe2','lampe3','lampe4'
-                            ];
+        const imageNames = ['vase1', 'vase2', 'vase3', 'vase4',
+            'tapis1', 'tapis2', 'tapis3', 'tapis4',
+            'sac1', 'sac2', 'sac3', 'sac4',
+            'table1', 'table2', 'table3', 'table4',
+            'collier1', 'collier2', 'collier3', 'collier4',
+            'echarpe1', 'echarpe2', 'echarpe3', 'echarpe4',
+            'panier1', 'panier2', 'panier3', 'panier4',
+            'panneau1', 'panneau2', 'panneau3',
+            'laterne1', 'laterne2', 'laterne3',
+            'lampe1', 'lampe2', 'lampe3', 'lampe4'
+        ];
 
         this.imageOptions = imageNames.map(name => `/images/produits/${name}.png`);
 
-        
 
-        this.updateProductList(); 
+
+        this.updateProductList();
     }
 
 
@@ -97,7 +98,7 @@ export class ProduitComponent implements OnInit {
 
     saveProduct() {
         this.selectedProduct.artisanName = this.userConnected;
-    
+
         if (this.selectedProduct.id) {
             // Cas : modification
             this.productService.updateProduct(this.selectedProduct).subscribe(() => {
@@ -112,23 +113,27 @@ export class ProduitComponent implements OnInit {
             });
         }
     }
-    
-    
+
+
 
     deleteProduct(productId: number) {
-        if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) {
-            this.productService.deleteProduct(productId).subscribe({
-                next: () => {
-                    this.updateProductList(); // Recharge les produits après suppression
-                },
-                error: (err: any) => {
-                    console.error('Erreur lors de la suppression du produit :', err);
-                    alert("Une erreur est survenue lors de la suppression.");
-                }
-            });
-        }
+        this.confirmation.confirmDelete(
+            'Voulez-vous vraiment supprimer ce produit ?',
+            () => {
+                this.productService.deleteProduct(productId).subscribe({
+                    next: () => {
+                        this.updateProductList(); // Recharge les produits après suppression
+                    },
+                    error: (err: any) => {
+                        console.error('Erreur lors de la suppression du produit :', err);
+                        this.confirmation.erreurAlert("Une erreur est survenue lors de la suppression.");
+                    }
+                });
+            }
+        );
     }
-    
+
+
 
     onFileSelected(event: any) {
         this.selectedFile = event.target.files[0];

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../Authentification/auth.service';
 import { OrderService } from '../../../services/order.service';
+import { ErreurAlertService } from '../../../Authentification/alerts/erreur-alert.service';
 
 @Component({
   selector: 'app-commandes',
@@ -32,7 +33,8 @@ export class CommandesComponent implements OnInit {
   constructor(
     private router: Router,
     private orderService: OrderService,
-    private authService: AuthService
+    private authService: AuthService,
+    private erreurAlertService : ErreurAlertService
   ) { }
 
   ngOnInit(): void {
@@ -55,16 +57,16 @@ export class CommandesComponent implements OnInit {
         });
 
         const filteredGroups = Object.values(groupedByCommande).filter(group => {
-    const statut = group[0].statut;
-    const assignedToCurrentUser = group.some(order => order.livreurName === this.currentUser);
-    return (
-        (statut === 'Prêt au ramassage' || 
-         statut === 'Prélevé' || 
-         statut === 'En cours de livraison' || 
-         statut === 'Livré') 
-        && assignedToCurrentUser
-    );
-});
+          const statut = group[0].statut;
+          const assignedToCurrentUser = group.some(order => order.livreurName === this.currentUser);
+          return (
+            (statut === 'Prêt au ramassage' ||
+              statut === 'Prélevé' ||
+              statut === 'En cours de livraison' ||
+              statut === 'Livré')
+            && assignedToCurrentUser
+          );
+        });
 
         this.groupedOrders = filteredGroups.map(group => {
           const first = group[0];
@@ -97,19 +99,28 @@ export class CommandesComponent implements OnInit {
 
         this.isLoading = false;
       },
-      error: (err: any) => {
-        console.error('Erreur lors du chargement des commandes:', err);
-        this.errorMessage = 'Erreur lors du chargement des commandes. Veuillez réessayer plus tard.';
-        this.isLoading = false;
+        error: (err: any) => {
+      if (err.status === 0) {
+        this.erreurAlertService.erreurAlert('Impossible de joindre le serveur');
+      } else if (err.status === 404) {
+        this.erreurAlertService.erreurAlert('Aucune commande trouvée');
+      } else if (err.status === 500) {
+        this.erreurAlertService.erreurAlert('Erreur interne du serveur');
+      } else {
+        this.erreurAlertService.erreurAlert('Erreur inconnue');
       }
-    });
-  }
+      this.isLoading = false;
+    }
+  });
+}
+
+
 
   filterOrders(): void {
     if (!this.searchTerm) {
       this.orders = [...this.groupedOrders];
     } else {
-      this.orders = this.groupedOrders.filter(order => 
+      this.orders = this.groupedOrders.filter(order =>
         order.orderNumber.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         order.clientName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         order.artisanName.toLowerCase().includes(this.searchTerm.toLowerCase())
@@ -160,10 +171,21 @@ export class CommandesComponent implements OnInit {
         this.closeModal();
       },
       error: (err: any) => {
-        console.error('Erreur:', err);
+      if (err.status === 0) {
+        this.erreurAlertService.erreurAlert('Impossible de joindre le serveur');
+      } else if (err.status === 400) {
+        this.erreurAlertService.erreurAlert('Données invalides');
+      } else if (err.status === 404) {
+        this.erreurAlertService.erreurAlert('Commande non trouvée');
+      } else if (err.status === 500) {
+        this.erreurAlertService.erreurAlert('Erreur interne du serveur');
+      } else {
+        this.erreurAlertService.erreurAlert('Erreur inconnue');
       }
-    });
-  }
+    }
+  });
+}
+
 
   openModal(modalId: string): void {
     const modal = document.getElementById(modalId);

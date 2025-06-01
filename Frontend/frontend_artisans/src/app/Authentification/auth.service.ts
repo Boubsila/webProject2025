@@ -15,52 +15,18 @@ export class AuthService {
   constructor(private http: HttpClient, private success: SuccessAlertService, private erreur: ErreurAlertService) { }
 
 
-
   // Méthode pour la connexion
   login(email: string, password: string): Observable<any> {
-
-    // Envoi de la requête POST à l'URL 'http://localhost:4200/login' avec les données email et password
-
-    return this.http.post(`https://localhost:7128/api/Authentication/Login?login=${email}&password=${password}`, null)
-      .pipe(
-        catchError(error => {
-          // Gestion des erreurs
-          let errorMessage = ''; // Message par défaut
-
-          if (error.error) {
-            // Extraire le message d'erreur de la chaîne de caractères
-            const errorMessageMatch = error.error.match(/System\.Exception: (.*)\r\n/);
-            if (errorMessageMatch && errorMessageMatch.length > 1) {
-              errorMessage = errorMessageMatch[1];
-            } else {
-              errorMessage = error.error; // Utiliser la chaîne de caractères brute si le message n'est pas trouvé
-            }
-          } else if (error.status === 401) {
-            errorMessage = 'Identifiants invalides.'; // Message pour les erreurs d'authentification
-          }
-
-          this.erreur.erreurAlert(errorMessage); // Afficher le message d'erreur
-          return throwError(error); // Propager l'erreur
-        })
-      );
+    return this.http.post(`https://localhost:7128/api/Authentication/Login?login=${email}&password=${password}`, null);
   }
 
 
   // Méthode pour l'enregistrement d'un nouvel utilisateur
-  Register(email: any, password: any, role: any): void {
-    // Envoi d'une requête POST à l'API pour enregistrer un utilisateur avec email, mot de passe et rôle
-    this.http.post(`https://localhost:7128/api/Authentication/Register?login=${email}&password=${password}&role=${role}`, null)
-      .subscribe(
-        response => {
-          // Si la requête réussit, afficher une alerte de succès
-          this.success.successAlert('Utilisateur enregistré avec succès');
-        },
-        error => {
-          // Si une erreur survient, afficher une alerte d'erreur
-          this.erreur.erreurAlert('Erreur lors de l\'enregistrement de l\'utilisateur');
-        }
-      );
+  // Nouveau code
+  Register(email: string, password: string, role: string): Observable<any> {
+    return this.http.post(`https://localhost:7128/api/Authentication/Register?login=${email}&password=${password}&role=${role}`, null);
   }
+
 
 
   /**
@@ -70,20 +36,21 @@ export class AuthService {
 
 
   getUserRoles(): any {
-  let token = sessionStorage.getItem("jwt");
-  if (!token) {
-    return null;  // Pas de token => pas de rôle
+    let token = sessionStorage.getItem("jwt");
+    if (!token) {
+      return null;  // Pas de token => pas de rôle
+    }
+
+    try {
+      let decodedToken: any = jwtDecode(token);
+      let role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+      return role;
+    } catch (error) {
+      this.erreur.erreurAlert('Le jeton JWT est invalide ou corrompu.');
+      return null;  // En cas d'erreur de décodage, retourne null
+    }
   }
 
-  try {
-    let decodedToken: any = jwtDecode(token);
-    let role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-    return role;
-  } catch (error) {
-    console.error('JWT invalide ou corrompu:', error);
-    return null;  // En cas d'erreur de décodage, retourne null
-  }
-}
 
 
   /**
@@ -94,7 +61,7 @@ export class AuthService {
   getUserName(): string {
     let token = sessionStorage.getItem("jwt") ?? '';
     let decodedToken: any = jwtDecode(token);
-    
+
     return decodedToken.sub;
   }
 
@@ -108,10 +75,24 @@ export class AuthService {
     return this.http.get<any>('https://localhost:7128/api/Authentication/GetUsers')
       .pipe(
         catchError(error => {
-          this.erreur.erreurAlert('Erreur lors de la récupération des utilisateurs');
-          return throwError(error);
+          let errorMessage = 'Erreur lors de la récupération des utilisateurs';
+
+          if (error.error && typeof error.error === 'string') {
+            const match = error.error.match(/System\.Exception: (.*)\r\n/);
+            if (match && match[1]) {
+              errorMessage = match[1];
+            } else {
+              errorMessage = error.error;
+            }
+          } else if (error.status === 0) {
+            errorMessage = 'Connexion impossible au serveur.';
+          }
+
+          this.erreur.erreurAlert(errorMessage);
+          return throwError(() => error);
         })
       );
   }
+
 
 }

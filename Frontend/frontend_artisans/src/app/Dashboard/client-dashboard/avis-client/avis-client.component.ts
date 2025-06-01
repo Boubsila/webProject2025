@@ -50,8 +50,8 @@ export class AvisClientComponent implements OnInit {
         next: (data: any[]) => {
           const clientOrdersForReview = data.filter((item: any) =>
 
-            
-            
+
+
             item.clientName === this.user && item.statut === 'Livré');
 
           const commandesGrouped: { [key: string]: any } = {};
@@ -127,8 +127,8 @@ export class AvisClientComponent implements OnInit {
     );
 
     forkJoin({
-      comments: commentRequest,
-      note: noteRequest
+      comments: this.avisService.getAvisList(orderNumber, item.name),
+      note: this.avisService.getNote(orderNumber, item.name)
     }).subscribe({
       next: (result) => {
         item.existingComments = result.comments;
@@ -137,12 +137,20 @@ export class AvisClientComponent implements OnInit {
         item.avisSubmitted = result.comments.length > 0;
       },
       error: (error) => {
-        console.error('Erreur lors du chargement des données du produit:', error);
+        if (error.status === 404) {
+          this.erreurAlertService.erreurAlert("Aucun avis ou note trouvée.");
+        } else if (error.status === 500) {
+          this.erreurAlertService.erreurAlert("Erreur serveur lors du chargement des données du produit.");
+        } else {
+          this.erreurAlertService.erreurAlert("Erreur inconnue lors du chargement des données.");
+        }
+        
       },
       complete: () => {
         item.isLoadingComments = false;
       }
     });
+
   }
 
   goToDashboard() {
@@ -226,14 +234,19 @@ export class AvisClientComponent implements OnInit {
       },
       error: (error) => {
         item.isSubmitting = false;
+
         if (error.status === 400) {
-          this.erreurAlertService.erreurAlert("Vous avez déjà soumis un avis pour ce produit.");
+          this.erreurAlertService.erreurAlert("Les données de l'avis ne sont pas valides ou l'avis a déjà été soumis.");
+        } else if (error.status === 500) {
+          this.erreurAlertService.erreurAlert("Erreur interne du serveur lors de la soumission de l'avis.");
         } else {
-          this.erreurAlertService.erreurAlert("Une erreur est survenue lors de la soumission de l'avis.");
-          console.log(error);
+          this.erreurAlertService.erreurAlert("Une erreur inconnue est survenue.");
         }
+
+        
       }
     });
+
   }
 
   addCommentToProduct(orderIndex: number, itemIndex: number) {
@@ -249,6 +262,7 @@ export class AvisClientComponent implements OnInit {
     const formattedComment = `${this.user}: ${this.newComment.trim()}, ${this.formatDate(new Date())}`;
 
     item.isAddingComment = true;
+
     this.avisService.addComment(order.orderNumber, item.name, formattedComment).subscribe({
       next: () => {
         this.successAlertService.successAlert('Commentaire ajouté avec succès !');
@@ -257,16 +271,26 @@ export class AvisClientComponent implements OnInit {
       },
       error: (error) => {
         item.isAddingComment = false;
-        if (error.status === 400) {
-          this.erreurAlertService.erreurAlert("Vous devez d'abord soumettre un avis initial.");
-        } else {
-          this.erreurAlertService.erreurAlert('Erreur lors de l\'ajout du commentaire.');
+        if (error.status === 0) {     
+          this.erreurAlertService.erreurAlert("Impossible de joindre le serveur.");
         }
+        else if (error.status === 400) {
+          this.erreurAlertService.erreurAlert("Le commentaire est vide ou vous devez d'abord soumettre un avis.");
+        } else if (error.status === 404) {
+          this.erreurAlertService.erreurAlert("Produit ou commande non trouvés.");
+        } else if (error.status === 500) {
+          this.erreurAlertService.erreurAlert("Erreur serveur lors de l'ajout du commentaire.");
+        } else {
+          this.erreurAlertService.erreurAlert("Une erreur inconnue est survenue.");
+        }
+
+        
       },
       complete: () => {
-        item.isAddingComment = false; // <-- Solution alternative
+        item.isAddingComment = false;
       }
     });
+
   }
 
   getStarClass(star: number, currentRating: number, hoverRating: number | null, isDisabled: boolean): string {
@@ -290,7 +314,7 @@ export class AvisClientComponent implements OnInit {
   getCommentText(comment: string): string {
     const parts = comment.split(':');
     if (parts.length < 2) return comment;
-    
+
     const textParts = parts[1].split(',');
     return textParts[0]?.trim() || '';
   }
@@ -298,10 +322,10 @@ export class AvisClientComponent implements OnInit {
   getFormattedDateFromComment(comment: string): string {
     const parts = comment.split(',');
     if (parts.length < 2) return '';
-    
+
     const dateTime = parts[1]?.trim();
     if (!dateTime) return '';
-    
+
     const [date, time] = dateTime.split(' ');
     return `${date} à ${time}`;
   }

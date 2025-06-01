@@ -23,4 +23,26 @@ export class ErreurAlertService {
       },
     });
   }
+
+  confirmDelete(message: string, onConfirm: () => void) {
+  Swal.fire({
+    title: 'Confirmation',
+    text: message,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Oui, supprimer',
+    cancelButtonText: 'Annuler',
+    customClass: {
+      popup: 'custom-alert-popup',
+      confirmButton: 'btn btn-danger',
+      cancelButton: 'btn btn-secondary',
+    },
+    reverseButtons: true, // Place le bouton "Annuler" à gauche
+  }).then((result) => {
+    if (result.isConfirmed) {
+      onConfirm(); // Exécute l'action de suppression
+    }
+  });
+}
+
 }
