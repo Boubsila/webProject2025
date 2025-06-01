@@ -52,7 +52,7 @@ L'**Art Marketplace Platform** est une marketplace en ligne où :
 
 ---
 
-## 🔌 **API Endpoints**  
+## 🔌 **API Endpoints**  (exemples)
 
 📌 **Authentification**  
 - `POST /api/auth/register` → Inscription des utilisateurs  
