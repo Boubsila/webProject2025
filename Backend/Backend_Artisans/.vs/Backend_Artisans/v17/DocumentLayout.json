@@ -1,7 +1,16 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\Migrations\\20250604200410_seed-add-data-product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Data\\Migrations\\20250604200410_seed-add-data-product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|c:\\users\\boubs\\desktop\\ephec\\ephec2025\\projet d\u00E9veloppement web\\projets\\web development project 2025\\backend\\backend_artisans\\data\\repo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A6E35FE5-2DBC-42E2-B08C-A7FD95CEC6A7}|Data\\Data.csproj|solutionrelative:data\\repo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,6 +31,32 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20250604200410_seed-add-data-product.cs",
+              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\Migrations\\20250604200410_seed-add-data-product.cs",
+              "RelativeDocumentMoniker": "Data\\Migrations\\20250604200410_seed-add-data-product.cs",
+              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\Migrations\\20250604200410_seed-add-data-product.cs",
+              "RelativeToolTip": "Data\\Migrations\\20250604200410_seed-add-data-product.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAACQAAABXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T20:04:10.846Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Repo.cs",
+              "DocumentMoniker": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\Repo.cs",
+              "RelativeDocumentMoniker": "Data\\Repo.cs",
+              "ToolTip": "C:\\Users\\boubs\\Desktop\\Ephec\\Ephec2025\\Projet d\u00E9veloppement Web\\Projets\\Web Development Project 2025\\Backend\\Backend_Artisans\\Data\\Repo.cs",
+              "RelativeToolTip": "Data\\Repo.cs",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAAAGEAAAB9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-03T21:49:28.978Z",
+              "EditorCaption": ""
             }
           ]
         }

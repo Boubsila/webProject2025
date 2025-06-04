@@ -102,10 +102,13 @@ export class StatisticsComponent implements OnInit {
       error: (error: any) => {
         if (error.status === 500) {
           this.ErreurAlertService.erreurAlert('Erreur interne du serveur');
+        } else if (error.status === 404) {
+          this.ErreurAlertService.erreurAlert('Aucune commande trouvée');
         } else {
           this.ErreurAlertService.erreurAlert('Erreur inconnue');
         }
       }
+
     });
   }
 
@@ -120,10 +123,13 @@ export class StatisticsComponent implements OnInit {
       error: (error: any) => {
         if (error.status === 500) {
           this.ErreurAlertService.erreurAlert('Erreur interne du serveur');
+        } else if (error.status === 404) {
+          this.ErreurAlertService.erreurAlert('Aucun produit trouvé');
         } else {
           this.ErreurAlertService.erreurAlert('Erreur inconnue');
         }
       }
+
     });
   }
 

@@ -86,10 +86,15 @@ export class AvisClientComponent implements OnInit {
           this.loadAllProductData();
         },
         error: (error: any) => {
-          this.erreurAlertService.erreurAlert('Erreur lors de la récupération de l\'historique des commandes.');
+          if (error.status === 404) {
+            this.erreurAlertService.erreurAlert('Aucun avis trouvé');
+          } else {
+            this.erreurAlertService.erreurAlert('Erreur lors de la récupération des avis.');
+          }
           this.orders = [];
           this.isLoading = false;
         },
+
         complete: () => {
           this.isLoading = false;
         }
@@ -139,12 +144,13 @@ export class AvisClientComponent implements OnInit {
       error: (error) => {
         if (error.status === 404) {
           this.erreurAlertService.erreurAlert("Aucun avis ou note trouvée.");
-        } else if (error.status === 500) {
-          this.erreurAlertService.erreurAlert("Erreur serveur lors du chargement des données du produit.");
-        } else {
-          this.erreurAlertService.erreurAlert("Erreur inconnue lors du chargement des données.");
-        }
-        
+        } else
+          if (error.status === 500) {
+            this.erreurAlertService.erreurAlert("Erreur serveur lors du chargement des données du produit.");
+          } else {
+            this.erreurAlertService.erreurAlert("Erreur inconnue lors du chargement des données.");
+          }
+
       },
       complete: () => {
         item.isLoadingComments = false;
@@ -243,7 +249,7 @@ export class AvisClientComponent implements OnInit {
           this.erreurAlertService.erreurAlert("Une erreur inconnue est survenue.");
         }
 
-        
+
       }
     });
 
@@ -271,7 +277,7 @@ export class AvisClientComponent implements OnInit {
       },
       error: (error) => {
         item.isAddingComment = false;
-        if (error.status === 0) {     
+        if (error.status === 0) {
           this.erreurAlertService.erreurAlert("Impossible de joindre le serveur.");
         }
         else if (error.status === 400) {
@@ -284,7 +290,7 @@ export class AvisClientComponent implements OnInit {
           this.erreurAlertService.erreurAlert("Une erreur inconnue est survenue.");
         }
 
-        
+
       },
       complete: () => {
         item.isAddingComment = false;

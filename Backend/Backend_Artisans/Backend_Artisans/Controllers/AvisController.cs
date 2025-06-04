@@ -32,10 +32,7 @@ namespace Backend_Artisans.Controllers
             {
                 var avis = _service.GetComent(ORD, produitName);
 
-                if (avis == null || avis.Count == 0)
-                {
-                    return NotFound(); // 404 : Aucun avis trouvé
-                }
+               
 
                 return Ok(avis); // 200 : Avis trouvés
             }

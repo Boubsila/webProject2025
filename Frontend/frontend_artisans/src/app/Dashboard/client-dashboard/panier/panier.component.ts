@@ -94,9 +94,13 @@ export class PanierComponent implements OnInit {
         this.calculateTotal();
       },
       error: (error: any) => {
-        console.error('Erreur lors de la récupération des éléments du panier:', error);
-        this.erreurAlert.erreurAlert('Erreur lors du chargement du panier');
+        if (error.status === 404) {
+          this.erreurAlert.erreurAlert('Aucun produit dans le panier');
+        } else {
+          this.erreurAlert.erreurAlert('Erreur lors du chargement du panier');
+        }
       }
+
     });
   }
 
