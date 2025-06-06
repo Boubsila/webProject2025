@@ -14,7 +14,7 @@ export class OrderService {
 
 
   deleteOrderUrl = 'https://localhost:7128/api/Commande/Delete';
-
+  deleteOrderCartUrl = 'https://localhost:7128/api/Commande/DeleteCart';
   updateOrderUrl = 'https://localhost:7128/api/Commande/updateOrder'
 
   updateOrderStatusUrl = 'https://localhost:7128/api/Commande/ChangeOrderStatus';
@@ -40,10 +40,12 @@ getOrders(): any {
     return this.http.get<any[]>(`${this.getOrdersByArtisanUrl}/${artisanName}`);
   }
 
-  deleteOrder(id: number): any {
-    return this.http.delete(`${this.deleteOrderUrl}/${id}`);
+  deleteOrder(orderNumber : string): any {
+    return this.http.delete(`${this.deleteOrderUrl}/${orderNumber}`);
   }
-
+  deleteOrderCart(id : number): any {
+    return this.http.delete(`${this.deleteOrderCartUrl}/${id}`);
+  }
   updateOrder(order: any): any {
     return this.http.put(`${this.updateOrderUrl}/${order.id}`, order);
   }

@@ -54,6 +54,7 @@ export class CommandeClientComponent implements OnInit {
     if (this.user) {
       this.orderService.getOrders().subscribe({
         next: (data: any[]) => {
+          console.log("donnés reçu : ", data)
           const clientOrders = data.filter(item => item.clientName === this.user && item.isOrderd);
           const ordersGrouped: { [key: string]: any } = {};
 

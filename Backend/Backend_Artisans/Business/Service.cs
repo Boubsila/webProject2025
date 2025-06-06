@@ -104,16 +104,22 @@ namespace Business
         }
 
         // Met à jour les données principales d'une commande
-        public void UpdateCommande(int id, string statut, bool isOrdered, string numeroCommande, string? adresseLivraison = null, string? dateLivraison = null)
+        public void UpdateCommande(int id, string statut, bool isOrdered, string numeroCommande, int quantite, string? adresseLivraison = null, string? dateLivraison = null)
         {
-            _repository.UpdateCommande(id, statut, isOrdered, numeroCommande, adresseLivraison, dateLivraison);
+            _repository.UpdateCommande(id, statut, isOrdered, numeroCommande, quantite, adresseLivraison, dateLivraison);
         }
 
         // Supprime une commande
-        public void DeleteCommande(int id)
+        public void DeleteCommande(string orderNumber)
         {
-            _repository.DeleteCommande(id);
+            _repository.DeleteCommande( orderNumber);
         }
+
+        public void DeleteCommandeCart(int id)
+        {
+            _repository.DeleteCommandeCart(id);
+        }
+
 
         // Récupère les commandes d’un artisan spécifique
         public List<Commande> GetCommandesByArtisanName(string artisanName)

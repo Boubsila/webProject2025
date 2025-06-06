@@ -83,8 +83,12 @@ namespace Backend_Artisans.Controllers
                     updatedCommande.statut,
                     updatedCommande.isOrderd,
                     updatedCommande.numeroCommande,
+                    updatedCommande.quantite,
                     updatedCommande.adresseLivraison,
                     updatedCommande.dateLivraison
+                    
+
+                   
                 );
 
                 return Ok(); // 200 : mise à jour réussie
@@ -102,12 +106,12 @@ namespace Backend_Artisans.Controllers
 
 
 
-        [HttpDelete("Delete/{id}")]
-        public ActionResult DeleteOrder(int id)
+        [HttpDelete("Delete/{orderNumber}")]
+        public ActionResult DeleteOrder(string orderNumber)
         {
             try
             {
-                _service.DeleteCommande(id);
+                _service.DeleteCommande(orderNumber);
                 return Ok(); // 200 : suppression réussie
             }
             catch (KeyNotFoundException)
@@ -120,7 +124,23 @@ namespace Backend_Artisans.Controllers
             }
         }
 
-
+        [HttpDelete("DeleteCart/{id}")]
+        public ActionResult DeleteOrder(int id)
+        {
+            try
+            {
+                _service.DeleteCommandeCart(id);
+                return Ok(); // 200 : suppression réussie
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(); // 404 : commande introuvable
+            }
+            catch (Exception)
+            {
+                return StatusCode(500); // 500 : erreur serveur
+            }
+        }
 
 
 

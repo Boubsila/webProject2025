@@ -394,7 +394,29 @@
         }
       }
     },
-    "/api/Commande/Delete/{id}": {
+    "/api/Commande/Delete/{orderNumber}": {
+      "delete": {
+        "tags": [
+          "Commande"
+        ],
+        "parameters": [
+          {
+            "name": "orderNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/Commande/DeleteCart/{id}": {
       "delete": {
         "tags": [
           "Commande"

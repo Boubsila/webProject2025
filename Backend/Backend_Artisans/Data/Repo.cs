@@ -297,7 +297,7 @@ namespace Data
         }
 
         // Met à jour les détails d'une commande existante
-        public void UpdateCommande(int id, string statut, bool isOrdered, string numeroCommande, string? adresseLivraison = null, string? dateLivraison = null)
+        public void UpdateCommande(int id, string statut, bool isOrdered, string numeroCommande, int quantite, string? adresseLivraison = null, string? dateLivraison = null)
         {
             var commande = _context.Commandes.FirstOrDefault(c => c.Id == id); // Trouve la commande par Id
 
@@ -317,14 +317,19 @@ namespace Data
 
                 if (numeroCommande != null)
                     commande.numeroCommande = numeroCommande; // Met à jour le numéro de commande
+                if (quantite != 0)
+                    commande.quantite = quantite; // Met à jour la quantité de la commande 
             }
             _context.SaveChanges(); // Sauvegarde les changements
         }
 
-        // Supprime une commande par son Id
-        public void DeleteCommande(int id)
+        // Supprime une commande par son order number
+        public void DeleteCommande(string orderNumber)
         {
-            var commande = _context.Commandes.FirstOrDefault(c => c.Id == id); // Cherche la commande par Id
+          
+                var commande = _context.Commandes.FirstOrDefault(c => c.numeroCommande == orderNumber); // Cherche la commande par order number
+
+            
 
             if (commande != null)
             {
@@ -333,6 +338,27 @@ namespace Data
 
             _context.SaveChanges(); // Sauvegarde la suppression en base
         }
+
+
+        public void DeleteCommandeCart(int id)
+        {
+
+            var commande = _context.Commandes.FirstOrDefault(c => c.Id == id); 
+
+
+
+            if (commande != null)
+            {
+                _context.Commandes.Remove(commande); // Supprime la commande du contexte
+            }
+
+            _context.SaveChanges(); // Sauvegarde la suppression en base
+        }
+
+
+
+
+
 
         // Récupère toutes les commandes pour un artisan donné (insensible à la casse)
         public List<Commande> GetCommandesByArtisanName(string artisanName)

@@ -71,6 +71,38 @@ export class CommandeComponent implements OnInit {
   }
 
 
+deleteOrder(order: any) {
+  if (order && order.orderNumber) {
+    this.erreurAlertService.confirmDelete(
+      `Voulez-vous vraiment supprimer la commande ${order.orderNumber} ?`,
+      () => {
+        this.orderService.deleteOrder(order.orderNumber).subscribe({
+          next: () => {
+            this.orders = this.orders.filter(o => o.orderNumber !== order.orderNumber);
+            this.filterOrders();
+            this.calculateTotalSales();
+          },
+          error: (error: any) => {
+            if (error.status === 0) {
+              this.erreurAlertService.erreurAlert('Impossible de joindre le serveur');
+            } else if (error.status === 404) {
+              this.erreurAlertService.erreurAlert('Commande non trouvée');
+            } else {
+              this.erreurAlertService.erreurAlert('Erreur inconnue');
+            }
+          }
+        });
+      }
+    );
+  } else {
+    console.log(order);
+    this.erreurAlertService.erreurAlert('ID de la commande invalide');
+  }
+}
+
+
+  
+
   filterOrders(): void {
     if (!this.searchTerm) {
       this.filteredOrders = [...this.orders];

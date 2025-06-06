@@ -268,7 +268,23 @@
   {
     "ContainingType": "Backend_Artisans.Controllers.CommandeController",
     "Method": "DeleteOrder",
-    "RelativePath": "api/Commande/Delete/{id}",
+    "RelativePath": "api/Commande/Delete/{orderNumber}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderNumber",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend_Artisans.Controllers.CommandeController",
+    "Method": "DeleteOrder",
+    "RelativePath": "api/Commande/DeleteCart/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,

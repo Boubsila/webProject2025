@@ -32,11 +32,12 @@ namespace Data
         void UpdateProductQuantity(int id, int nouvelleQuantite);
 
 
-        //commandes
+        //**************************************commandes**********************************
         public void AddCommande(Commande commande);
         public List<Commande> GetCommandeList();
-        void UpdateCommande(int id, string statut, bool isOrdered, string numeroCommande, string? adresseLivraison = null, string? dateLivraison = null);
-        void DeleteCommande(int id);
+        void UpdateCommande(int id, string statut, bool isOrdered, string numeroCommande, int quantite, string? adresseLivraison = null, string? dateLivraison = null );
+        void DeleteCommande(string orderNumber);
+        void DeleteCommandeCart(int id);
         void addPickupAdres(string nmOrder, string adresse, string livreur);
 
         // recuperer les commandes par nom d'artisan

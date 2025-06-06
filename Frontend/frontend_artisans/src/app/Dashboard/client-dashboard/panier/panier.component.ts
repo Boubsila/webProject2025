@@ -50,6 +50,7 @@ export class PanierComponent implements OnInit {
       item.quantity = 1;
     } else if (item.quantity > item.avaibleQuantity) {
       item.quantity = item.avaibleQuantity;
+      
       this.erreurAlert.erreurAlert('La quantité demandée est supérieure à la quantité disponible !');
     }
     this.calculateTotal();
@@ -60,6 +61,7 @@ export class PanierComponent implements OnInit {
       item.quantity++;
       this.calculateTotal();
     } else {
+      console.log(item.avaibleQuantity)
       this.erreurAlert.erreurAlert('La quantité demandée est supérieure à la quantité disponible !');
     }
   }
@@ -105,7 +107,7 @@ export class PanierComponent implements OnInit {
   }
 
   removeFromCart(item: any): void {
-    this.orderService.deleteOrder(item.id).subscribe({
+    this.orderService.deleteOrderCart(item.id).subscribe({
       next: () => {
         this.cartItems = this.cartItems.filter(i => i.id !== item.id);
         this.calculateTotal();
@@ -158,6 +160,7 @@ export class PanierComponent implements OnInit {
         adresseLivraison: this.adresseLivraison,
         dateLivraison: item.dateLivraison || '',
       };
+      
 
       this.orderService.updateOrder(updatedOrder).subscribe({
         next: () => {

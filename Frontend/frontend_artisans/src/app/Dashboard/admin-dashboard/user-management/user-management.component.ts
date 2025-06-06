@@ -18,7 +18,7 @@ export class UserManagementComponent implements OnInit {
 
   users: any[] = [];
 
-  constructor(private router: Router,private user : UserService,private SuccessAlertService:SuccessAlertService,private ErreurAlertService:ErreurAlertService) {}
+  constructor(private router: Router, private user: UserService, private SuccessAlertService: SuccessAlertService, private ErreurAlertService: ErreurAlertService) { }
 
   ngOnInit(): void {
     this.user.getUsers().subscribe(
@@ -33,7 +33,7 @@ export class UserManagementComponent implements OnInit {
         });
       },);
 
-   }
+  }
 
   get filteredUsers(): any[] {
     return this.users.filter(user =>
@@ -44,27 +44,34 @@ export class UserManagementComponent implements OnInit {
   }
 
   deleteUser(userId: number): void {
-    var userEmail = this.users.find(user => user.id === userId)?.email;
-    this.user.deleteUSer(userId).subscribe(
-      (response: any) => {
-        // Mettre à jour la liste des utilisateurs ici
-        this.user.getUsers().subscribe((data: any[]) => {
-          this.users = data.map(user => {
-            return {
-              id: user.id,
-              email: user.username,
-              role: user.role,
-              status: user.statut ? 'approved' : 'pending'
-            };
-          });
-        });
-        this.SuccessAlertService.successAlert('Utilisateur supprimé : ' +userEmail  );
-      },
-      (error) => {
-        this.ErreurAlertService.erreurAlert('Erreur lors de la suppression de l\'utilisateur');
+    const userEmail = this.users.find(user => user.id === userId)?.email;
+
+    this.ErreurAlertService.confirmDelete(
+      `Voulez-vous vraiment supprimer l'utilisateur ${userEmail} ?`,
+      () => {
+        this.user.deleteUSer(userId).subscribe(
+          (response: any) => {
+            // Mettre à jour la liste des utilisateurs après suppression
+            this.user.getUsers().subscribe((data: any[]) => {
+              this.users = data.map(user => {
+                return {
+                  id: user.id,
+                  email: user.username,
+                  role: user.role,
+                  status: user.statut ? 'approved' : 'pending'
+                };
+              });
+            });
+            this.SuccessAlertService.successAlert('Utilisateur supprimé : ' + userEmail);
+          },
+          (error) => {
+            this.ErreurAlertService.erreurAlert('Erreur lors de la suppression de l\'utilisateur');
+          }
+        );
       }
     );
   }
+
 
   validateUser(userId: number): void {
     this.user.changeStatus(userId).subscribe(
@@ -80,21 +87,21 @@ export class UserManagementComponent implements OnInit {
                 status: user.statut ? 'approved' : 'pending'
               };
             });
-  
+
             // Trouver l'utilisateur validé par son userId
             const validatedUser = this.users.find(user => user.id === userId);
-  
+
             if (validatedUser) // Afficher l'alerte avec l'email de l'utilisateur
               this.SuccessAlertService.successAlert('Utilisateur validé : ' + validatedUser.email);
-           
+
           },
-          
+
         );
       },
       (error) => {
 
         this.ErreurAlertService.erreurAlert('Erreur lors de la validation de l\'utilisateur');
-        
+
       }
     );
   }
@@ -112,7 +119,7 @@ export class UserManagementComponent implements OnInit {
               status: user.statut ? 'approved' : 'pending'
             };
           });
-  
+
           // Trouver l'utilisateur rejeté avant sa suppression pour afficher son email
           const rejectedUser = this.users.find(user => user.id === userId);
           if (rejectedUser) {
@@ -131,6 +138,6 @@ export class UserManagementComponent implements OnInit {
     this.router.navigate(['/dashboard']);
   }
 
- 
-  
+
+
 }
