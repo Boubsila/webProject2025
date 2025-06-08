@@ -1,4 +1,4 @@
-/* Styles pour la barre de progression du statut */
+
 .status-progress {
   margin: 20px 0;
 }
@@ -75,7 +75,7 @@
   left: 0;
 }
 
-/* Styles pour les groupes de commandes */
+
 .order-group {
   transition: all 0.3s ease;
 }
@@ -85,13 +85,13 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Styles pour les badges */
+
 .badge {
   font-size: 0.85rem;
   padding: 0.35em 0.65em;
 }
 
-/* Styles pour le modal */
+
 .modal-content {
   border-radius: 0.5rem;
 }

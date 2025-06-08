@@ -35,14 +35,6 @@ namespace Domain
         public string ArtisanName { get; set; }
         public string Statut { get; set; }
 
-        //// Relation avec Artisan
-        //public int ArtisanId { get; set; }
-        //public Artisan Artisan { get; set; }
-
-        //// Relation avec CommandesProduits
-        //public ICollection<CommandeProduit> CommandesProduits { get; set; } = new List<CommandeProduit>();
-
-        //// Relation avec Avis
-        //public ICollection<Avis> Avis { get; set; } = new List<Avis>();
+        
     }
 }

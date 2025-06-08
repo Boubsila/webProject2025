@@ -26,9 +26,9 @@ export class UserManagementComponent implements OnInit {
         this.users = users.map(user => {
           return {
             id: user.id,
-            email: user.username, // Assurez-vous que c'est le bon champ pour l'email
+            email: user.username, 
             role: user.role,
-            status: user.statut ? 'approved' : 'pending' // Afficher 'pending' si statut est false sinon afficher 'approved'
+            status: user.statut ? 'approved' : 'pending' 
           };
         });
       },);
@@ -51,7 +51,7 @@ export class UserManagementComponent implements OnInit {
       () => {
         this.user.deleteUSer(userId).subscribe(
           (response: any) => {
-            // Mettre à jour la liste des utilisateurs après suppression
+           
             this.user.getUsers().subscribe((data: any[]) => {
               this.users = data.map(user => {
                 return {
@@ -76,7 +76,7 @@ export class UserManagementComponent implements OnInit {
   validateUser(userId: number): void {
     this.user.changeStatus(userId).subscribe(
       (response: any) => {
-        // Récupérer les utilisateurs pour trouver l'email correspondant à l'userId
+       
         this.user.getUsers().subscribe(
           (users: any[]) => {
             this.users = users.map(user => {
@@ -88,10 +88,10 @@ export class UserManagementComponent implements OnInit {
               };
             });
 
-            // Trouver l'utilisateur validé par son userId
+            
             const validatedUser = this.users.find(user => user.id === userId);
 
-            if (validatedUser) // Afficher l'alerte avec l'email de l'utilisateur
+            if (validatedUser) 
               this.SuccessAlertService.successAlert('Utilisateur validé : ' + validatedUser.email);
 
           },
@@ -109,7 +109,7 @@ export class UserManagementComponent implements OnInit {
   rejectUser(userId: number): void {
     this.user.deleteUSer(userId).subscribe(
       (response: any) => {
-        // Mettre à jour la liste des utilisateurs après suppression
+        
         this.user.getUsers().subscribe((users: any[]) => {
           this.users = users.map(user => {
             return {
@@ -120,7 +120,7 @@ export class UserManagementComponent implements OnInit {
             };
           });
 
-          // Trouver l'utilisateur rejeté avant sa suppression pour afficher son email
+          
           const rejectedUser = this.users.find(user => user.id === userId);
           if (rejectedUser) {
             this.SuccessAlertService.successAlert('Utilisateur rejeté : ' + rejectedUser.email);
@@ -133,7 +133,7 @@ export class UserManagementComponent implements OnInit {
     );
   }
 
-  // Méthode pour naviguer vers le tableau de bord
+  
   goToDashboard() {
     this.router.navigate(['/dashboard']);
   }

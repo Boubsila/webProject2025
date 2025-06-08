@@ -1,8 +1,8 @@
+import { ErreurAlertService } from './../../../Authentification/alerts/erreur-alert.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SuccessAlertService } from '../../../Authentification/alerts/success-alert.service';
-import { ErreurAlertService } from '../../../Authentification/alerts/erreur-alert.service';
 import { ProductService } from '../../../services/product.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class ModerationComponent implements OnInit {
 
   allProducts: any[] = [];
 
-  constructor(private router: Router,private successAlert : SuccessAlertService , private product : ProductService) { }
+  constructor(private router: Router,private successAlert : SuccessAlertService , private product : ProductService,private erreurAlertService:ErreurAlertService) { }
 
   
   pendingProducts: number = 0;
@@ -62,23 +62,28 @@ export class ModerationComponent implements OnInit {
     );
   }
 
-  deleteProduct(productId: number): void {
-    this.product.deleteProduct(productId).subscribe({
-      next: () => {
-        
-        this.allProducts = this.allProducts.filter(p => p.id !== productId);
-  
-        this.pendingProducts = this.getPendingProducts().length;
-        this.approvedProducts = this.getApprovedProducts().length;
-        this.successAlert.successAlert(`Produit : ${productId} supprimé avec succès !`);
-      },
-      error: (error: unknown) => {
-        
-        console.error('Erreur lors de la suppression du produit :', error);
-        
-      }
-    });
-  }
+ deleteProduct(productId: number): void {
+  this.erreurAlertService.confirmDelete(
+    `Voulez-vous vraiment supprimer le produit avec l'ID ${productId} ?`,
+    () => {
+      this.product.deleteProduct(productId).subscribe({
+        next: () => {
+          this.allProducts = this.allProducts.filter(p => p.id !== productId);
+
+          this.pendingProducts = this.getPendingProducts().length;
+          this.approvedProducts = this.getApprovedProducts().length;
+
+          this.successAlert.successAlert(`Produit : ${productId} supprimé avec succès !`);
+        },
+        error: (error: unknown) => {
+          console.error('Erreur lors de la suppression du produit :', error);
+          this.erreurAlertService.erreurAlert(`Échec de la suppression du produit ${productId}`);
+        }
+      });
+    }
+  );
+}
+
 
   goToDashboard() {
     this.router.navigate(['/dashboard']);

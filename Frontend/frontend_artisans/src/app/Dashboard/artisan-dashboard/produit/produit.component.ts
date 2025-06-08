@@ -102,13 +102,13 @@ export class ProduitComponent implements OnInit {
         if (this.selectedProduct.id) {
             // Cas : modification
             this.productService.updateProduct(this.selectedProduct).subscribe(() => {
-                this.updateProductList(); //  recharge la liste après modification
+                this.updateProductList(); 
                 this.closeModal();
             });
         } else {
             // Cas : ajout
             this.productService.addProduct(this.selectedProduct).subscribe(() => {
-                this.updateProductList(); //  recharge la liste après ajout
+                this.updateProductList(); 
                 this.closeModal();
             });
         }

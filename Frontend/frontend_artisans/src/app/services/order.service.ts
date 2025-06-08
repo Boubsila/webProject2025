@@ -10,7 +10,7 @@ export class OrderService {
 
   getOrdersUrl = 'https://localhost:7128/api/Commande/GetOrder';
   
-  getOrdersByArtisanUrl = 'https://localhost:7128/api/Commande/GetCommandesByArtisan'; // Ajout de l'URL pour récupérer les commandes par artisan
+  getOrdersByArtisanUrl = 'https://localhost:7128/api/Commande/GetCommandesByArtisan'; 
 
 
   deleteOrderUrl = 'https://localhost:7128/api/Commande/Delete';

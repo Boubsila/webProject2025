@@ -44,7 +44,7 @@ namespace Backend_Artisans.Controllers
         {
             if (string.IsNullOrWhiteSpace(role))
             {
-                return BadRequest(); // 400 Bad Request si rôle vide ou null
+                return BadRequest(); // 400 Bad Request 
             }
 
             try

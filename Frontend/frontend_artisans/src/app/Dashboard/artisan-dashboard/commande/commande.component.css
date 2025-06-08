@@ -1,4 +1,4 @@
-/* Styles globaux */
+
 .text-gradient {
   background: linear-gradient(45deg, #3a7bd5, #00d2ff);
   -webkit-background-clip: text;
@@ -31,7 +31,7 @@
   box-shadow: 0 0 0 0.25rem rgba(58, 123, 213, 0.25);
 }
 
-/* Animation des lignes du tableau */
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -41,13 +41,13 @@
   animation: fadeIn 0.3s ease-out forwards;
 }
 
-/* Style des badges de statut */
+
 .badge {
   font-size: 0.85rem;
   letter-spacing: 0.5px;
 }
 
-/* Style des cartes d'information */
+
 .info-card {
   border-radius: 12px;
   background-color: #f8f9fa;
@@ -73,7 +73,7 @@
   margin-bottom: 0.5rem;
 }
 
-/* Style des icônes en cercle */
+
 .icon-circle {
   width: 50px;
   height: 50px;
@@ -99,13 +99,13 @@
   background-color: rgba(220, 53, 69, 0.1);
 }
 
-/* Effet de survol */
+
 .bg-light-hover:hover {
   background-color: #f8f9fa;
   transition: background-color 0.3s;
 }
 
-/* Style de la modal */
+
 .modal-content {
   border: none;
   border-radius: 12px;
@@ -120,7 +120,7 @@
   padding: 1.5rem;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .search-box {
     width: 100%;

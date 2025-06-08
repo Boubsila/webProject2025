@@ -11,7 +11,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 })
 export class CarouselComponent implements AfterViewInit {
   ngAfterViewInit(): void {
-    // Animation supplémentaire pour les éléments du carousel
+    
     const carouselItems = document.querySelectorAll('.carousel-item');
     
     carouselItems.forEach((item: Element) => {

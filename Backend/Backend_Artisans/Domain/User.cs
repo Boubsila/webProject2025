@@ -15,15 +15,7 @@ namespace Domain
         public string Role { get; set; }
         public Boolean Statut { get; set; }
 
-        // Relations
        
-
-        //public Artisan? Artisan { get; set; }
-        //public Client? Client { get; set; }
-        //public PartenaireLivraison? PartenaireLivraison { get; set; }
-
-
-        //migration test 
 
         public User(int id, string username, string password, string salt, string role, bool statut)
         {

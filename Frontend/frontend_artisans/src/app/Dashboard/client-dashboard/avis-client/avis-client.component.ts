@@ -215,7 +215,7 @@ export class AvisClientComponent implements OnInit {
       return;
     }
 
-    // Formatage du commentaire avec le nom d'utilisateur
+   
     const formattedComment = `${this.user}: ${item.comment.trim()}, ${this.formatDate(new Date())}`;
 
     const avis = {
@@ -264,7 +264,7 @@ export class AvisClientComponent implements OnInit {
       return;
     }
 
-    // Formatage du nouveau commentaire avec le nom d'utilisateur
+    
     const formattedComment = `${this.user}: ${this.newComment.trim()}, ${this.formatDate(new Date())}`;
 
     item.isAddingComment = true;

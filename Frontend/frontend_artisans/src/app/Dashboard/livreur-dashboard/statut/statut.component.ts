@@ -85,7 +85,7 @@ export class StatutComponent implements OnInit {
       this.selectedOrder.statut
     ).subscribe({
       next: () => {
-        this.loadOrders(); // Recharger les données après mise à jour
+        this.loadOrders(); 
         this.closeModal();
       },
       error: (error:any) => {

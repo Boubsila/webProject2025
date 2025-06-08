@@ -221,7 +221,7 @@ export class AvisComponent implements OnInit {
     return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
   }
 
-  // Méthode pour l'affichage relatif (ex: "il y a 2 heures")
+  // Méthode pour l'affichage relatif 
   getRelativeTime(comment: string): string {
     const parts = comment.split(',');
     if (parts.length < 2) return 'Récemment';

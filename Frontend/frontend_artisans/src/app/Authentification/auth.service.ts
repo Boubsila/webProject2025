@@ -22,7 +22,7 @@ export class AuthService {
 
 
   // Méthode pour l'enregistrement d'un nouvel utilisateur
-  // Nouveau code
+  
   Register(email: string, password: string, role: string): Observable<any> {
     return this.http.post(`https://localhost:7128/api/Authentication/Register?login=${email}&password=${password}&role=${role}`, null);
   }

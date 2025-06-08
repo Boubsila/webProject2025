@@ -1,4 +1,4 @@
-/* Style pour la barre de recherche */
+
 .search-box {
   position: relative;
   width: 250px;
@@ -16,14 +16,14 @@
   padding-left: 40px;
 }
 
-/* Style pour les badges de statut */
+
 .badge {
   font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 0.5px;
 }
 
-/* Animation pour les lignes du tableau */
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -33,12 +33,12 @@
   animation: fadeIn 0.3s ease-out;
 }
 
-/* Style pour le modal */
+
 .modal-content {
   border-radius: 0.75rem;
 }
 
-/* Style pour le header du tableau */
+
 .table-light th {
   font-weight: 600;
   text-transform: uppercase;
@@ -47,7 +47,7 @@
   color: #495057;
 }
 
-/* Style pour le texte gradient */
+
 .text-gradient {
   background: linear-gradient(90deg, #0d6efd 0%, #6610f2 100%);
   -webkit-background-clip: text;

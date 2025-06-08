@@ -26,21 +26,28 @@ export class ErreurAlertService {
 
   confirmDelete(message: string, onConfirm: () => void) {
   Swal.fire({
-    title: 'Confirmation',
+    title: 'Confirmer la suppression',
     text: message,
-    icon: 'warning',
+    icon: 'question', 
     showCancelButton: true,
     confirmButtonText: 'Oui, supprimer',
     cancelButtonText: 'Annuler',
-    customClass: {
-      popup: 'custom-alert-popup',
-      confirmButton: 'btn btn-danger',
-      cancelButton: 'btn btn-secondary',
+    confirmButtonColor: '#d33', 
+    cancelButtonColor: '#3085d6', 
+    reverseButtons: true, 
+    focusCancel: true, 
+    showClass: {
+      popup: 'animate__animated animate__fadeIn' 
     },
-    reverseButtons: true, // Place le bouton "Annuler" à gauche
+    hideClass: {
+      popup: 'animate__animated animate__fadeOut' 
+    },
+    customClass: {
+      popup: 'swal-wide', 
+    }
   }).then((result) => {
     if (result.isConfirmed) {
-      onConfirm(); // Exécute l'action de suppression
+      onConfirm();
     }
   });
 }

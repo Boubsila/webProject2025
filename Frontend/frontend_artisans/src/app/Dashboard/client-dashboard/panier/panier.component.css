@@ -1,4 +1,4 @@
-/* Style personnalisé pour le panier */
+
 .text-gradient-primary {
   background: linear-gradient(to right, #4e54c8, #8f94fb);
   -webkit-background-clip: text;
@@ -49,7 +49,7 @@
   font-size: 0.75rem;
 }
 
-/* Animation pour les boutons */
+
 .btn {
   transition: all 0.2s ease;
 }
@@ -58,12 +58,12 @@
   transform: scale(0.98);
 }
 
-/* Style pour le panier vide */
+
 .bi-cart-x {
   opacity: 0.2;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
   .table-responsive {
       border: 0;

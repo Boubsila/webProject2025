@@ -13,7 +13,7 @@ import { AuthService } from '../../Authentification/auth.service';
 export class DashboardComponent implements OnInit {
 
   
-// Variables
+
   userRole: string;
   userName: string;
 

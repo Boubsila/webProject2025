@@ -31,7 +31,7 @@ namespace Data
         // Récupère tous les utilisateurs de la base de données
         public List<User> GetUsers()
         {
-            return _context.User.ToList(); // Retourne la liste complète des utilisateurs
+            return _context.User.ToList(); 
         }
 
         // Ajoute un nouvel utilisateur à la base de données

@@ -21,7 +21,7 @@ export class NavbarComponent {
   constructor(private router: Router, private clientUser: AuthService) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.activeRoute = event.url; // Met à jour l'état actif en fonction de l'URL
+        this.activeRoute = event.url; 
       }
       
     });

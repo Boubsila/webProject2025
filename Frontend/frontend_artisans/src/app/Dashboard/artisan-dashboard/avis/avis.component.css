@@ -1,9 +1,9 @@
-/* Styles généraux */
+
 .container {
     max-width: 1200px;
   }
   
-  /* Bouton Retour */
+ 
   .btn-outline-primary {
     border-width: 1.5px;
     transition: all 0.3s;
@@ -15,7 +15,7 @@
     transform: translateY(-1px);
   }
   
-  /* Styles pour la table améliorée */
+ 
   .table {
     --bs-table-bg: transparent;
   }
@@ -60,7 +60,7 @@
     border-color: rgba(0, 0, 0, 0.03) !important;
   }
   
-  /* Styles pour le modal amélioré */
+  
   .modal-content {
     border: none;
     overflow: hidden;
@@ -114,7 +114,7 @@
     box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
   }
   
-  /* Animation d'ouverture du modal */
+ 
   .modal.fade .modal-dialog {
     transform: translateY(-50px);
     opacity: 0;
@@ -126,7 +126,7 @@
     opacity: 1;
   }
   
-  /* Responsive adjustments */
+  
   @media (max-width: 768px) {
     .table-responsive {
       border: 0;
@@ -163,7 +163,7 @@
     }
   }
 
-  /* Styles pour le modal amélioré */
+  
 .comment-bubble {
   border-left: 3px solid #4e73df;
   transition: all 0.2s ease;
@@ -183,12 +183,12 @@
   background-color: rgba(78, 115, 223, 0.1);
 }
 
-/* Style pour la date */
+
 .text-muted small {
   font-size: 0.8rem;
 }
 
-/* Animation d'entrée des commentaires */
+
 .comment-section div {
   animation: fadeIn 0.3s ease-out forwards;
 }
