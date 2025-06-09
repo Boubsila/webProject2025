@@ -36,7 +36,8 @@ Ce projet permet de connecter plusieurs types d'utilisateurs (Admin, Artisan, Cl
 
 3. **Statistiques**
    - Nombre d'utilisateurs inscrits (par rôle : artisan, client, livreur actifs)
-   - Statistiques de commandes (total, complétées, en attente, approuvées)
+   - Statistiques de commandes (total, complétées, en attente)
+   - Statistiques de produits (total, en attente, approuvées)
 
 ---
 
