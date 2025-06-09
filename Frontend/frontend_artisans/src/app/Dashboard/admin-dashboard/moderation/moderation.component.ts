@@ -76,7 +76,7 @@ export class ModerationComponent implements OnInit {
           this.successAlert.successAlert(`Produit : ${productId} supprimé avec succès !`);
         },
         error: (error: unknown) => {
-          console.error('Erreur lors de la suppression du produit :', error);
+          
           this.erreurAlertService.erreurAlert(`Échec de la suppression du produit ${productId}`);
         }
       });

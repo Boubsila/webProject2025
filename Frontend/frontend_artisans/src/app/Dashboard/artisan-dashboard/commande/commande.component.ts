@@ -95,7 +95,7 @@ deleteOrder(order: any) {
       }
     );
   } else {
-    console.log(order);
+    
     this.erreurAlertService.erreurAlert('ID de la commande invalide');
   }
 }

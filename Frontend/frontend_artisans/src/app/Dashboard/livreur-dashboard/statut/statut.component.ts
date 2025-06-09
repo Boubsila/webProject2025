@@ -61,7 +61,7 @@ export class StatutComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error:any) => {
-        console.error('Erreur lors du chargement des commandes:', error);
+       
         this.isLoading = false;
       }
     });
@@ -74,7 +74,7 @@ export class StatutComponent implements OnInit {
 
   updateOrderStatus(): void {
     if (!this.selectedOrder || !this.selectedOrder.numeroCommande || !this.selectedOrder.artisanName || !this.selectedOrder.statut) {
-      console.error('Données de commande incomplètes');
+      
       return;
     }
 
@@ -89,7 +89,7 @@ export class StatutComponent implements OnInit {
         this.closeModal();
       },
       error: (error:any) => {
-        console.error('Erreur lors de la mise à jour du statut:', error);
+       
         this.isLoading = false;
       }
     });

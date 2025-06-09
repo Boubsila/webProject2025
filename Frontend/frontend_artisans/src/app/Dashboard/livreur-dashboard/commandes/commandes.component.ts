@@ -153,10 +153,12 @@ export class CommandesComponent implements OnInit {
         this.selectedOrder.deliveryPerson
       ).subscribe({
         next: () => {
-          console.log('Adresse et livreur enregistrés');
+         
+          this.erreurAlertService.erreurAlert('Adresse et livreur enregistrés');
         },
         error: (err: any) => {
-          console.error('Erreur:', err);
+          
+           this.erreurAlertService.erreurAlert(`Erreur : , ${err}`);
         }
       });
     }

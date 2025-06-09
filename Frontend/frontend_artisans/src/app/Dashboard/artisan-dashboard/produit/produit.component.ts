@@ -50,7 +50,7 @@ export class ProduitComponent implements OnInit {
 
     ngOnInit(): void {
         this.userConnected = this.authservice.getUserName();
-        console.log(this.userConnected);
+        
 
         const imageNames = ['vase1', 'vase2', 'vase3', 'vase4',
             'tapis1', 'tapis2', 'tapis3', 'tapis4',
@@ -125,7 +125,7 @@ export class ProduitComponent implements OnInit {
                         this.updateProductList(); // Recharge les produits après suppression
                     },
                     error: (err: any) => {
-                        console.error('Erreur lors de la suppression du produit :', err);
+                       
                         this.confirmation.erreurAlert("Une erreur est survenue lors de la suppression.");
                     }
                 });
